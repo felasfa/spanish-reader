@@ -169,30 +169,38 @@ $('popup-close').addEventListener('click', () => {
   $('translation-popup').style.display = 'none';
 });
 
+/* ===== Vocabulary Storage (localStorage) ===== */
+const VOCAB_KEY = 'spanish-reader-vocab';
+
+function vocabRead() {
+  try { return JSON.parse(localStorage.getItem(VOCAB_KEY) || '[]'); } catch { return []; }
+}
+
+function vocabWrite(vocab) {
+  localStorage.setItem(VOCAB_KEY, JSON.stringify(vocab));
+}
+
 /* ===== Save to Vocabulary ===== */
-$('popup-save').addEventListener('click', async () => {
+$('popup-save').addEventListener('click', () => {
   const t = state.pendingTranslation;
   if (!t) return;
 
   try {
-    const res = await fetch('/api/vocabulary', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        word: t.word,
-        translation: t.wordTranslation,
-        sentence: t.sentence,
-        sentenceTranslation: t.sentenceTranslation,
-        url: state.currentUrl,
-      }),
+    const vocab = vocabRead();
+    vocab.unshift({
+      id: Date.now(),
+      word: t.word,
+      translation: t.wordTranslation || '',
+      sentence: t.sentence || '',
+      sentenceTranslation: t.sentenceTranslation || '',
+      url: state.currentUrl,
+      date: new Date().toISOString(),
     });
-
-    if (!res.ok) throw new Error('Failed to save');
+    vocabWrite(vocab);
 
     $('popup-save').style.display = 'none';
     $('popup-saved').style.display = 'flex';
     updateVocabCount();
-
   } catch (err) {
     $('popup-error').textContent = `Save failed: ${err.message}`;
     $('popup-error').style.display = 'block';
@@ -200,30 +208,20 @@ $('popup-save').addEventListener('click', async () => {
 });
 
 /* ===== Vocabulary Count Badge ===== */
-async function updateVocabCount() {
-  try {
-    const res = await fetch('/api/vocabulary');
-    const vocab = await res.json();
-    const count = vocab.length;
-    const badge = $('nav-vocab-count');
-    if (count > 0) {
-      badge.textContent = count;
-      badge.style.display = 'inline-block';
-    } else {
-      badge.style.display = 'none';
-    }
-  } catch { /* ignore */ }
+function updateVocabCount() {
+  const count = vocabRead().length;
+  const badge = $('nav-vocab-count');
+  if (count > 0) {
+    badge.textContent = count;
+    badge.style.display = 'inline-block';
+  } else {
+    badge.style.display = 'none';
+  }
 }
 
 /* ===== Vocabulary View ===== */
-async function loadVocabulary() {
-  try {
-    const res = await fetch('/api/vocabulary');
-    const vocab = await res.json();
-    renderVocabulary(vocab);
-  } catch (err) {
-    console.error('Failed to load vocabulary', err);
-  }
+function loadVocabulary() {
+  renderVocabulary(vocabRead());
 }
 
 function renderVocabulary(vocab) {
@@ -270,34 +268,24 @@ function renderVocabulary(vocab) {
   });
 }
 
-async function deleteVocabEntry(id) {
-  try {
-    await fetch(`/api/vocabulary/${id}`, { method: 'DELETE' });
-    loadVocabulary();
-    updateVocabCount();
-  } catch (err) {
-    console.error('Delete failed', err);
-  }
+function deleteVocabEntry(id) {
+  vocabWrite(vocabRead().filter(v => v.id !== Number(id)));
+  loadVocabulary();
+  updateVocabCount();
 }
 
 /* ===== Clear All Vocabulary ===== */
-$('vocab-clear').addEventListener('click', async () => {
+$('vocab-clear').addEventListener('click', () => {
   if (!confirm('Clear all vocabulary entries? This cannot be undone.')) return;
-  try {
-    await fetch('/api/vocabulary', { method: 'DELETE' });
-    loadVocabulary();
-    updateVocabCount();
-  } catch (err) {
-    console.error('Clear failed', err);
-  }
+  vocabWrite([]);
+  loadVocabulary();
+  updateVocabCount();
 });
 
 /* ===== Export CSV ===== */
-$('vocab-export').addEventListener('click', async () => {
-  try {
-    const res = await fetch('/api/vocabulary');
-    const vocab = await res.json();
-    if (!vocab.length) { alert('No vocabulary to export.'); return; }
+$('vocab-export').addEventListener('click', () => {
+  const vocab = vocabRead();
+  if (!vocab.length) { alert('No vocabulary to export.'); return; }
 
     const headers = ['Word', 'Translation', 'Spanish Sentence', 'English Sentence', 'URL', 'Date'];
     const rows = vocab.map(e => [
@@ -313,9 +301,6 @@ $('vocab-export').addEventListener('click', async () => {
     a.download = `spanish-vocabulary-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
-  } catch (err) {
-    console.error('Export failed', err);
-  }
 });
 
 /* ===== Init ===== */
