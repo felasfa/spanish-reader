@@ -10,6 +10,7 @@ const INTERACTION_SCRIPT = `
 </style>
 <script>
 (function () {
+  // ---- Sentence context ----
   function getSentence(selectionText, container) {
     let text = '';
     const walker = document.createTreeWalker(
@@ -19,33 +20,49 @@ const INTERACTION_SCRIPT = `
     let n;
     while ((n = walker.nextNode())) text += n.textContent;
     if (!text) text = container.innerText || container.textContent || selectionText;
-
-    // Find sentence containing the selection
-    const sentences = text.match(/[^.!?¡¿\n]+[.!?\n]*/g) || [];
+    const sentences = text.match(/[^.!?¡¿\\n]+[.!?\\n]*/g) || [];
     for (const s of sentences) {
       if (s.includes(selectionText)) return s.trim();
     }
     return text.trim().slice(0, 300);
   }
 
-  function onSelectionEnd() {
+  function sendSelection() {
     const sel = window.getSelection();
     if (!sel || sel.isCollapsed) return;
     const word = sel.toString().trim();
     if (!word) return;
-
     const range = sel.getRangeAt(0);
     let container = range.commonAncestorContainer;
     if (container.nodeType === 3) container = container.parentNode;
-
     const sentence = getSentence(word, container);
     window.parent.postMessage({ type: 'word-selected', word, sentence }, '*');
   }
 
-  document.addEventListener('mouseup', onSelectionEnd);
-  document.addEventListener('touchend', function () {
-    setTimeout(onSelectionEnd, 120);
+  // Desktop: fire on mouseup
+  document.addEventListener('mouseup', function () {
+    setTimeout(sendSelection, 20);
   });
+
+  // iOS / mobile: selectionchange fires as the user adjusts handles.
+  // Debounce so we only act once the selection has settled.
+  var selTimer;
+  document.addEventListener('selectionchange', function () {
+    clearTimeout(selTimer);
+    selTimer = setTimeout(sendSelection, 600);
+  });
+
+  // ---- Link interception ----
+  // The sandbox prevents normal navigation; catch every anchor click
+  // and ask the parent to load it through the reader instead.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href]');
+    if (!a) return;
+    e.preventDefault();
+    e.stopPropagation();
+    // a.href is already resolved to absolute by the <base> tag
+    if (a.href) window.parent.postMessage({ type: 'link-clicked', href: a.href }, '*');
+  }, true);
 })();
 </script>`;
 

@@ -102,13 +102,23 @@ $('url-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') $('url-submit').click();
 });
 
-/* ===== Word Selection via postMessage from iframe ===== */
+/* ===== Messages from iframe ===== */
 window.addEventListener('message', async (event) => {
-  if (!event.data || event.data.type !== 'word-selected') return;
-  const { word, sentence } = event.data;
-  if (!word || word.length > 200) return;
+  if (!event.data) return;
 
-  showTranslationPopup(word, sentence);
+  if (event.data.type === 'word-selected') {
+    const { word, sentence } = event.data;
+    if (!word || word.length > 200) return;
+    showTranslationPopup(word, sentence);
+  }
+
+  if (event.data.type === 'link-clicked') {
+    const { href } = event.data;
+    if (href && href.startsWith('http')) {
+      $('url-input').value = href;
+      loadUrl(href);
+    }
+  }
 });
 
 /* ===== Translation Popup ===== */
