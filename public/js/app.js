@@ -48,7 +48,7 @@ $('vocab-go-read').addEventListener('click', () => showView('url'));
 document.querySelectorAll('.suggestion-chip').forEach(chip => {
   chip.addEventListener('click', () => {
     $('url-input').value = chip.dataset.url;
-    $('url-input').focus();
+    loadUrl(chip.dataset.url);
   });
 });
 
@@ -220,7 +220,7 @@ function renderVocabulary(vocab) {
   const subtitle = $('vocab-subtitle');
   subtitle.textContent = vocab.length
     ? `${vocab.length} word${vocab.length !== 1 ? 's' : ''} in your collection`
-    : 'Words you've looked up while reading';
+    : "Words you've looked up while reading";
 
   if (vocab.length === 0) {
     $('vocab-empty').style.display = 'flex';
