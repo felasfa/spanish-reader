@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spanish Reader</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      Spanish Reader
+    </div>
+    <div class="nav-links">
+      <a href="https://felasfa.app" class="nav-link" id="nav-home" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9,22 9,12 15,12 15,22"/>
+        </svg>
+        Homepage
+      </a>
+      <button class="nav-link nav-btn" id="nav-new-url">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        New URL
+      </button>
+      <button class="nav-link nav-btn" id="nav-vocabulary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        Vocabulary
+        <span class="vocab-count" id="nav-vocab-count" style="display:none"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Views -->
+  <main class="main-content">
+
+    <!-- URL Input View -->
+    <div id="view-url" class="view active">
+      <div class="url-hero">
+        <div class="url-hero-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+        </div>
+        <h1>Spanish Web Reader</h1>
+        <p>Enter a URL to a Spanish webpage. Select any word to get an instant English translation.</p>
+        <div class="url-form">
+          <div class="url-input-wrap">
+            <svg class="url-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            <input
+              type="url"
+              id="url-input"
+              class="url-input"
+              placeholder="https://elpais.com/..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button class="url-submit-btn" id="url-submit">
+              Leer
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12,5 19,12 12,19"/>
+              </svg>
+            </button>
+          </div>
+          <div id="url-error" class="url-error" style="display:none"></div>
+        </div>
+        <div class="url-suggestions">
+          <span class="suggestions-label">Try:</span>
+          <button class="suggestion-chip" data-url="https://elpais.com">El País</button>
+          <button class="suggestion-chip" data-url="https://www.bbc.com/mundo">BBC Mundo</button>
+          <button class="suggestion-chip" data-url="https://www.rtve.es/noticias/">RTVE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reader View -->
+    <div id="view-reader" class="view">
+      <div class="reader-toolbar">
+        <div class="reader-url-info">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span id="reader-url-display"></span>
+        </div>
+        <div class="reader-hint">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          Select any word or phrase to translate
+        </div>
+      </div>
+      <div class="reader-frame-wrap">
+        <div id="reader-loading" class="reader-loading" style="display:none">
+          <div class="spinner"></div>
+          <p>Loading page…</p>
+        </div>
+        <iframe id="reader-iframe" class="reader-iframe" sandbox="allow-same-origin allow-scripts" title="Spanish article"></iframe>
+      </div>
+    </div>
+
+    <!-- Vocabulary View -->
+    <div id="view-vocabulary" class="view">
+      <div class="vocab-header">
+        <div>
+          <h2>Vocabulary Store</h2>
+          <p id="vocab-subtitle">Words you've looked up while reading</p>
+        </div>
+        <div class="vocab-header-actions">
+          <button class="btn btn-outline" id="vocab-export">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7,10 12,15 17,10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export CSV
+          </button>
+          <button class="btn btn-danger" id="vocab-clear">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3,6 5,6 21,6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+            Clear All
+          </button>
+        </div>
+      </div>
+
+      <div id="vocab-empty" class="vocab-empty" style="display:none">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        <h3>No words yet</h3>
+        <p>Start reading Spanish content and select words to build your vocabulary.</p>
+        <button class="btn btn-primary" id="vocab-go-read">Start Reading</button>
+      </div>
+
+      <div id="vocab-table-wrap" class="vocab-table-wrap">
+        <table class="vocab-table" id="vocab-table">
+          <thead>
+            <tr>
+              <th>Spanish Word</th>
+              <th>English</th>
+              <th>Spanish Sentence</th>
+              <th>English Sentence</th>
+              <th>Source</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="vocab-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Translation Popup -->
+  <div id="translation-popup" class="translation-popup" style="display:none">
+    <div class="popup-header">
+      <div class="popup-word" id="popup-word"></div>
+      <button class="popup-close" id="popup-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div id="popup-loading" class="popup-loading">
+      <div class="spinner spinner-sm"></div>
+      <span>Translating…</span>
+    </div>
+    <div id="popup-content" class="popup-content" style="display:none">
+      <div class="popup-translation-row">
+        <div class="popup-label">Word</div>
+        <div class="popup-value" id="popup-word-translation"></div>
+      </div>
+      <div class="popup-divider"></div>
+      <div class="popup-sentence-section">
+        <div class="popup-label">Sentence</div>
+        <div class="popup-sentence-es" id="popup-sentence-es"></div>
+        <div class="popup-sentence-en" id="popup-sentence-en"></div>
+      </div>
+      <div class="popup-actions">
+        <button class="btn btn-primary btn-sm" id="popup-save">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17,21 17,13 7,13 7,21"/>
+            <polyline points="7,3 7,8 15,8"/>
+          </svg>
+          Save to Vocabulary
+        </button>
+        <span class="popup-saved-badge" id="popup-saved" style="display:none">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20,6 9,17 4,12"/>
+          </svg>
+          Saved!
+        </span>
+      </div>
+    </div>
+    <div id="popup-error" class="popup-error" style="display:none"></div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay" class="overlay" style="display:none"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
