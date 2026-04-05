@@ -60,6 +60,8 @@ html, body {
   letter-spacing: -0.3px;
   color: #fff;
   text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav-links {
@@ -632,11 +634,24 @@ html, body {
 .btn-danger:hover { background: var(--danger-light); border-color: var(--danger); }
 
 /* ===== Responsive ===== */
-@media (max-width: 640px) {
-  .navbar { padding: 0 16px; }
-  .nav-brand span { display: none; }
-  .nav-link { padding: 7px 10px; }
+@media (max-width: 600px) {
+  .navbar { padding: 0 12px; }
+
+  /* Icon-only nav: hide text labels, keep icons */
+  .nav-label { display: none; }
+
+  /* Tighter icon buttons */
+  .nav-link { padding: 8px 10px; gap: 0; }
+
+  /* Keep brand icon + text but shrink font */
+  .nav-brand { font-size: 14px; gap: 7px; }
+
   .translation-popup { bottom: 0; right: 0; left: 0; width: 100%; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
   .vocab-header { flex-direction: column; align-items: flex-start; }
   #view-vocabulary { padding: 20px 16px; }
+}
+
+@media (max-width: 380px) {
+  /* Very small screens: hide brand text too, just show icon */
+  .nav-brand-text { display: none; }
 }
