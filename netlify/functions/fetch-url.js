@@ -55,13 +55,15 @@ const INTERACTION_SCRIPT = `
   // ---- Link interception ----
   // The sandbox prevents normal navigation; catch every anchor click
   // and ask the parent to load it through the reader instead.
+  // (Links are also rewritten server-side with onclick for iOS reliability.)
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href]');
     if (!a) return;
+    var href = a.getAttribute('data-href') || a.href;
+    if (!href || !href.startsWith('http')) return;
     e.preventDefault();
     e.stopPropagation();
-    // a.href is already resolved to absolute by the <base> tag
-    if (a.href) window.parent.postMessage({ type: 'link-clicked', href: a.href }, '*');
+    window.parent.postMessage({ type: 'link-clicked', href: href }, '*');
   }, true);
 })();
 </script>`;
@@ -137,6 +139,20 @@ exports.handler = async (event) => {
     if ($('base').length === 0) {
       $('head').prepend(`<base href="${url}">`);
     }
+
+    // Rewrite all navigational links server-side so iOS onclick fires reliably.
+    // Replaces href with # and stores the absolute target in data-href + onclick.
+    $('a[href]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      if (!href || href.startsWith('#') || href.startsWith('javascript:') ||
+          href.startsWith('mailto:') || href.startsWith('tel:')) return;
+      const absolute = resolveUrl(href, url);
+      if (!absolute.startsWith('http')) return;
+      const escaped = absolute.replace(/'/g, '%27');
+      $(el).attr('href', '#');
+      $(el).attr('data-href', absolute);
+      $(el).attr('onclick', `event.preventDefault();window.parent.postMessage({type:'link-clicked',href:'${escaped}'},'*');return false;`);
+    });
 
     $('body').append(INTERACTION_SCRIPT);
 

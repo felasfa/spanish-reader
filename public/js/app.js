@@ -171,6 +171,7 @@ $('popup-close').addEventListener('click', () => {
 
 /* ===== Vocabulary Storage (localStorage) ===== */
 const VOCAB_KEY = 'spanish-reader-vocab';
+const VOCAB_SEEN_KEY = 'spanish-reader-vocab-seen';
 
 function vocabRead() {
   try { return JSON.parse(localStorage.getItem(VOCAB_KEY) || '[]'); } catch { return []; }
@@ -178,6 +179,15 @@ function vocabRead() {
 
 function vocabWrite(vocab) {
   localStorage.setItem(VOCAB_KEY, JSON.stringify(vocab));
+}
+
+function markVocabSeen() {
+  localStorage.setItem(VOCAB_SEEN_KEY, Date.now().toString());
+}
+
+function hasUnseenWords() {
+  const seenAt = parseInt(localStorage.getItem(VOCAB_SEEN_KEY) || '0', 10);
+  return vocabRead().some(v => new Date(v.date).getTime() > seenAt);
 }
 
 /* ===== Save to Vocabulary ===== */
@@ -207,20 +217,16 @@ $('popup-save').addEventListener('click', () => {
   }
 });
 
-/* ===== Vocabulary Count Badge ===== */
+/* ===== Vocabulary Badge (dot = unseen words) ===== */
 function updateVocabCount() {
-  const count = vocabRead().length;
   const badge = $('nav-vocab-count');
-  if (count > 0) {
-    badge.textContent = count;
-    badge.style.display = 'inline-block';
-  } else {
-    badge.style.display = 'none';
-  }
+  badge.style.display = hasUnseenWords() ? 'inline-block' : 'none';
 }
 
 /* ===== Vocabulary View ===== */
 function loadVocabulary() {
+  markVocabSeen();
+  updateVocabCount();
   renderVocabulary(vocabRead());
 }
 
