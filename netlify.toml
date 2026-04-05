@@ -1,0 +1,34 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = []
+
+# Route /api/* to the corresponding Netlify Function
+[[redirects]]
+  from = "/api/fetch"
+  to   = "/.netlify/functions/fetch-url"
+  status = 200
+
+[[redirects]]
+  from = "/api/translate"
+  to   = "/.netlify/functions/translate"
+  status = 200
+
+[[redirects]]
+  from = "/api/vocabulary"
+  to   = "/.netlify/functions/vocabulary"
+  status = 200
+
+[[redirects]]
+  from = "/api/vocabulary/*"
+  to   = "/.netlify/functions/vocabulary"
+  status = 200
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 200
