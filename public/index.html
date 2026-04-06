@@ -61,7 +61,7 @@
           </svg>
         </div>
         <h1>Spanish Web Reader</h1>
-        <p>Enter a URL to a Spanish webpage. Select any word to get an instant English translation.</p>
+        <p>Enter a URL to a Spanish webpage. Select any word for an instant English translation.</p>
         <div class="url-form">
           <div class="url-input-wrap">
             <svg class="url-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -77,12 +77,20 @@
               autocomplete="off"
               spellcheck="false"
             />
-            <button class="url-submit-btn" id="url-submit">
-              Leer
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          </div>
+          <div class="url-actions">
+            <button class="url-action-btn url-action-primary" id="url-read-now">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="5" y1="12" x2="19" y2="12"/>
                 <polyline points="12,5 19,12 12,19"/>
               </svg>
+              Read Now
+            </button>
+            <button class="url-action-btn url-action-outline" id="url-save-later">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+              Read Later
             </button>
           </div>
           <div id="url-error" class="url-error" style="display:none"></div>
@@ -113,7 +121,7 @@
             <line x1="12" y1="8" x2="12" y2="12"/>
             <line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
-          Select any word or phrase to translate
+          Select a word to translate · Hold a link to save
         </div>
       </div>
       <div class="reader-frame-wrap">
@@ -123,6 +131,38 @@
         </div>
         <iframe id="reader-iframe" class="reader-iframe" sandbox="allow-same-origin allow-scripts" title="Spanish article"></iframe>
       </div>
+    </div>
+
+    <!-- Read Later View -->
+    <div id="view-reading-list" class="view">
+      <div class="rl-header">
+        <div>
+          <h2>Read Later</h2>
+          <p id="rl-subtitle">Articles saved for later</p>
+        </div>
+        <button class="btn btn-danger" id="rl-clear">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3,6 5,6 21,6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+          </svg>
+          Clear All
+        </button>
+      </div>
+
+      <div id="rl-loading" class="rl-loading" style="display:none">
+        <div class="spinner"></div>
+      </div>
+
+      <div id="rl-empty" class="vocab-empty" style="display:none">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+        </svg>
+        <h3>Nothing saved yet</h3>
+        <p>While reading, hold a link and choose "Save for Later". Or paste a URL and tap Read Later.</p>
+        <button class="btn btn-primary" id="rl-go-read">Start Reading</button>
+      </div>
+
+      <div id="rl-list" class="rl-list"></div>
     </div>
 
     <!-- Vocabulary View -->
@@ -159,6 +199,10 @@
         <h3>No words yet</h3>
         <p>Start reading Spanish content and select words to build your vocabulary.</p>
         <button class="btn btn-primary" id="vocab-go-read">Start Reading</button>
+      </div>
+
+      <div id="vocab-loading" class="rl-loading" style="display:none">
+        <div class="spinner"></div>
       </div>
 
       <div id="vocab-table-wrap" class="vocab-table-wrap">
@@ -226,8 +270,8 @@
     <div id="popup-error" class="popup-error" style="display:none"></div>
   </div>
 
-  <!-- Overlay -->
-  <div id="overlay" class="overlay" style="display:none"></div>
+  <!-- Toast notification -->
+  <div id="toast" class="toast" style="display:none"></div>
 
   <script src="/js/app.js"></script>
 </body>

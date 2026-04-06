@@ -2,7 +2,7 @@
 const state = {
   currentView: 'url',
   currentUrl: '',
-  pendingTranslation: null, // { word, sentence, wordTranslation, sentenceTranslation }
+  pendingTranslation: null,
 };
 
 /* ===== Helpers ===== */
@@ -15,34 +15,44 @@ function showView(name) {
 }
 
 function formatDate(iso) {
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 function escapeHtml(str) {
   return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function showError(el, msg) {
-  el.textContent = msg;
-  el.style.display = 'block';
-}
+function showError(el, msg) { el.textContent = msg; el.style.display = 'block'; }
+function hideError(el)       { el.style.display = 'none'; }
 
-function hideError(el) {
-  el.style.display = 'none';
+/* ===== Toast ===== */
+let toastTimer;
+function showToast(msg, type = 'info') {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = `toast toast-${type}`;
+  t.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3000);
 }
 
 /* ===== Navigation ===== */
 $('nav-new-url').addEventListener('click', () => showView('url'));
+
+$('nav-reading-list').addEventListener('click', () => {
+  loadReadingList();
+  showView('reading-list');
+});
+
 $('nav-vocabulary').addEventListener('click', () => {
   loadVocabulary();
   showView('vocabulary');
 });
+
 $('vocab-go-read').addEventListener('click', () => showView('url'));
+$('rl-go-read').addEventListener('click', () => showView('url'));
 
 /* ===== URL Suggestions ===== */
 document.querySelectorAll('.suggestion-chip').forEach(chip => {
@@ -55,51 +65,53 @@ document.querySelectorAll('.suggestion-chip').forEach(chip => {
 /* ===== URL Submission ===== */
 async function loadUrl(url) {
   if (!url) return;
-
   hideError($('url-error'));
-  $('url-submit').disabled = true;
-  $('url-submit').textContent = 'Loading…';
+  $('url-read-now').disabled = true;
+  $('url-read-now').textContent = 'Loading…';
 
   try {
-    const res = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`);
+    const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`);
     const data = await res.json();
-
     if (!res.ok) throw new Error(data.error || 'Failed to load page');
 
     state.currentUrl = url;
     $('reader-url-display').textContent = url;
-
-    // Show loading state in reader
     showView('reader');
     $('reader-loading').style.display = 'flex';
     $('reader-iframe').style.visibility = 'hidden';
 
-    // Set iframe content
     const iframe = $('reader-iframe');
     iframe.srcdoc = data.html;
-
     iframe.onload = () => {
       $('reader-loading').style.display = 'none';
       iframe.style.visibility = 'visible';
     };
-
-  } catch (err) {
-    showError($('url-error'), `Error: ${err.message}`);
+  } catch (e) {
+    showError($('url-error'), `Error: ${e.message}`);
     showView('url');
   } finally {
-    $('url-submit').disabled = false;
-    $('url-submit').innerHTML = `Leer <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>`;
+    $('url-read-now').disabled = false;
+    $('url-read-now').innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg> Read Now`;
   }
 }
 
-$('url-submit').addEventListener('click', () => {
+$('url-read-now').addEventListener('click', () => {
   const url = $('url-input').value.trim();
   if (!url) { showError($('url-error'), 'Please enter a URL'); return; }
   loadUrl(url);
 });
 
+$('url-save-later').addEventListener('click', () => {
+  const url = $('url-input').value.trim();
+  if (!url) { showError($('url-error'), 'Please enter a URL'); return; }
+  addToReadingList(url).then(() => {
+    loadReadingList();
+    showView('reading-list');
+  });
+});
+
 $('url-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') $('url-submit').click();
+  if (e.key === 'Enter') $('url-read-now').click();
 });
 
 /* ===== Messages from iframe ===== */
@@ -119,6 +131,13 @@ window.addEventListener('message', async (event) => {
       loadUrl(href);
     }
   }
+
+  if (event.data.type === 'save-for-later') {
+    const { href } = event.data;
+    if (href && href.startsWith('http')) {
+      await addToReadingList(href);
+    }
+  }
 });
 
 /* ===== Translation Popup ===== */
@@ -130,11 +149,9 @@ function showTranslationPopup(word, sentence) {
   $('popup-error').style.display = 'none';
   $('popup-saved').style.display = 'none';
   $('popup-save').style.display = 'inline-flex';
-
   popup.style.display = 'block';
   state.pendingTranslation = { word, sentence };
 
-  // Fetch translation
   fetch('/api/translate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -143,96 +160,73 @@ function showTranslationPopup(word, sentence) {
     .then(r => r.json())
     .then(data => {
       if (data.error) throw new Error(data.error);
-
       $('popup-word-translation').textContent = data.wordTranslation;
       $('popup-sentence-es').textContent = sentence;
       $('popup-sentence-en').textContent = data.sentenceTranslation;
-
-      state.pendingTranslation = {
-        word,
-        sentence,
-        wordTranslation: data.wordTranslation,
-        sentenceTranslation: data.sentenceTranslation,
-      };
-
+      state.pendingTranslation = { word, sentence, wordTranslation: data.wordTranslation, sentenceTranslation: data.sentenceTranslation };
       $('popup-loading').style.display = 'none';
       $('popup-content').style.display = 'block';
     })
-    .catch(err => {
+    .catch(e => {
       $('popup-loading').style.display = 'none';
-      $('popup-error').textContent = `Translation failed: ${err.message}`;
+      $('popup-error').textContent = `Translation failed: ${e.message}`;
       $('popup-error').style.display = 'block';
     });
 }
 
-$('popup-close').addEventListener('click', () => {
-  $('translation-popup').style.display = 'none';
-});
+$('popup-close').addEventListener('click', () => { $('translation-popup').style.display = 'none'; });
 
-/* ===== Vocabulary Storage (localStorage) ===== */
-const VOCAB_KEY = 'spanish-reader-vocab';
-const VOCAB_SEEN_KEY = 'spanish-reader-vocab-seen';
-
-function vocabRead() {
-  try { return JSON.parse(localStorage.getItem(VOCAB_KEY) || '[]'); } catch { return []; }
-}
-
-function vocabWrite(vocab) {
-  localStorage.setItem(VOCAB_KEY, JSON.stringify(vocab));
-}
-
-function markVocabSeen() {
-  localStorage.setItem(VOCAB_SEEN_KEY, Date.now().toString());
-}
-
-function hasUnseenWords() {
-  const seenAt = parseInt(localStorage.getItem(VOCAB_SEEN_KEY) || '0', 10);
-  return vocabRead().some(v => new Date(v.date).getTime() > seenAt);
-}
-
-/* ===== Save to Vocabulary ===== */
-$('popup-save').addEventListener('click', () => {
+/* ===== Save to Vocabulary (GitHub API) ===== */
+$('popup-save').addEventListener('click', async () => {
   const t = state.pendingTranslation;
   if (!t) return;
-
   try {
-    const vocab = vocabRead();
-    vocab.unshift({
-      id: Date.now(),
-      word: t.word,
-      translation: t.wordTranslation || '',
-      sentence: t.sentence || '',
-      sentenceTranslation: t.sentenceTranslation || '',
-      url: state.currentUrl,
-      date: new Date().toISOString(),
+    const res = await fetch('/api/vocabulary', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        word: t.word, translation: t.wordTranslation,
+        sentence: t.sentence, sentenceTranslation: t.sentenceTranslation,
+        url: state.currentUrl,
+      }),
     });
-    vocabWrite(vocab);
-
+    if (!res.ok) { const d = await res.json(); throw new Error(d.error || 'Save failed'); }
     $('popup-save').style.display = 'none';
     $('popup-saved').style.display = 'flex';
     updateVocabCount();
-  } catch (err) {
-    $('popup-error').textContent = `Save failed: ${err.message}`;
+  } catch (e) {
+    $('popup-error').textContent = `Save failed: ${e.message}`;
     $('popup-error').style.display = 'block';
   }
 });
 
-/* ===== Vocabulary Badge (dot = unseen words) ===== */
-function updateVocabCount() {
-  const badge = $('nav-vocab-count');
-  badge.style.display = hasUnseenWords() ? 'inline-block' : 'none';
+/* ===== Vocabulary (GitHub API) ===== */
+async function updateVocabCount() {
+  try {
+    const res   = await fetch('/api/vocabulary');
+    const vocab = await res.json();
+    const badge = $('nav-vocab-count');
+    badge.style.display = vocab.length > 0 ? 'inline-block' : 'none';
+  } catch { /* ignore */ }
 }
 
-/* ===== Vocabulary View ===== */
-function loadVocabulary() {
-  markVocabSeen();
-  updateVocabCount();
-  renderVocabulary(vocabRead());
+async function loadVocabulary() {
+  $('vocab-loading').style.display = 'flex';
+  $('vocab-table-wrap').style.display = 'none';
+  $('vocab-empty').style.display = 'none';
+  try {
+    const res   = await fetch('/api/vocabulary');
+    const vocab = await res.json();
+    renderVocabulary(vocab);
+  } catch (e) {
+    console.error('Failed to load vocabulary', e);
+  } finally {
+    $('vocab-loading').style.display = 'none';
+  }
 }
 
 function renderVocabulary(vocab) {
-  const subtitle = $('vocab-subtitle');
-  subtitle.textContent = vocab.length
+  $('vocab-subtitle').textContent = vocab.length
     ? `${vocab.length} word${vocab.length !== 1 ? 's' : ''} in your collection`
     : "Words you've looked up while reading";
 
@@ -241,73 +235,208 @@ function renderVocabulary(vocab) {
     $('vocab-table-wrap').style.display = 'none';
     return;
   }
-
   $('vocab-empty').style.display = 'none';
   $('vocab-table-wrap').style.display = 'block';
 
-  const tbody = $('vocab-tbody');
-  tbody.innerHTML = vocab.map(entry => {
-    const domain = entry.url ? (() => { try { return new URL(entry.url).hostname; } catch { return entry.url; } })() : '—';
-    return `<tr data-id="${entry.id}">
-      <td><span class="vocab-word">${escapeHtml(entry.word)}</span></td>
-      <td><span class="vocab-translation">${escapeHtml(entry.translation || '—')}</span></td>
-      <td><span class="vocab-sentence-es">${escapeHtml(entry.sentence || '—')}</span></td>
-      <td><span class="vocab-sentence-en">${escapeHtml(entry.sentenceTranslation || '—')}</span></td>
-      <td class="vocab-source">${entry.url ? `<a href="${escapeHtml(entry.url)}" target="_blank" rel="noopener" title="${escapeHtml(entry.url)}">${escapeHtml(domain)}</a>` : '—'}</td>
-      <td class="vocab-date">${entry.date ? formatDate(entry.date) : '—'}</td>
-      <td>
-        <button class="vocab-delete-btn" data-id="${entry.id}" title="Delete" aria-label="Delete entry">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="3,6 5,6 21,6"/>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-          </svg>
-        </button>
-      </td>
+  $('vocab-tbody').innerHTML = vocab.map(e => {
+    const domain = e.url ? (() => { try { return new URL(e.url).hostname; } catch { return e.url; } })() : '—';
+    return `<tr>
+      <td><span class="vocab-word">${escapeHtml(e.word)}</span></td>
+      <td><span class="vocab-translation">${escapeHtml(e.translation || '—')}</span></td>
+      <td><span class="vocab-sentence-es">${escapeHtml(e.sentence || '—')}</span></td>
+      <td><span class="vocab-sentence-en">${escapeHtml(e.sentenceTranslation || '—')}</span></td>
+      <td class="vocab-source">${e.url ? `<a href="${escapeHtml(e.url)}" target="_blank" rel="noopener" title="${escapeHtml(e.url)}">${escapeHtml(domain)}</a>` : '—'}</td>
+      <td class="vocab-date">${e.date ? formatDate(e.date) : '—'}</td>
+      <td><button class="vocab-delete-btn" data-id="${e.id}" title="Delete" aria-label="Delete">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3,6 5,6 21,6"/>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+        </svg>
+      </button></td>
     </tr>`;
   }).join('');
 
-  tbody.querySelectorAll('.vocab-delete-btn').forEach(btn => {
+  $('vocab-tbody').querySelectorAll('.vocab-delete-btn').forEach(btn => {
+    btn.addEventListener('click', () => deleteVocabEntry(btn.dataset.id));
+  });
+}
+
+async function deleteVocabEntry(id) {
+  await fetch(`/api/vocabulary/${id}`, { method: 'DELETE' });
+  loadVocabulary();
+  updateVocabCount();
+}
+
+$('vocab-clear').addEventListener('click', async () => {
+  if (!confirm('Clear all vocabulary entries? This cannot be undone.')) return;
+  await fetch('/api/vocabulary', { method: 'DELETE' });
+  loadVocabulary();
+  updateVocabCount();
+});
+
+$('vocab-export').addEventListener('click', async () => {
+  const res   = await fetch('/api/vocabulary');
+  const vocab = await res.json();
+  if (!vocab.length) { alert('No vocabulary to export.'); return; }
+  const headers = ['Word', 'Translation', 'Spanish Sentence', 'English Sentence', 'URL', 'Date'];
+  const rows = vocab.map(e =>
+    [e.word, e.translation, e.sentence, e.sentenceTranslation, e.url,
+     e.date ? new Date(e.date).toLocaleDateString() : '']
+    .map(v => `"${String(v || '').replace(/"/g, '""')}"`)
+  );
+  const csv  = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a    = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(blob),
+    download: `spanish-vocabulary-${new Date().toISOString().slice(0, 10)}.csv`,
+  });
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+/* ===== Reading List (GitHub API) ===== */
+async function addToReadingList(url) {
+  showToast('Fetching article info…', 'info');
+  try {
+    const res  = await fetch('/api/reading-list', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to save');
+    if (data.duplicate) {
+      showToast('Already in your Read Later list', 'info');
+    } else {
+      showToast('Saved to Read Later!', 'success');
+      updateRLCount();
+    }
+  } catch (e) {
+    showToast(`Could not save: ${e.message}`, 'error');
+  }
+}
+
+async function updateRLCount() {
+  try {
+    const res  = await fetch('/api/reading-list');
+    const list = await res.json();
+    const badge = $('nav-rl-count');
+    const unread = list.filter(i => !i.read).length;
+    badge.style.display = unread > 0 ? 'inline-block' : 'none';
+  } catch { /* ignore */ }
+}
+
+async function loadReadingList() {
+  $('rl-loading').style.display = 'flex';
+  $('rl-list').innerHTML = '';
+  $('rl-empty').style.display = 'none';
+  try {
+    const res  = await fetch('/api/reading-list');
+    const list = await res.json();
+    renderReadingList(list);
+  } catch (e) {
+    console.error('Failed to load reading list', e);
+  } finally {
+    $('rl-loading').style.display = 'none';
+  }
+}
+
+function renderReadingList(list) {
+  $('rl-subtitle').textContent = list.length
+    ? `${list.length} article${list.length !== 1 ? 's' : ''} saved`
+    : 'Articles saved for later';
+
+  if (list.length === 0) {
+    $('rl-empty').style.display = 'flex';
+    $('rl-list').innerHTML = '';
+    return;
+  }
+  $('rl-empty').style.display = 'none';
+
+  $('rl-list').innerHTML = list.map(item => {
+    const domain = (() => { try { return new URL(item.url).hostname; } catch { return item.url; } })();
+    const thumb  = item.image
+      ? `<img class="rl-thumb" src="${escapeHtml(item.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`
+      : `<div class="rl-thumb rl-thumb-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg></div>`;
+
+    return `<div class="rl-item ${item.read ? 'rl-read' : ''}" data-id="${item.id}" data-url="${escapeHtml(item.url)}">
+      <div class="rl-thumb-wrap" role="button" tabindex="0" aria-label="Read article">
+        ${thumb}
+      </div>
+      <div class="rl-content">
+        <div class="rl-title" role="button" tabindex="0">${escapeHtml(item.title)}</div>
+        <div class="rl-summary ${item.read ? '' : 'rl-unread'}">${escapeHtml(item.summary || '')}</div>
+        <div class="rl-meta">
+          <span class="rl-domain">${escapeHtml(domain)}</span>
+          <span class="rl-date">${item.dateAdded ? formatDate(item.dateAdded) : ''}</span>
+        </div>
+      </div>
+      <button class="rl-remove-btn" data-id="${item.id}" title="Remove" aria-label="Remove">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>`;
+  }).join('');
+
+  // Click handlers — open article and mark as read
+  $('rl-list').querySelectorAll('.rl-thumb-wrap, .rl-title').forEach(el => {
+    el.addEventListener('click', async () => {
+      const item  = el.closest('.rl-item');
+      const id    = parseInt(item.dataset.id, 10);
+      const url   = item.dataset.url;
+      // Mark as read (fire-and-forget)
+      fetch(`/api/reading-list/${id}`, { method: 'PATCH' }).then(() => {
+        item.classList.add('rl-read');
+        item.querySelector('.rl-summary')?.classList.remove('rl-unread');
+        updateRLCount();
+      });
+      $('url-input').value = url;
+      loadUrl(url);
+    });
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') el.click(); });
+  });
+
+  // Remove buttons
+  $('rl-list').querySelectorAll('.rl-remove-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
-      const id = btn.dataset.id;
-      await deleteVocabEntry(id);
+      const id = parseInt(btn.dataset.id, 10);
+      await fetch(`/api/reading-list/${id}`, { method: 'DELETE' });
+      btn.closest('.rl-item').remove();
+      // Re-check empty
+      if (!$('rl-list').querySelector('.rl-item')) {
+        $('rl-empty').style.display = 'flex';
+      }
+      updateRLCount();
+      // Update subtitle count
+      const remaining = $('rl-list').querySelectorAll('.rl-item').length;
+      $('rl-subtitle').textContent = remaining
+        ? `${remaining} article${remaining !== 1 ? 's' : ''} saved`
+        : 'Articles saved for later';
     });
   });
 }
 
-function deleteVocabEntry(id) {
-  vocabWrite(vocabRead().filter(v => v.id !== Number(id)));
-  loadVocabulary();
-  updateVocabCount();
-}
-
-/* ===== Clear All Vocabulary ===== */
-$('vocab-clear').addEventListener('click', () => {
-  if (!confirm('Clear all vocabulary entries? This cannot be undone.')) return;
-  vocabWrite([]);
-  loadVocabulary();
-  updateVocabCount();
+$('rl-clear').addEventListener('click', async () => {
+  if (!confirm('Remove all saved articles?')) return;
+  await fetch('/api/reading-list', { method: 'DELETE' });
+  loadReadingList();
+  updateRLCount();
 });
 
-/* ===== Export CSV ===== */
-$('vocab-export').addEventListener('click', () => {
-  const vocab = vocabRead();
-  if (!vocab.length) { alert('No vocabulary to export.'); return; }
-
-    const headers = ['Word', 'Translation', 'Spanish Sentence', 'English Sentence', 'URL', 'Date'];
-    const rows = vocab.map(e => [
-      e.word, e.translation, e.sentence, e.sentenceTranslation, e.url,
-      e.date ? new Date(e.date).toLocaleDateString() : ''
-    ].map(v => `"${String(v || '').replace(/"/g, '""')}"`));
-
-    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `spanish-vocabulary-${new Date().toISOString().slice(0, 10)}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-});
+/* ===== URL parameter: ?url=... adds to Read Later ===== */
+(function handleUrlParam() {
+  const params  = new URLSearchParams(window.location.search);
+  const urlParam = params.get('url');
+  if (!urlParam) return;
+  // Clean the URL bar immediately
+  history.replaceState({}, '', window.location.pathname);
+  addToReadingList(urlParam).then(() => {
+    loadReadingList();
+    showView('reading-list');
+  });
+})();
 
 /* ===== Init ===== */
 updateVocabCount();
+updateRLCount();

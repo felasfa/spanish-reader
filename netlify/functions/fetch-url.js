@@ -7,64 +7,123 @@ function resolveUrl(href, base) {
 const INTERACTION_SCRIPT = `
 <style>
   ::selection { background: rgba(198,40,40,.2); }
+  #_sr_menu {
+    display: none; position: fixed; background: #fff;
+    border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,.22);
+    z-index: 2147483647; overflow: hidden; min-width: 195px;
+    border: 1px solid rgba(0,0,0,.09);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  ._sr_mi {
+    padding: 13px 16px; cursor: pointer; font-size: 15px;
+    display: flex; align-items: center; gap: 10px; color: #1d1d1f;
+    user-select: none; -webkit-user-select: none;
+  }
+  ._sr_mi:active { background: #f0f0f0; }
+  ._sr_mi + ._sr_mi { border-top: 1px solid #f0f0f0; }
 </style>
+<div id="_sr_menu">
+  <div class="_sr_mi" id="_sr_open">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    Open article
+  </div>
+  <div class="_sr_mi" id="_sr_save">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+    Save for Later
+  </div>
+</div>
 <script>
 (function () {
-  // ---- Sentence context ----
+  // ── Context menu ──────────────────────────────────────────────
+  window._srLongPress = false;
+  var menu   = document.getElementById('_sr_menu');
+  var curHref = null;
+
+  function showMenu(href, x, y) {
+    curHref = href;
+    var mw = 200, mh = 110;
+    menu.style.left = Math.min(x, window.innerWidth  - mw - 12) + 'px';
+    menu.style.top  = Math.min(y, window.innerHeight - mh - 12) + 'px';
+    menu.style.display = 'block';
+  }
+
+  function hideMenu() { menu.style.display = 'none'; curHref = null; }
+
+  document.getElementById('_sr_open').addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (curHref) window.parent.postMessage({ type: 'link-clicked',   href: curHref }, '*');
+    hideMenu();
+  });
+  document.getElementById('_sr_save').addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (curHref) window.parent.postMessage({ type: 'save-for-later', href: curHref }, '*');
+    hideMenu();
+  });
+
+  // Dismiss on outside click/touch
+  document.addEventListener('click',     function (e) { if (!e.target.closest('#_sr_menu')) hideMenu(); });
+  document.addEventListener('touchstart', function (e) { if (!e.target.closest('#_sr_menu')) hideMenu(); }, { passive: true });
+
+  // Desktop right-click on a link
+  document.addEventListener('contextmenu', function (e) {
+    var a = e.target.closest('a[data-href]');
+    if (!a) return;
+    e.preventDefault();
+    showMenu(a.getAttribute('data-href'), e.clientX, e.clientY);
+  });
+
+  // Mobile long-press on a link (600 ms)
+  var pressTimer;
+  document.addEventListener('touchstart', function (e) {
+    var a = e.target.closest('a[data-href]');
+    if (!a) return;
+    var href = a.getAttribute('data-href');
+    var x = e.touches[0].clientX, y = e.touches[0].clientY;
+    clearTimeout(pressTimer);
+    pressTimer = setTimeout(function () {
+      window._srLongPress = true;   // suppress the tap-onclick below
+      showMenu(href, x, y);
+    }, 600);
+  }, false);
+
+  document.addEventListener('touchmove', function () { clearTimeout(pressTimer); }, { passive: true });
+  document.addEventListener('touchend',  function () { clearTimeout(pressTimer); }, false);
+
+  // ── Text selection ────────────────────────────────────────────
   function getSentence(selectionText, container) {
-    let text = '';
-    const walker = document.createTreeWalker(
+    var text = '';
+    var walker = document.createTreeWalker(
       container.closest('p,li,td,h1,h2,h3,h4,h5,h6,article,blockquote,section') || container,
       NodeFilter.SHOW_TEXT
     );
-    let n;
+    var n;
     while ((n = walker.nextNode())) text += n.textContent;
     if (!text) text = container.innerText || container.textContent || selectionText;
-    const sentences = text.match(/[^.!?¡¿\\n]+[.!?\\n]*/g) || [];
-    for (const s of sentences) {
-      if (s.includes(selectionText)) return s.trim();
+    var sentences = text.match(/[^.!?¡¿\\n]+[.!?\\n]*/g) || [];
+    for (var i = 0; i < sentences.length; i++) {
+      if (sentences[i].includes(selectionText)) return sentences[i].trim();
     }
     return text.trim().slice(0, 300);
   }
 
   function sendSelection() {
-    const sel = window.getSelection();
+    var sel = window.getSelection();
     if (!sel || sel.isCollapsed) return;
-    const word = sel.toString().trim();
+    var word = sel.toString().trim();
     if (!word) return;
-    const range = sel.getRangeAt(0);
-    let container = range.commonAncestorContainer;
+    var range = sel.getRangeAt(0);
+    var container = range.commonAncestorContainer;
     if (container.nodeType === 3) container = container.parentNode;
-    const sentence = getSentence(word, container);
-    window.parent.postMessage({ type: 'word-selected', word, sentence }, '*');
+    window.parent.postMessage({ type: 'word-selected', word: word, sentence: getSentence(word, container) }, '*');
   }
 
-  // Desktop: fire on mouseup
-  document.addEventListener('mouseup', function () {
-    setTimeout(sendSelection, 20);
-  });
+  document.addEventListener('mouseup', function () { setTimeout(sendSelection, 20); });
 
-  // iOS / mobile: selectionchange fires as the user adjusts handles.
-  // Debounce so we only act once the selection has settled.
   var selTimer;
   document.addEventListener('selectionchange', function () {
     clearTimeout(selTimer);
     selTimer = setTimeout(sendSelection, 600);
   });
-
-  // ---- Link interception ----
-  // The sandbox prevents normal navigation; catch every anchor click
-  // and ask the parent to load it through the reader instead.
-  // (Links are also rewritten server-side with onclick for iOS reliability.)
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href]');
-    if (!a) return;
-    var href = a.getAttribute('data-href') || a.href;
-    if (!href || !href.startsWith('http')) return;
-    e.preventDefault();
-    e.stopPropagation();
-    window.parent.postMessage({ type: 'link-clicked', href: href }, '*');
-  }, true);
 })();
 </script>`;
 
@@ -100,11 +159,9 @@ exports.handler = async (event) => {
     const html = await response.text();
     const $ = cheerio.load(html);
 
-    // Make image src/srcset absolute
     $('img').each((_, el) => {
       const src = $(el).attr('src');
       if (src && !src.startsWith('data:')) $(el).attr('src', resolveUrl(src, url));
-
       const srcset = $(el).attr('srcset');
       if (srcset) {
         $(el).attr('srcset', srcset.split(',').map(part => {
@@ -124,34 +181,32 @@ exports.handler = async (event) => {
       }
     });
 
-    // Make stylesheet hrefs absolute
     $('link[rel="stylesheet"]').each((_, el) => {
       const href = $(el).attr('href');
       if (href) $(el).attr('href', resolveUrl(href, url));
     });
 
-    // Remove scripts (prevent conflicts) and CSP meta tags
     $('script').remove();
     $('meta[http-equiv="Content-Security-Policy"]').remove();
     $('meta[http-equiv="X-Frame-Options"]').remove();
 
-    // Add base tag so remaining relative URLs resolve correctly
     if ($('base').length === 0) {
       $('head').prepend(`<base href="${url}">`);
     }
 
-    // Rewrite all navigational links server-side so iOS onclick fires reliably.
-    // Replaces href with # and stores the absolute target in data-href + onclick.
+    // Rewrite links: store absolute href in data-href; onclick checks _srLongPress
+    // so that a long-press shows the context menu instead of navigating.
     $('a[href]').each((_, el) => {
       const href = $(el).attr('href') || '';
       if (!href || href.startsWith('#') || href.startsWith('javascript:') ||
           href.startsWith('mailto:') || href.startsWith('tel:')) return;
       const absolute = resolveUrl(href, url);
       if (!absolute.startsWith('http')) return;
-      const escaped = absolute.replace(/'/g, '%27');
+      const esc = absolute.replace(/'/g, '%27');
       $(el).attr('href', '#');
       $(el).attr('data-href', absolute);
-      $(el).attr('onclick', `event.preventDefault();window.parent.postMessage({type:'link-clicked',href:'${escaped}'},'*');return false;`);
+      // If _srLongPress is set, the context menu is already visible — skip navigation
+      $(el).attr('onclick', `event.preventDefault();if(!window._srLongPress){window.parent.postMessage({type:'link-clicked',href:'${esc}'},'*');}window._srLongPress=false;return false;`);
     });
 
     $('body').append(INTERACTION_SCRIPT);

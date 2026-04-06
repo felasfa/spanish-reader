@@ -27,6 +27,16 @@
   to   = "/.netlify/functions/vocabulary"
   status = 200
 
+[[redirects]]
+  from = "/api/reading-list"
+  to   = "/.netlify/functions/reading-list"
+  status = 200
+
+[[redirects]]
+  from = "/api/reading-list/*"
+  to   = "/.netlify/functions/reading-list"
+  status = 200
+
 # SPA fallback
 [[redirects]]
   from = "/*"
