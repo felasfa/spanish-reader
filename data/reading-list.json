@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "id": 1775618220929,
+    "url": "https://t.newsletter.elpais.com/r/?id=hfb281b9c,cfd8aa4,53f1688&e=cDE9JTQwSWx3JTJCTFY5OXZ2SHdmY0FadFM0Sm54RXRUUWFyaFJFMDV5QnI1JTJCcW01U1klM0Q&s=3JM_MBpd_Kbwuwr5rbzx_k3MBcCcw6GZw-iuIAhM5-8",
+    "title": "La newsletter de Kiko Llaneras",
+    "image": "",
+    "summary": "Los ricos e pobres guardan su dinero en lugares muy diferentes, revelados en ocho gráficos informativos.",
+    "dateAdded": "2026-04-08T03:17:00.929Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1775618220930,
+    "url": "https://t.newsletter.elpais.com/r/?id=hfb41ec9e,cfd94f4,53f2312&e=cDE9JTQwOUg0cEtBUGUlMkIwZzFiSzFZVFZqNUQ1R3drckhybHppMm80VXhwaTVHQzljJTNE&s=qjwmO-ELtEGAb-IW5drxvh7hybPhs4nNiIAR3lkvc14",
+    "title": "El boletín de Materia",
+    "image": "",
+    "summary": "Un vehículo tripulado con forma de bumerán será enviado hacia la Luna en una misión espacial innovadora.",
+    "dateAdded": "2026-04-08T03:17:00.929Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1775618220931,
+    "url": "https://t.newsletter.elpais.com/r/?id=hfb6d4b27,cfdb7e0,53f63fe&e=cDE9JTQwRFZxdjFsSCUyQmRWWnVWNFZRMmwzQ3hIVXBVWW0yMWc4dHAlMkJiY09VazZmbXMlM0Q&s=E0Zu4paq0I5YGrtlJWwmoACApp3hWgpTeG96P-hmORw",
+    "title": "EL PAÍS de la mañana",
+    "image": "",
+    "summary": "Trump lleva la política estadounidense hacia extremos delirantes, según análisis de El País.",
+    "dateAdded": "2026-04-08T03:17:00.929Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1775618220932,
+    "url": "https://nl.nytimes.com/f/a/CvCXpNXfxvH9E6BWXA0Eew~~/AAAAARA~/nsOLYhRyVEhB-ASNnqS8ptywjZ0B1QaHCIsWzEAph54OvutVy0elG6D1-5InCisLFxKm3rNHAl-sqJvg8d8vepO4lW-FvSv-f1u4QMrSdOa6X7SpLFp9K9ANIzmwphykYrD806ffhyDg58Ypit0X-Kmehk_ySwDh45pcOQ_p8uGAdv_1W89SufgmdDTGKB-8BZoIQWnzmAk8hWf1Ti6DqM3bvZiaaC4CuwYRSYbb7YBUJszmVPSPblwF48XNfViQqBS3csAFKeTx-5iqvVDrlP6YmYcCrQCRsFp1wqPCCjks55pnf3AmPxp1XWdH83gPMn8EQ8UOXzEERPyRb9skuCuh_-GNNwKvldUwXKQ9hKE~",
+    "title": "The World: Trump, el negociador de deportaciones",
+    "image": "",
+    "summary": "Trump planea negociar deportaciones masivas mediante políticas migratorias más restrictivas y acuerdos internacionales.",
+    "dateAdded": "2026-04-08T03:17:00.929Z",
+    "read": false,
+    "source": "gmail"
+  }
+]
