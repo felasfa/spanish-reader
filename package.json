@@ -8,6 +8,8 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "@netlify/blobs": "^8.0.0",
-    "cheerio": "^1.0.0"
+    "cheerio": "^1.0.0",
+    "imapflow": "^1.0.0",
+    "mailparser": "^3.7.0"
   }
 }

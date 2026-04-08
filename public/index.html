@@ -145,13 +145,22 @@
           <h2>Read Later</h2>
           <p id="rl-subtitle">Articles saved for later</p>
         </div>
-        <button class="btn btn-danger" id="rl-clear">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="3,6 5,6 21,6"/>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-          </svg>
-          Clear All
-        </button>
+        <div class="rl-header-actions">
+          <button class="btn btn-outline" id="rl-gmail-import">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Check Gmail
+          </button>
+          <button class="btn btn-danger" id="rl-clear">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3,6 5,6 21,6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+            Clear All
+          </button>
+        </div>
       </div>
 
       <div id="rl-loading" class="rl-loading" style="display:none">

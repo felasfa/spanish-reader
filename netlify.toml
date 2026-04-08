@@ -6,6 +6,9 @@
   node_bundler = "esbuild"
   included_files = []
 
+[functions."gmail-import"]
+  timeout = 26
+
 # Route /api/* to the corresponding Netlify Function
 [[redirects]]
   from = "/api/fetch"
@@ -35,6 +38,11 @@
 [[redirects]]
   from = "/api/reading-list/*"
   to   = "/.netlify/functions/reading-list"
+  status = 200
+
+[[redirects]]
+  from = "/api/gmail-import"
+  to   = "/.netlify/functions/gmail-import"
   status = 200
 
 # SPA fallback
