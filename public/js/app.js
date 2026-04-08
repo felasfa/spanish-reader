@@ -4,6 +4,7 @@ const state = {
   previousView: 'url',
   currentUrl: '',
   pendingTranslation: null,
+  readerHistory: [],   // URL stack for back-navigation within reader
 };
 
 /* ===== Helpers ===== */
@@ -16,7 +17,13 @@ function showView(name) {
   state.currentView = name;
 }
 
-$('reader-back').addEventListener('click', () => showView(state.previousView || 'url'));
+$('reader-back').addEventListener('click', () => {
+  if (state.readerHistory.length > 0) {
+    loadUrl(state.readerHistory.pop(), false);
+  } else {
+    showView(state.previousView || 'url');
+  }
+});
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -67,7 +74,7 @@ document.querySelectorAll('.suggestion-chip').forEach(chip => {
 });
 
 /* ===== URL Submission ===== */
-async function loadUrl(url) {
+async function loadUrl(url, addToHistory = true) {
   if (!url) return;
   hideError($('url-error'));
   $('url-read-now').disabled = true;
@@ -77,6 +84,13 @@ async function loadUrl(url) {
     const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Failed to load page');
+
+    // Track navigation history so back works correctly
+    if (state.currentView === 'reader') {
+      if (addToHistory && state.currentUrl) state.readerHistory.push(state.currentUrl);
+    } else {
+      state.readerHistory = []; // fresh entry into reader, clear old history
+    }
 
     state.currentUrl = url;
     $('reader-url-display').textContent = url;
