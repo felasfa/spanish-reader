@@ -71,12 +71,15 @@ async function ghWrite(path, data, sha, message) {
 // ─── Spanish detection ────────────────────────────────────────────────────────
 // Accented/special chars are a strong signal; fall back to keyword frequency
 function isSpanishContent(text) {
+  // Strong signal: accented chars or inverted punctuation
   if (/[ñáéíóúüÁÉÍÓÚÜ¿¡]/.test(text)) return true;
   const lower = text.toLowerCase();
+  // Spanish words that rarely appear as standalone words in English text
   const keywords = [
-    'del','las','los','más','también','cuando','hace','están','hay','muy',
-    'desde','según','aunque','después','antes','nuevo','nueva','años','hoy',
-    'mundo','país','sobre','entre','como','para','pero','este','esta',
+    'el', 'la', 'de', 'un', 'una', 'con', 'que', 'por',    // articles / prepositions
+    'del', 'las', 'los', 'hay', 'muy', 'como', 'para', 'pero', 'este', 'esta',
+    'sobre', 'entre', 'cuando', 'mundo', 'hace', 'nuevo', 'nueva',
+    'noticias', 'semana', 'edición', 'gobierno', 'internacional', // common in newsletters
   ];
   return keywords.filter(w => new RegExp(`\\b${w}\\b`).test(lower)).length >= 2;
 }
@@ -144,7 +147,7 @@ async function getSummary(meta, emailSubject) {
       max_tokens: 80,
       messages: [{
         role: 'user',
-        content: `One English sentence (max 20 words) summarising this Spanish newsletter:\nTitle: "${emailSubject}"${meta?.title && meta.title !== emailSubject ? '\nArticle: "' + meta.title + '"' : ''}\nReply with only the sentence.`,
+        content: `Escribe una frase en español (máximo 20 palabras) que resuma este boletín:\nTítulo: "${emailSubject}"${meta?.title && meta.title !== emailSubject ? '\nArtículo: "' + meta.title + '"' : ''}\nResponde solo con la frase.`,
       }],
     });
     return msg.content[0].text.trim();

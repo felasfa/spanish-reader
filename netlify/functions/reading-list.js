@@ -117,7 +117,7 @@ async function getSummary(meta, url) {
     max_tokens: 80,
     messages: [{
       role: 'user',
-      content: `Write one English sentence (max 20 words) summarising this Spanish article.\nTitle: "${meta.title}"${meta.description ? '\nDescription: "' + meta.description + '"' : ''}\nReply with only the summary sentence.`,
+      content: `Escribe una frase en español (máximo 20 palabras) que resuma este artículo.\nTítulo: "${meta.title}"${meta.description ? '\nDescripción: "' + meta.description + '"' : ''}\nResponde solo con la frase.`,
     }],
   });
   return msg.content[0].text.trim();
