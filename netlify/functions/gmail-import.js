@@ -155,7 +155,9 @@ async function getSummary(meta, emailSubject) {
 
 // ─── Handler ─────────────────────────────────────────────────────────────────
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
+  // Accept POST (manual "Check Gmail" button) or scheduled invocation (GET/no method)
+  const method = event.httpMethod || 'GET';
+  if (method !== 'POST' && method !== 'GET') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
@@ -177,25 +179,27 @@ exports.handler = async (event) => {
     const lock = await imap.getMailboxLock('INBOX');
 
     try {
-      // ── Step 1: get UIDs of recent messages ──────────────────────────────
+      // ── Step 1: count inbox messages ─────────────────────────────────────
       const status = await imap.status('INBOX', { messages: true });
       const total  = status.messages;
       if (total === 0) return ok({ imported: 0, message: 'Inbox is empty' });
 
-      const start = Math.max(1, total - 149); // last 150 messages
+      // Scan all messages (inbox is small; cap at 200 to be safe)
+      const start = Math.max(1, total - 199);
 
-      // ── Step 2: fetch lightweight headers to find Spanish newsletters ─────
+      // ── Step 2: fetch headers as Buffer — check for newsletter markers ────
       const candidates = [];
       for await (const msg of imap.fetch(`${start}:${total}`, {
         envelope: true,
-        headers: ['list-unsubscribe', 'list-id'],
+        headers: true,   // returns Buffer — parse with string search
         uid: true,
       })) {
-        // Must look like a newsletter (has List-Unsubscribe or List-Id header)
-        const isNewsletter = msg.headers.has('list-unsubscribe') || msg.headers.has('list-id');
+        // msg.headers is a Buffer; convert to lowercase string for searching
+        const rawHeaders = msg.headers ? msg.headers.toString('utf8').toLowerCase() : '';
+        const isNewsletter = rawHeaders.includes('list-unsubscribe:') || rawHeaders.includes('list-id:');
         if (!isNewsletter) continue;
 
-        // Subject + sender name must suggest Spanish content
+        // Subject + sender must suggest Spanish content
         const fromName    = msg.envelope.from?.[0]?.name || '';
         const fromAddress = msg.envelope.from?.[0]?.address || '';
         const subject     = msg.envelope.subject || '';
@@ -207,7 +211,7 @@ exports.handler = async (event) => {
       }
 
       if (!candidates.length) {
-        return ok({ imported: 0, message: 'No Spanish newsletters found in recent inbox' });
+        return ok({ imported: 0, message: 'No Spanish newsletters found in inbox' });
       }
 
       // ── Step 3: fetch full source for candidates ──────────────────────────
