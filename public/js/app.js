@@ -1,6 +1,7 @@
 /* ===== State ===== */
 const state = {
   currentView: 'url',
+  previousView: 'url',
   currentUrl: '',
   pendingTranslation: null,
 };
@@ -9,10 +10,13 @@ const state = {
 function $(id) { return document.getElementById(id); }
 
 function showView(name) {
+  if (state.currentView !== name) state.previousView = state.currentView;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   $(`view-${name}`).classList.add('active');
   state.currentView = name;
 }
+
+$('reader-back').addEventListener('click', () => showView(state.previousView || 'url'));
 
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });

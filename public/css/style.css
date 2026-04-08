@@ -268,22 +268,37 @@ html, body {
 }
 
 /* ===== Reader View ===== */
+/* NOTE: do NOT set display here — the ID selector would override .view { display:none }
+   and keep the iframe visible on every other view. Use .active instead. */
 #view-reader {
-  display: flex;
   flex-direction: column;
-  /* 100svh = dynamic viewport (accounts for iOS Safari address bar); fall back to 100vh */
   height: calc(100vh - var(--navbar-h));
   height: calc(100svh - var(--navbar-h));
 }
+#view-reader.active { display: flex; }  /* overrides .view.active { display:block } */
+
+.reader-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.reader-back-btn:hover { background: var(--surface-2); color: var(--primary); }
 
 .reader-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px;
+  padding: 6px 12px;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  gap: 16px;
+  gap: 10px;
   flex-shrink: 0;
 }
 

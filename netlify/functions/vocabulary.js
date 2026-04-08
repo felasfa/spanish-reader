@@ -1,9 +1,23 @@
 // ─── GitHub helpers ───────────────────────────────────────────────────────────
-const GH_OWNER  = process.env.GITHUB_OWNER || 'felasfa';
-const GH_REPO   = process.env.GITHUB_REPO  || 'spanish-reader';
-const GH_BRANCH = process.env.GITHUB_DATA_BRANCH || process.env.HEAD || process.env.BRANCH || 'main';
-const GH_TOKEN  = process.env.GITHUB_TOKEN || process.env.GITHUB_API_KEY || process.env.GH_TOKEN;
-const GH_BASE   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents`;
+const GH_OWNER = process.env.GITHUB_OWNER || 'felasfa';
+const GH_REPO  = process.env.GITHUB_REPO  || 'spanish-reader';
+const GH_TOKEN = process.env.GITHUB_TOKEN || process.env.GITHUB_API_KEY || process.env.GH_TOKEN;
+const GH_BASE  = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents`;
+
+let _branch = null;
+async function getDataBranch() {
+  if (_branch) return _branch;
+  if (process.env.GITHUB_DATA_BRANCH) { _branch = process.env.GITHUB_DATA_BRANCH; return _branch; }
+
+  const candidates = [process.env.BRANCH, process.env.HEAD].filter(Boolean);
+  for (const b of candidates) {
+    const r = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/branches/${encodeURIComponent(b)}`, { headers: ghHeaders() });
+    if (r.ok) { _branch = b; return _branch; }
+  }
+  const r = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/branches`, { headers: ghHeaders() });
+  if (r.ok) { const bs = await r.json(); if (bs.length) { _branch = bs[0].name; return _branch; } }
+  _branch = 'main'; return _branch;
+}
 
 function ghHeaders() {
   return {
@@ -16,7 +30,8 @@ function ghHeaders() {
 }
 
 async function ghRead(path) {
-  const res = await fetch(`${GH_BASE}/${path}?ref=${GH_BRANCH}`, { headers: ghHeaders() });
+  const branch = await getDataBranch();
+  const res = await fetch(`${GH_BASE}/${path}?ref=${branch}`, { headers: ghHeaders() });
   if (res.status === 404) return { data: [], sha: null };
   if (!res.ok) throw new Error(`GitHub read ${res.status}: ${await res.text()}`);
   const file = await res.json();
@@ -27,10 +42,11 @@ async function ghRead(path) {
 }
 
 async function ghWrite(path, data, sha, message) {
+  const branch = await getDataBranch();
   const body = {
     message,
     content: Buffer.from(JSON.stringify(data, null, 2)).toString('base64'),
-    branch: GH_BRANCH,
+    branch,
     ...(sha ? { sha } : {}),
   };
   const res = await fetch(`${GH_BASE}/${path}`, {
