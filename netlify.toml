@@ -8,7 +8,7 @@
 
 [functions."gmail-import"]
   timeout = 26
-  schedule = "0 10 * * *"
+  schedule = "0 8 * * *"
 
 # Route /api/* to the corresponding Netlify Function
 [[redirects]]

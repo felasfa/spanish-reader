@@ -190,6 +190,34 @@ exports.handler = async (event) => {
     $('meta[http-equiv="Content-Security-Policy"]').remove();
     $('meta[http-equiv="X-Frame-Options"]').remove();
 
+    // ── Newsletter / email HTML cleanup ───────────────────────────────────────
+    // Remove hidden elements (email clients hide these; browsers show them as blank space)
+    $('[style]').each((_, el) => {
+      const style = $(el).attr('style') || '';
+      if (/display\s*:\s*none|visibility\s*:\s*hidden|max-height\s*:\s*0|overflow\s*:\s*hidden[\s;]/.test(style)) {
+        $(el).remove();
+      }
+    });
+    // Remove tracking pixel images (1×1 or 0×0)
+    $('img').each((_, el) => {
+      const w = parseInt($(el).attr('width') || '99', 10);
+      const h = parseInt($(el).attr('height') || '99', 10);
+      if (w <= 1 || h <= 1) $(el).remove();
+    });
+    // Collapse empty structural elements that create vertical blank space
+    $('div, td, th, section, footer').each((_, el) => {
+      if ($(el).text().trim() === '' && $(el).find('img').length === 0) {
+        $(el).remove();
+      }
+    });
+    // Reset newsletter wrapper heights/padding so content flows naturally
+    $('head').append(`<style>
+      html, body { height: auto !important; min-height: 0 !important; }
+      body { padding: 0 !important; margin: 0 !important; }
+      table { height: auto !important; }
+      td, th { height: auto !important; }
+    </style>`);
+
     if ($('base').length === 0) {
       $('head').prepend(`<base href="${url}">`);
     }
