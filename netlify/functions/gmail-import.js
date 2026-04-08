@@ -261,11 +261,15 @@ exports.handler = async (event) => {
       const existingUrls  = new Set(data.map(i => i.url));
 
       const newEntries   = [];
-      const importedUids = [];
+      const toArchive    = []; // UIDs of all newsletters to archive (new + already imported)
 
       for (let i = 0; i < enriched.length; i++) {
         const item = enriched[i];
-        if (existingUrls.has(item.url)) continue;
+        if (existingUrls.has(item.url)) {
+          // Already in reading list from a previous import — just archive it
+          toArchive.push(item.uid);
+          continue;
+        }
         newEntries.push({
           id:        Date.now() + i,
           url:       item.url,
@@ -276,7 +280,7 @@ exports.handler = async (event) => {
           read:      false,
           source:    'gmail',
         });
-        importedUids.push(item.uid);
+        toArchive.push(item.uid);
         existingUrls.add(item.url); // prevent self-duplicates within this batch
       }
 
@@ -287,13 +291,21 @@ exports.handler = async (event) => {
           sha,
           `Import ${newEntries.length} newsletter(s) from Gmail`
         );
-        // Mark imported emails as read
-        await imap.messageFlagsAdd(importedUids, ['\\Seen'], { uid: true });
+      }
+
+      // Archive all matched newsletters (mark read + move out of inbox)
+      if (toArchive.length > 0) {
+        await imap.messageFlagsAdd(toArchive, ['\\Seen'], { uid: true });
+        try {
+          await imap.messageMove(toArchive, '[Gmail]/All Mail', { uid: true });
+        } catch (e) {
+          console.warn('Archive move failed (non-fatal):', e.message);
+        }
       }
 
       return ok({
         imported: newEntries.length,
-        skipped:  enriched.length - newEntries.length,
+        archived: toArchive.length,
       });
 
     } finally {

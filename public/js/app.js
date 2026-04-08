@@ -451,12 +451,14 @@ $('rl-gmail-import').addEventListener('click', async () => {
     const res  = await fetch('/api/gmail-import', { method: 'POST' });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Import failed');
-    if (data.imported === 0) {
+    if (data.imported === 0 && !data.archived) {
       showToast(data.message || 'No new Spanish newsletters found', 'info');
     } else {
-      showToast(`Imported ${data.imported} newsletter${data.imported !== 1 ? 's' : ''}!`, 'success');
-      loadReadingList();
-      updateRLCount();
+      const parts = [];
+      if (data.imported > 0) parts.push(`Imported ${data.imported} newsletter${data.imported !== 1 ? 's' : ''}`);
+      if (data.archived > 0) parts.push(`archived ${data.archived}`);
+      showToast(parts.join(', ') + '!', 'success');
+      if (data.imported > 0) { loadReadingList(); updateRLCount(); }
     }
   } catch (e) {
     showToast(`Gmail import failed: ${e.message}`, 'error');
