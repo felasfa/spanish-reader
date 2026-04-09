@@ -303,23 +303,14 @@ function renderVocabulary(vocab) {
     btn.addEventListener('click', () => deleteVocabEntry(btn.dataset.id));
   });
 
-  // Watch new rows: un-highlight as they scroll into view; clear badge when all seen
-  const newRows = Array.from($('vocab-tbody').querySelectorAll('.vocab-new'));
-  if (newRows.length === 0) return;
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.remove('vocab-new');
-      observer.unobserve(entry.target);
-      if (!$('vocab-tbody').querySelector('.vocab-new')) {
-        localStorage.setItem('vocabLastViewed', new Date().toISOString());
-        $('nav-vocab-count').style.display = 'none';
-      }
-    });
-  }, { threshold: 0.6 });
-
-  newRows.forEach(row => observer.observe(row));
+  // Clear highlights and badge 2 seconds after the list opens
+  if ($('vocab-tbody').querySelector('.vocab-new')) {
+    setTimeout(() => {
+      $('vocab-tbody').querySelectorAll('.vocab-new').forEach(r => r.classList.remove('vocab-new'));
+      localStorage.setItem('vocabLastViewed', new Date().toISOString());
+      $('nav-vocab-count').style.display = 'none';
+    }, 2000);
+  }
 }
 
 async function deleteVocabEntry(id) {

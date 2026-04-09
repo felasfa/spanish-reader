@@ -608,8 +608,8 @@ html, body {
 .vocab-source-date a:hover { text-decoration: underline; }
 .vocab-date-text { color: var(--text-muted); font-size: 11px; }
 
-tr.vocab-new td { background: rgba(198,40,40,.07); }
-tr.vocab-new { transition: background 0.4s; }
+tr.vocab-new td { background: rgba(198,40,40,.07); transition: background 0.8s ease; }
+tr td { transition: background 0.8s ease; }
 
 .vocab-delete-btn {
   background: none;
