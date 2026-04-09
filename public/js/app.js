@@ -17,6 +17,26 @@ function showView(name) {
   state.currentView = name;
 }
 
+$('reader-share').addEventListener('click', async () => {
+  const url = state.currentUrl;
+  if (!url) return;
+  if (navigator.share) {
+    try {
+      await navigator.share({ url, title: $('reader-url-display').textContent || url });
+    } catch (e) {
+      if (e.name !== 'AbortError') showToast('Share failed', 'error');
+    }
+  } else {
+    // Fallback: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(url);
+      showToast('Link copied!', 'success');
+    } catch {
+      showToast('Copy not supported', 'error');
+    }
+  }
+});
+
 $('reader-back').addEventListener('click', () => {
   if (state.readerHistory.length > 0) {
     loadUrl(state.readerHistory.pop(), false);
