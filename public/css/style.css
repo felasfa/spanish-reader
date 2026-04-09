@@ -595,22 +595,21 @@ html, body {
 .vocab-word { font-weight: 700; color: var(--primary); font-size: 15px; }
 .vocab-translation { font-weight: 600; color: var(--success); }
 .vocab-sentence-es { color: var(--text-2); max-width: 200px; }
-.vocab-sentence-en { color: var(--text-muted); font-style: italic; max-width: 200px; }
-
-.vocab-source a {
+.vocab-source-date a {
   color: var(--primary);
   text-decoration: none;
   font-size: 12px;
-  word-break: break-all;
-  max-width: 120px;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 110px;
 }
+.vocab-source-date a:hover { text-decoration: underline; }
+.vocab-date-text { color: var(--text-muted); font-size: 11px; }
 
-.vocab-source a:hover { text-decoration: underline; }
-.vocab-date { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
+tr.vocab-new td { background: rgba(198,40,40,.07); }
+tr.vocab-new { transition: background 0.4s; }
 
 .vocab-delete-btn {
   background: none;

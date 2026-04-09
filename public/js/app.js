@@ -243,8 +243,9 @@ async function updateVocabCount() {
   try {
     const res   = await fetch('/api/vocabulary');
     const vocab = await res.json();
-    const badge = $('nav-vocab-count');
-    badge.style.display = vocab.length > 0 ? 'inline-block' : 'none';
+    const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
+    const hasNew = vocab.some(e => e.date && e.date > lastViewed);
+    $('nav-vocab-count').style.display = hasNew ? 'inline-block' : 'none';
   } catch { /* ignore */ }
 }
 
@@ -276,15 +277,19 @@ function renderVocabulary(vocab) {
   $('vocab-empty').style.display = 'none';
   $('vocab-table-wrap').style.display = 'block';
 
+  const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
+
   $('vocab-tbody').innerHTML = vocab.map(e => {
-    const domain = e.url ? (() => { try { return new URL(e.url).hostname; } catch { return e.url; } })() : '—';
-    return `<tr>
+    const domain  = e.url ? (() => { try { return new URL(e.url).hostname; } catch { return e.url; } })() : null;
+    const isNew   = e.date && e.date > lastViewed;
+    return `<tr class="${isNew ? 'vocab-new' : ''}">
       <td><span class="vocab-word">${escapeHtml(e.word)}</span></td>
       <td><span class="vocab-translation">${escapeHtml(e.translation || '—')}</span></td>
       <td><span class="vocab-sentence-es">${escapeHtml(e.sentence || '—')}</span></td>
-      <td><span class="vocab-sentence-en">${escapeHtml(e.sentenceTranslation || '—')}</span></td>
-      <td class="vocab-source">${e.url ? `<a href="${escapeHtml(e.url)}" target="_blank" rel="noopener" title="${escapeHtml(e.url)}">${escapeHtml(domain)}</a>` : '—'}</td>
-      <td class="vocab-date">${e.date ? formatDate(e.date) : '—'}</td>
+      <td class="vocab-source-date">
+        ${domain ? `<a href="${escapeHtml(e.url)}" target="_blank" rel="noopener">${escapeHtml(domain)}</a>` : '—'}
+        ${e.date ? `<br><span class="vocab-date-text">${formatDate(e.date)}</span>` : ''}
+      </td>
       <td><button class="vocab-delete-btn" data-id="${e.id}" title="Delete" aria-label="Delete">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="3,6 5,6 21,6"/>
@@ -297,6 +302,24 @@ function renderVocabulary(vocab) {
   $('vocab-tbody').querySelectorAll('.vocab-delete-btn').forEach(btn => {
     btn.addEventListener('click', () => deleteVocabEntry(btn.dataset.id));
   });
+
+  // Watch new rows: un-highlight as they scroll into view; clear badge when all seen
+  const newRows = Array.from($('vocab-tbody').querySelectorAll('.vocab-new'));
+  if (newRows.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.remove('vocab-new');
+      observer.unobserve(entry.target);
+      if (!$('vocab-tbody').querySelector('.vocab-new')) {
+        localStorage.setItem('vocabLastViewed', new Date().toISOString());
+        $('nav-vocab-count').style.display = 'none';
+      }
+    });
+  }, { threshold: 0.6 });
+
+  newRows.forEach(row => observer.observe(row));
 }
 
 async function deleteVocabEntry(id) {
@@ -418,7 +441,7 @@ function renderReadingList(list) {
   }).join('');
 
   // Click handlers — open article and mark as read
-  $('rl-list').querySelectorAll('.rl-thumb-wrap, .rl-title').forEach(el => {
+  $('rl-list').querySelectorAll('.rl-thumb-wrap, .rl-title, .rl-summary').forEach(el => {
     el.addEventListener('click', async () => {
       const item  = el.closest('.rl-item');
       const id    = parseInt(item.dataset.id, 10);
