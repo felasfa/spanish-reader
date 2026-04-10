@@ -157,21 +157,42 @@ async function getSummary(meta, emailSubject) {
   }
 }
 
-// ─── Find first article link by headline text (long anchor, not a CTA) ───────
-// Works even with tracking URLs like click.nytimes.com — fetchOgImage follows redirects.
-function extractArticleLinkUrl(html) {
+// ─── Find the best article link for image extraction ─────────────────────────
+// Priority 1: link whose anchor text contains keywords from the newsletter subject
+//             (finds the right story even when "Most Read" links appear first)
+// Priority 2: first long anchor text that isn't a CTA
+function extractBestArticleUrl(html, subject) {
   if (!html) return null;
   const $ = cheerio.load(html);
   const skipText = /shop\s*now|buy\s*now|learn\s*more|subscribe|unsubscrib|click\s*here|view\s*(online|in\s*browser)|sign\s*up|manage|privacy|terms|follow\s*us|see\s*all|read\s*more/i;
-  let found = null;
+
+  // Strip "Newsletter Name: " prefix, extract 4+ char keywords
+  const bare = (subject || '').replace(/^[\w\s]+:\s*/, '');
+  const keywords = bare.toLowerCase()
+    .split(/[\s,.:;!?()-]+/)
+    .filter(w => w.length >= 4)
+    .slice(0, 6);
+
+  let titleMatch = null;
+  let firstLong  = null;
+
   $('a[href]').each((_, el) => {
-    if (found) return false;
     const href = $(el).attr('href') || '';
     const text = $(el).text().replace(/\s+/g, ' ').trim();
-    // Headline links have substantial text and aren't call-to-action buttons
-    if (href.startsWith('http') && text.length >= 30 && !skipText.test(text)) found = href;
+    if (!href.startsWith('http') || !text) return;
+
+    // Priority 1 — anchor text contains a keyword from the subject
+    if (!titleMatch && keywords.length && keywords.some(kw => text.toLowerCase().includes(kw))) {
+      titleMatch = href;
+    }
+    // Priority 2 — first long non-CTA anchor text
+    if (!firstLong && text.length >= 30 && !skipText.test(text)) {
+      firstLong = href;
+    }
+    if (titleMatch && firstLong) return false;
   });
-  return found;
+
+  return titleMatch || firstLong || null;
 }
 
 // Fast og:image fetch — follows redirects (handles tracking URLs) with a short timeout
@@ -321,10 +342,10 @@ exports.handler = async (event) => {
             const summary  = await getSummary(meta, c.subject);
             const siteName = meta?.siteName || '';
 
-            // Image: try newsletter page og:image → first article's og:image → email HTML scan
+            // Image: try newsletter page og:image → subject-matched article og:image → email HTML scan
             let image = meta?.image || '';
             if (!image) {
-              const articleUrl = extractArticleLinkUrl(html);
+              const articleUrl = extractBestArticleUrl(html, c.subject);
               if (articleUrl) image = await fetchOgImage(articleUrl);
             }
             if (!image) image = extractEmailImage(html);
