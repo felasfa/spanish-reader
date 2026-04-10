@@ -55,6 +55,14 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+// Strip common newsletter/tracking subdomains so e.g. t.newsletter.elpais.com → elpais.com
+function cleanDomain(hostname) {
+  const prefixes = /^(www|t|m|e|email|go|click|link|track|tracking|news|newsletter|newsletters)\./i;
+  let h = hostname, prev;
+  do { prev = h; h = h.replace(prefixes, ''); } while (h !== prev);
+  return h;
+}
+
 function showError(el, msg) { el.textContent = msg; el.style.display = 'block'; }
 function hideError(el)       { el.style.display = 'none'; }
 
@@ -200,7 +208,8 @@ function showTranslationPopup(word, sentence) {
       if (data.error) throw new Error(data.error);
       $('popup-word-translation').textContent = data.wordTranslation;
       // Render sentence as tappable word chips so user can pick one word to save
-      $('popup-sentence-es').innerHTML = sentence.replace(
+      const sentenceText = sentence || '';
+      $('popup-sentence-es').innerHTML = sentenceText.replace(
         /([\u00C0-\u024F\w]+)/g,
         '<span class="popup-word-chip">$1</span>'
       );
@@ -416,7 +425,7 @@ function renderReadingList(list) {
   $('rl-empty').style.display = 'none';
 
   $('rl-list').innerHTML = list.map(item => {
-    const domain     = (() => { try { return new URL(item.url).hostname; } catch { return item.url; } })();
+    const domain     = (() => { try { return cleanDomain(new URL(item.url).hostname); } catch { return item.url; } })();
     const sourceName = item.siteName || domain;
     const thumb  = item.image
       ? `<img class="rl-thumb" src="${escapeHtml(item.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`

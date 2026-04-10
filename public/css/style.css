@@ -501,11 +501,16 @@ html, body {
   cursor: pointer;
   border-radius: 3px;
   padding: 1px 2px;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--text-muted);
   transition: background 0.15s, color 0.15s;
 }
-.popup-word-chip:hover {
+.popup-word-chip:hover,
+.popup-word-chip:active {
   background: var(--primary);
   color: #fff;
+  text-decoration: none;
 }
 
 .popup-actions {
