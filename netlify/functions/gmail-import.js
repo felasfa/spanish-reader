@@ -158,19 +158,19 @@ async function getSummary(meta, emailSubject) {
 }
 
 // ─── Find the best article link for image extraction ─────────────────────────
-// Priority 1: link whose anchor text contains keywords from the newsletter subject
-//             (finds the right story even when "Most Read" links appear first)
+// Priority 1: link whose anchor text contains ≥2 keywords from the subject
+//             (requires multiple matches to avoid hitting nav/section links)
 // Priority 2: first long anchor text that isn't a CTA
 function extractBestArticleUrl(html, subject) {
   if (!html) return null;
   const $ = cheerio.load(html);
   const skipText = /shop\s*now|buy\s*now|learn\s*more|subscribe|unsubscrib|click\s*here|view\s*(online|in\s*browser)|sign\s*up|manage|privacy|terms|follow\s*us|see\s*all|read\s*more/i;
 
-  // Strip "Newsletter Name: " prefix, extract 4+ char keywords
+  // Strip "Newsletter Name: " prefix; extract 5+ char words (excludes short prepositions)
   const bare = (subject || '').replace(/^[\w\s]+:\s*/, '');
   const keywords = bare.toLowerCase()
     .split(/[\s,.:;!?()-]+/)
-    .filter(w => w.length >= 4)
+    .filter(w => w.length >= 5)
     .slice(0, 6);
 
   let titleMatch = null;
@@ -179,16 +179,21 @@ function extractBestArticleUrl(html, subject) {
   $('a[href]').each((_, el) => {
     const href = $(el).attr('href') || '';
     const text = $(el).text().replace(/\s+/g, ' ').trim();
+    const textLower = text.toLowerCase();
     if (!href.startsWith('http') || !text) return;
 
-    // Priority 1 — anchor text contains a keyword from the subject
-    if (!titleMatch && keywords.length && keywords.some(kw => text.toLowerCase().includes(kw))) {
-      titleMatch = href;
+    // Priority 1: anchor text matches ≥2 subject keywords in a 20+ char link
+    // (single-keyword matches are too ambiguous and hit nav links)
+    if (!titleMatch && keywords.length >= 2 && text.length >= 20) {
+      const matches = keywords.filter(kw => textLower.includes(kw)).length;
+      if (matches >= 2) titleMatch = href;
     }
-    // Priority 2 — first long non-CTA anchor text
+
+    // Priority 2: first long non-CTA anchor text
     if (!firstLong && text.length >= 30 && !skipText.test(text)) {
       firstLong = href;
     }
+
     if (titleMatch && firstLong) return false;
   });
 
