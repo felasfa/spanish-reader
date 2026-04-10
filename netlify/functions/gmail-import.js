@@ -157,6 +157,39 @@ async function getSummary(meta, emailSubject) {
   }
 }
 
+// ─── Find first article link by headline text (long anchor, not a CTA) ───────
+// Works even with tracking URLs like click.nytimes.com — fetchOgImage follows redirects.
+function extractArticleLinkUrl(html) {
+  if (!html) return null;
+  const $ = cheerio.load(html);
+  const skipText = /shop\s*now|buy\s*now|learn\s*more|subscribe|unsubscrib|click\s*here|view\s*(online|in\s*browser)|sign\s*up|manage|privacy|terms|follow\s*us|see\s*all|read\s*more/i;
+  let found = null;
+  $('a[href]').each((_, el) => {
+    if (found) return false;
+    const href = $(el).attr('href') || '';
+    const text = $(el).text().replace(/\s+/g, ' ').trim();
+    // Headline links have substantial text and aren't call-to-action buttons
+    if (href.startsWith('http') && text.length >= 30 && !skipText.test(text)) found = href;
+  });
+  return found;
+}
+
+// Fast og:image fetch — follows redirects (handles tracking URLs) with a short timeout
+async function fetchOgImage(url) {
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; SpanishReader/1.0)' },
+      signal: AbortSignal.timeout(5000),
+      redirect: 'follow',
+    });
+    if (!res.ok) return '';
+    const html = await res.text();
+    const $ = cheerio.load(html);
+    const image = $('meta[property="og:image"]').attr('content') || $('meta[name="og:image"]').attr('content') || '';
+    return image.startsWith('http') ? image : '';
+  } catch { return ''; }
+}
+
 // ─── Extract best editorial image from email HTML ────────────────────────────
 function extractEmailImage(html) {
   if (!html) return '';
@@ -286,8 +319,15 @@ exports.handler = async (event) => {
             const title   = (meta?.title && meta.title.length > 5 && !meta.title.includes(hostname))
               ? meta.title : c.subject;
             const summary  = await getSummary(meta, c.subject);
-            const image    = meta?.image || extractEmailImage(html);
             const siteName = meta?.siteName || '';
+
+            // Image: try newsletter page og:image → first article's og:image → email HTML scan
+            let image = meta?.image || '';
+            if (!image) {
+              const articleUrl = extractArticleLinkUrl(html);
+              if (articleUrl) image = await fetchOgImage(articleUrl);
+            }
+            if (!image) image = extractEmailImage(html);
 
             return { uid: c.uid, url, title, image, siteName, summary };
           } catch (e) {

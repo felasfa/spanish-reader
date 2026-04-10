@@ -195,7 +195,24 @@ window.addEventListener('message', async (event) => {
 /* ===== Translation Popup ===== */
 function showTranslationPopup(word, sentence) {
   const popup = $('translation-popup');
-  $('popup-word').textContent = word;
+
+  // Render multi-word selections as tappable chips so user can pick one word to save
+  const wordEl = $('popup-word');
+  if (word.includes(' ')) {
+    wordEl.innerHTML = word.replace(
+      /([\u00C0-\u024F\w]+)/g,
+      '<span class="popup-word-chip">$1</span>'
+    );
+    wordEl.querySelectorAll('.popup-word-chip').forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showTranslationPopup(chip.textContent, sentence);
+      });
+    });
+  } else {
+    wordEl.textContent = word;
+  }
+
   $('popup-loading').style.display = 'flex';
   $('popup-content').style.display = 'none';
   $('popup-error').style.display = 'none';
@@ -213,18 +230,7 @@ function showTranslationPopup(word, sentence) {
     .then(data => {
       if (data.error) throw new Error(data.error);
       $('popup-word-translation').textContent = data.wordTranslation;
-      // Render sentence as tappable word chips so user can pick one word to save
-      const sentenceText = sentence || '';
-      $('popup-sentence-es').innerHTML = sentenceText.replace(
-        /([\u00C0-\u024F\w]+)/g,
-        '<span class="popup-word-chip">$1</span>'
-      );
-      $('popup-sentence-es').querySelectorAll('.popup-word-chip').forEach(chip => {
-        chip.addEventListener('click', (e) => {
-          e.stopPropagation();
-          showTranslationPopup(chip.textContent, sentence);
-        });
-      });
+      $('popup-sentence-es').textContent = sentence || '';
       $('popup-sentence-en').textContent = data.sentenceTranslation;
       state.pendingTranslation = { word, sentence, wordTranslation: data.wordTranslation, sentenceTranslation: data.sentenceTranslation };
       $('popup-loading').style.display = 'none';

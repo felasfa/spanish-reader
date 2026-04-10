@@ -416,6 +416,9 @@ html, body {
   font-weight: 700;
   color: var(--primary);
   letter-spacing: -0.3px;
+  /* Prevent iOS text-selection mode so chip taps fire as clicks */
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .popup-close {
@@ -484,9 +487,6 @@ html, body {
   background: var(--surface-2);
   border-radius: 6px;
   border-left: 3px solid var(--primary);
-  /* Disable text selection so iOS tap targets the word chip click handler */
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 .popup-sentence-en {
@@ -503,16 +503,17 @@ html, body {
   display: inline;
   cursor: pointer;
   border-radius: 3px;
-  padding: 1px 2px;
+  padding: 1px 3px;
   text-decoration: underline;
   text-decoration-style: dotted;
-  text-decoration-color: var(--text-muted);
-  transition: background 0.15s, color 0.15s;
+  text-decoration-color: currentColor;
+  opacity: 0.85;
+  transition: background 0.1s, opacity 0.1s;
 }
 .popup-word-chip:hover,
 .popup-word-chip:active {
-  background: var(--primary);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.12);
+  opacity: 1;
   text-decoration: none;
 }
 
