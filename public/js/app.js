@@ -7,6 +7,8 @@ const state = {
   readerHistory: [],   // URL stack for back-navigation within reader
 };
 
+let rlUnreadCount = 0; // tracked in memory — no extra API call needed
+
 /* ===== Helpers ===== */
 function $(id) { return document.getElementById(id); }
 
@@ -392,6 +394,7 @@ async function addToReadingList(url) {
       showToast('Already in your Read Later list', 'info');
     } else {
       showToast('Saved to Read Later!', 'success');
+      rlUnreadCount++;
       updateRLCount();
     }
   } catch (e) {
@@ -399,14 +402,8 @@ async function addToReadingList(url) {
   }
 }
 
-async function updateRLCount() {
-  try {
-    const res  = await fetch('/api/reading-list');
-    const list = await res.json();
-    const badge = $('nav-rl-count');
-    const unread = list.filter(i => !i.read).length;
-    badge.style.display = unread > 0 ? 'inline-block' : 'none';
-  } catch { /* ignore */ }
+function updateRLCount() {
+  $('nav-rl-count').style.display = rlUnreadCount > 0 ? 'inline-block' : 'none';
 }
 
 async function loadReadingList() {
@@ -416,6 +413,8 @@ async function loadReadingList() {
   try {
     const res  = await fetch('/api/reading-list');
     const list = await res.json();
+    rlUnreadCount = list.filter(i => !i.read).length;
+    updateRLCount();
     renderReadingList(list);
   } catch (e) {
     console.error('Failed to load reading list', e);
@@ -471,9 +470,12 @@ function renderReadingList(list) {
       const url   = item.dataset.url;
       // Mark as read (fire-and-forget)
       fetch(`/api/reading-list/${id}`, { method: 'PATCH' }).then(() => {
+        if (!item.classList.contains('rl-read')) {
+          rlUnreadCount = Math.max(0, rlUnreadCount - 1);
+          updateRLCount();
+        }
         item.classList.add('rl-read');
         item.querySelector('.rl-summary')?.classList.remove('rl-unread');
-        updateRLCount();
       });
       $('url-input').value = url;
       loadUrl(url);
@@ -484,14 +486,18 @@ function renderReadingList(list) {
   // Remove buttons
   $('rl-list').querySelectorAll('.rl-remove-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
-      const id = parseInt(btn.dataset.id, 10);
+      const id   = parseInt(btn.dataset.id, 10);
+      const item = btn.closest('.rl-item');
+      if (!item.classList.contains('rl-read')) {
+        rlUnreadCount = Math.max(0, rlUnreadCount - 1);
+        updateRLCount();
+      }
       await fetch(`/api/reading-list/${id}`, { method: 'DELETE' });
-      btn.closest('.rl-item').remove();
+      item.remove();
       // Re-check empty
       if (!$('rl-list').querySelector('.rl-item')) {
         $('rl-empty').style.display = 'flex';
       }
-      updateRLCount();
       // Update subtitle count
       const remaining = $('rl-list').querySelectorAll('.rl-item').length;
       $('rl-subtitle').textContent = remaining
@@ -504,11 +510,21 @@ function renderReadingList(list) {
 $('rl-clear').addEventListener('click', async () => {
   if (!confirm('Remove all saved articles?')) return;
   await fetch('/api/reading-list', { method: 'DELETE' });
-  loadReadingList();
+  rlUnreadCount = 0;
   updateRLCount();
+  loadReadingList();
 });
 
 $('rl-gmail-import').addEventListener('click', async () => {
+  const COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
+  const lastCheck  = parseInt(localStorage.getItem('gmailLastCheck') || '0', 10);
+  const elapsed    = Date.now() - lastCheck;
+  if (elapsed < COOLDOWN_MS) {
+    const remaining = Math.ceil((COOLDOWN_MS - elapsed) / 60000);
+    showToast(`Checked recently — try again in ${remaining} min`, 'info');
+    return;
+  }
+
   const btn = $('rl-gmail-import');
   btn.disabled = true;
   btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Checking…`;
@@ -517,6 +533,7 @@ $('rl-gmail-import').addEventListener('click', async () => {
     const res  = await fetch('/api/gmail-import', { method: 'POST' });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Import failed');
+    localStorage.setItem('gmailLastCheck', Date.now().toString());
     if (data.imported === 0 && !data.archived) {
       showToast(data.message || 'No new Spanish newsletters found', 'info');
     } else {
@@ -524,7 +541,11 @@ $('rl-gmail-import').addEventListener('click', async () => {
       if (data.imported > 0) parts.push(`Imported ${data.imported} newsletter${data.imported !== 1 ? 's' : ''}`);
       if (data.archived > 0) parts.push(`archived ${data.archived}`);
       showToast(parts.join(', ') + '!', 'success');
-      if (data.imported > 0) { loadReadingList(); updateRLCount(); }
+      if (data.imported > 0) {
+        rlUnreadCount += data.imported;
+        updateRLCount();
+        loadReadingList();
+      }
     }
   } catch (e) {
     showToast(`Gmail import failed: ${e.message}`, 'error');
@@ -549,4 +570,3 @@ $('rl-gmail-import').addEventListener('click', async () => {
 
 /* ===== Init ===== */
 updateVocabCount();
-updateRLCount();
