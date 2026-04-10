@@ -55,12 +55,18 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-// Strip common newsletter/tracking subdomains so e.g. t.newsletter.elpais.com → elpais.com
+// Strip subdomains: nl.nytimes.com → nytimes.com, t.newsletter.elpais.com → elpais.com
+// Keeps 2 parts normally; keeps 3 for country-code SLDs like bbc.co.uk
 function cleanDomain(hostname) {
-  const prefixes = /^(www|t|m|e|email|go|click|link|track|tracking|news|newsletter|newsletters)\./i;
-  let h = hostname, prev;
-  do { prev = h; h = h.replace(prefixes, ''); } while (h !== prev);
-  return h;
+  const parts = hostname.split('.');
+  if (parts.length <= 2) return hostname;
+  // Country-code SLDs: co.uk, com.br, co.jp, etc.
+  const sld = parts[parts.length - 2];
+  const tld = parts[parts.length - 1];
+  if (['co', 'com', 'net', 'org', 'gov', 'edu', 'ac'].includes(sld) && tld.length === 2) {
+    return parts.slice(-3).join('.');
+  }
+  return parts.slice(-2).join('.');
 }
 
 function showError(el, msg) { el.textContent = msg; el.style.display = 'block'; }

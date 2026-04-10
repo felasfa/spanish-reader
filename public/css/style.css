@@ -484,6 +484,9 @@ html, body {
   background: var(--surface-2);
   border-radius: 6px;
   border-left: 3px solid var(--primary);
+  /* Disable text selection so iOS tap targets the word chip click handler */
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .popup-sentence-en {

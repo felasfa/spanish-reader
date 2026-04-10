@@ -157,24 +157,46 @@ async function getSummary(meta, emailSubject) {
   }
 }
 
-// ─── Extract first meaningful image from email HTML ───────────────────────────
+// ─── Extract best editorial image from email HTML ────────────────────────────
 function extractEmailImage(html) {
   if (!html) return '';
   const $ = cheerio.load(html);
-  const skip = /logo|icon|avatar|signature|spacer|pixel|tracking|badge/i;
-  let found = '';
+  const skipSrc = /logo|icon|avatar|signature|spacer|pixel|tracking|badge|unsubscri|header|footer/i;
+  const skipAlt = /logo|subscribe|advertisement|sponsor|shop|sale|promo|offer/i;
+
+  let best = null;
+  let bestScore = -1;
+
   $('img[src]').each((_, el) => {
-    if (found) return false;
     const src    = $(el).attr('src') || '';
+    const alt    = $(el).attr('alt') || '';
     const width  = parseInt($(el).attr('width')  || '0', 10);
     const height = parseInt($(el).attr('height') || '0', 10);
+
     if (!src.startsWith('http')) return;
-    if (skip.test(src)) return;
-    if (width  > 0 && width  < 80) return; // skip tiny images
+    if (skipSrc.test(src) || skipAlt.test(alt)) return;
+    if (width  > 0 && width  < 80) return;
     if (height > 0 && height < 80) return;
-    found = src;
+
+    // Skip when the parent link points to a shopping/commercial URL
+    const parentHref = ($(el).closest('a').attr('href') || '').toLowerCase();
+    if (/shop|store|buy|cart|sale|promo|discount|subscribe|offer/i.test(parentHref)) return;
+
+    let score = 0;
+    if (width > 0 && height > 0) {
+      const ratio = width / height;
+      if (ratio > 3.5) return;          // skip banner ads (very wide)
+      if (height < 100) return;          // skip short strips
+      score = width * height;            // prefer larger images
+      if (ratio >= 0.75 && ratio <= 2.5) score *= 2; // bonus for photo-like aspect ratio
+    } else {
+      score = 5000;                      // unknown size — neutral
+    }
+
+    if (score > bestScore) { bestScore = score; best = src; }
   });
-  return found;
+
+  return best || '';
 }
 
 // ─── Handler ─────────────────────────────────────────────────────────────────
