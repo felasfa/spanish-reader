@@ -130,7 +130,8 @@ async function fetchMeta(url) {
     const title       = (og('og:title') || $('h1').first().text() || $('title').text() || '').trim();
     const image       = og('og:image') || og('twitter:image') || '';
     const description = (og('og:description') || og('description')).trim();
-    return { title, image: image.startsWith('http') ? image : '', description };
+    const siteName    = og('og:site_name').trim();
+    return { title, image: image.startsWith('http') ? image : '', description, siteName };
   } catch {
     return null;
   }
@@ -154,6 +155,26 @@ async function getSummary(meta, emailSubject) {
   } catch {
     return '';
   }
+}
+
+// ─── Extract first meaningful image from email HTML ───────────────────────────
+function extractEmailImage(html) {
+  if (!html) return '';
+  const $ = cheerio.load(html);
+  const skip = /logo|icon|avatar|signature|spacer|pixel|tracking|badge/i;
+  let found = '';
+  $('img[src]').each((_, el) => {
+    if (found) return false;
+    const src    = $(el).attr('src') || '';
+    const width  = parseInt($(el).attr('width')  || '0', 10);
+    const height = parseInt($(el).attr('height') || '0', 10);
+    if (!src.startsWith('http')) return;
+    if (skip.test(src)) return;
+    if (width  > 0 && width  < 80) return; // skip tiny images
+    if (height > 0 && height < 80) return;
+    found = src;
+  });
+  return found;
 }
 
 // ─── Handler ─────────────────────────────────────────────────────────────────
@@ -242,9 +263,11 @@ exports.handler = async (event) => {
             const hostname = (() => { try { return new URL(url).hostname; } catch { return ''; } })();
             const title   = (meta?.title && meta.title.length > 5 && !meta.title.includes(hostname))
               ? meta.title : c.subject;
-            const summary = await getSummary(meta, c.subject);
+            const summary  = await getSummary(meta, c.subject);
+            const image    = meta?.image || extractEmailImage(html);
+            const siteName = meta?.siteName || '';
 
-            return { uid: c.uid, url, title, image: meta?.image || '', summary };
+            return { uid: c.uid, url, title, image, siteName, summary };
           } catch (e) {
             console.error(`Failed to process newsletter uid=${c.uid}:`, e.message);
             return null;
@@ -276,6 +299,7 @@ exports.handler = async (event) => {
           title:     item.title,
           image:     item.image,
           summary:   item.summary,
+          siteName:  item.siteName,
           dateAdded: new Date().toISOString(),
           read:      false,
           source:    'gmail',

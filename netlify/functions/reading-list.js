@@ -103,7 +103,8 @@ async function fetchMeta(url) {
   }
 
   const description = (og('og:description') || og('description') || og('twitter:description')).trim();
-  return { title, image, description };
+  const siteName    = og('og:site_name').trim();
+  return { title, image, description, siteName };
 }
 
 async function getSummary(meta, url) {
@@ -159,6 +160,7 @@ exports.handler = async (event) => {
         title:     meta.title,
         image:     meta.image || '',
         summary,
+        siteName:  meta.siteName || '',
         dateAdded: new Date().toISOString(),
         read:      false,
       };

@@ -199,7 +199,17 @@ function showTranslationPopup(word, sentence) {
     .then(data => {
       if (data.error) throw new Error(data.error);
       $('popup-word-translation').textContent = data.wordTranslation;
-      $('popup-sentence-es').textContent = sentence;
+      // Render sentence as tappable word chips so user can pick one word to save
+      $('popup-sentence-es').innerHTML = sentence.replace(
+        /([\u00C0-\u024F\w]+)/g,
+        '<span class="popup-word-chip">$1</span>'
+      );
+      $('popup-sentence-es').querySelectorAll('.popup-word-chip').forEach(chip => {
+        chip.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showTranslationPopup(chip.textContent, sentence);
+        });
+      });
       $('popup-sentence-en').textContent = data.sentenceTranslation;
       state.pendingTranslation = { word, sentence, wordTranslation: data.wordTranslation, sentenceTranslation: data.sentenceTranslation };
       $('popup-loading').style.display = 'none';
@@ -406,7 +416,8 @@ function renderReadingList(list) {
   $('rl-empty').style.display = 'none';
 
   $('rl-list').innerHTML = list.map(item => {
-    const domain = (() => { try { return new URL(item.url).hostname; } catch { return item.url; } })();
+    const domain     = (() => { try { return new URL(item.url).hostname; } catch { return item.url; } })();
+    const sourceName = item.siteName || domain;
     const thumb  = item.image
       ? `<img class="rl-thumb" src="${escapeHtml(item.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`
       : `<div class="rl-thumb rl-thumb-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg></div>`;
@@ -419,7 +430,7 @@ function renderReadingList(list) {
         <div class="rl-title" role="button" tabindex="0">${escapeHtml(item.title)}</div>
         <div class="rl-summary ${item.read ? '' : 'rl-unread'}">${escapeHtml(item.summary || '')}</div>
         <div class="rl-meta">
-          <span class="rl-domain">${escapeHtml(domain)}</span>
+          <span class="rl-domain">${escapeHtml(sourceName)}</span>
           <span class="rl-date">${item.dateAdded ? formatDate(item.dateAdded) : ''}</span>
         </div>
       </div>
