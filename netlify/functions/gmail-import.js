@@ -157,106 +157,27 @@ async function getSummary(meta, emailSubject) {
   }
 }
 
-// ─── Find the best article link for image extraction ─────────────────────────
-// Priority 1: link whose anchor text contains ≥2 keywords from the subject
-//             (requires multiple matches to avoid hitting nav/section links)
-// Priority 2: first long anchor text that isn't a CTA
-function extractBestArticleUrl(html, subject) {
-  if (!html) return null;
-  const $ = cheerio.load(html);
-  const skipText = /shop\s*now|buy\s*now|learn\s*more|subscribe|unsubscrib|click\s*here|view\s*(online|in\s*browser)|sign\s*up|manage|privacy|terms|follow\s*us|see\s*all|read\s*more/i;
-
-  // Strip "Newsletter Name: " prefix; extract 5+ char words (excludes short prepositions)
-  const bare = (subject || '').replace(/^[\w\s]+:\s*/, '');
-  const keywords = bare.toLowerCase()
-    .split(/[\s,.:;!?()-]+/)
-    .filter(w => w.length >= 5)
-    .slice(0, 6);
-
-  let titleMatch = null;
-  let firstLong  = null;
-
-  $('a[href]').each((_, el) => {
-    const href = $(el).attr('href') || '';
-    const text = $(el).text().replace(/\s+/g, ' ').trim();
-    const textLower = text.toLowerCase();
-    if (!href.startsWith('http') || !text) return;
-
-    // Priority 1: anchor text matches ≥2 subject keywords in a 20+ char link
-    // (single-keyword matches are too ambiguous and hit nav links)
-    if (!titleMatch && keywords.length >= 2 && text.length >= 20) {
-      const matches = keywords.filter(kw => textLower.includes(kw)).length;
-      if (matches >= 2) titleMatch = href;
-    }
-
-    // Priority 2: first long non-CTA anchor text
-    if (!firstLong && text.length >= 30 && !skipText.test(text)) {
-      firstLong = href;
-    }
-
-    if (titleMatch && firstLong) return false;
-  });
-
-  return titleMatch || firstLong || null;
-}
-
-// Fast og:image fetch — follows redirects (handles tracking URLs) with a short timeout
-async function fetchOgImage(url) {
-  try {
-    const res = await fetch(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; SpanishReader/1.0)' },
-      signal: AbortSignal.timeout(5000),
-      redirect: 'follow',
-    });
-    if (!res.ok) return '';
-    const html = await res.text();
-    const $ = cheerio.load(html);
-    const image = $('meta[property="og:image"]').attr('content') || $('meta[name="og:image"]').attr('content') || '';
-    return image.startsWith('http') ? image : '';
-  } catch { return ''; }
-}
-
-// ─── Extract best editorial image from email HTML ────────────────────────────
+// ─── First non-banner image from email HTML ───────────────────────────────────
 function extractEmailImage(html) {
   if (!html) return '';
   const $ = cheerio.load(html);
-  const skipSrc = /logo|icon|avatar|signature|spacer|pixel|tracking|badge|unsubscri|header|footer/i;
-  const skipAlt = /logo|subscribe|advertisement|sponsor|shop|sale|promo|offer/i;
-
-  let best = null;
-  let bestScore = -1;
-
+  const skip = /logo|icon|avatar|signature|spacer|pixel|tracking|badge/i;
+  let found = '';
   $('img[src]').each((_, el) => {
+    if (found) return false;
     const src    = $(el).attr('src') || '';
-    const alt    = $(el).attr('alt') || '';
     const width  = parseInt($(el).attr('width')  || '0', 10);
     const height = parseInt($(el).attr('height') || '0', 10);
-
     if (!src.startsWith('http')) return;
-    if (skipSrc.test(src) || skipAlt.test(alt)) return;
-    if (width  > 0 && width  < 80) return;
-    if (height > 0 && height < 80) return;
-
-    // Skip when the parent link points to a shopping/commercial URL
-    const parentHref = ($(el).closest('a').attr('href') || '').toLowerCase();
-    if (/shop|store|buy|cart|sale|promo|discount|subscribe|offer/i.test(parentHref)) return;
-
-    let score = 0;
-    if (width > 0 && height > 0) {
-      const ratio = width / height;
-      if (ratio > 3.5) return;          // skip banner ads (very wide)
-      if (height < 100) return;          // skip short strips
-      score = width * height;            // prefer larger images
-      if (ratio >= 0.75 && ratio <= 2.5) score *= 2; // bonus for photo-like aspect ratio
-    } else {
-      score = 5000;                      // unknown size — neutral
-    }
-
-    if (score > bestScore) { bestScore = score; best = src; }
+    if (skip.test(src)) return;
+    if (width  > 0 && width  < 100) return;           // skip tiny images
+    if (height > 0 && height < 100) return;
+    if (width > 0 && height > 0 && width / height > 3) return; // skip banners
+    found = src;
   });
-
-  return best || '';
+  return found;
 }
+
 
 // ─── Handler ─────────────────────────────────────────────────────────────────
 exports.handler = async (event) => {
@@ -347,13 +268,7 @@ exports.handler = async (event) => {
             const summary  = await getSummary(meta, c.subject);
             const siteName = meta?.siteName || '';
 
-            // Image: try newsletter page og:image → subject-matched article og:image → email HTML scan
-            let image = meta?.image || '';
-            if (!image) {
-              const articleUrl = extractBestArticleUrl(html, c.subject);
-              if (articleUrl) image = await fetchOgImage(articleUrl);
-            }
-            if (!image) image = extractEmailImage(html);
+            const image = meta?.image || extractEmailImage(html);
 
             return { uid: c.uid, url, title, image, siteName, summary };
           } catch (e) {
