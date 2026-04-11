@@ -21,6 +21,8 @@ const INTERACTION_SCRIPT = `
   }
   ._sr_mi:active { background: #f0f0f0; }
   ._sr_mi + ._sr_mi { border-top: 1px solid #f0f0f0; }
+  /* Suppress iOS native link preview/callout so our menu can appear */
+  a[data-href] { -webkit-touch-callout: none; }
 </style>
 <div id="_sr_menu">
   <div class="_sr_mi" id="_sr_open">
@@ -61,8 +63,8 @@ const INTERACTION_SCRIPT = `
   });
 
   // Dismiss on outside click/touch
-  document.addEventListener('click',     function (e) { if (!e.target.closest('#_sr_menu')) hideMenu(); });
-  document.addEventListener('touchstart', function (e) { if (!e.target.closest('#_sr_menu')) hideMenu(); }, { passive: true });
+  document.addEventListener('click',   function (e) { if (!e.target.closest('#_sr_menu')) hideMenu(); });
+  document.addEventListener('touchend', function (e) { if (!e.target.closest('#_sr_menu')) hideMenu(); }, { passive: true });
 
   // Desktop right-click on a link
   document.addEventListener('contextmenu', function (e) {
@@ -72,22 +74,27 @@ const INTERACTION_SCRIPT = `
     showMenu(a.getAttribute('data-href'), e.clientX, e.clientY);
   });
 
-  // Mobile long-press on a link (600 ms)
-  var pressTimer;
+  // Mobile: tap on a link → show our menu immediately.
+  // This intercepts the touch before iOS can show its native link preview.
+  var touchStartX = 0, touchStartY = 0;
   document.addEventListener('touchstart', function (e) {
     var a = e.target.closest('a[data-href]');
     if (!a) return;
-    var href = a.getAttribute('data-href');
-    var x = e.touches[0].clientX, y = e.touches[0].clientY;
-    clearTimeout(pressTimer);
-    pressTimer = setTimeout(function () {
-      window._srLongPress = true;   // suppress the tap-onclick below
-      showMenu(href, x, y);
-    }, 600);
-  }, false);
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
 
-  document.addEventListener('touchmove', function () { clearTimeout(pressTimer); }, { passive: true });
-  document.addEventListener('touchend',  function () { clearTimeout(pressTimer); }, false);
+  document.addEventListener('touchend', function (e) {
+    var a = e.target.closest('a[data-href]');
+    if (!a) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    var dy = e.changedTouches[0].clientY - touchStartY;
+    if (dx * dx + dy * dy < 100) { // within ~10 px → it's a tap, not a scroll
+      e.preventDefault();          // block iOS callout and the subsequent click
+      window._srLongPress = true;  // guard the inline onclick too
+      showMenu(a.getAttribute('data-href'), touchStartX, touchStartY);
+    }
+  }, false);
 
   // ── Text selection ────────────────────────────────────────────
   function getSentence(selectionText, container) {
