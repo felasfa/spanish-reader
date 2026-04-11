@@ -31,6 +31,12 @@ app.use(cors({
 
 app.use(express.json());
 
+// ─── Request logger ───────────────────────────────────────────────────────────
+app.use((req, _res, next) => {
+  console.log(`${new Date().toISOString()} ${req.method} ${req.path}`);
+  next();
+});
+
 // ─── Health check ─────────────────────────────────────────────────────────────
 app.get('/health', (_req, res) => res.json({ status: 'ok', ts: new Date().toISOString() }));
 
