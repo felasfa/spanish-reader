@@ -1,0 +1,19 @@
+{
+  "name": "spanish-reader-server",
+  "version": "1.0.0",
+  "description": "Express API server for Spanish Reader (replaces Netlify Functions)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "imapflow": "^1.0.169",
+    "mailparser": "^3.7.1"
+  }
+}

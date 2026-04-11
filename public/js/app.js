@@ -570,3 +570,5 @@ $('rl-gmail-import').addEventListener('click', async () => {
 
 /* ===== Init ===== */
 updateVocabCount();
+loadReadingList();
+showView('reading-list');
