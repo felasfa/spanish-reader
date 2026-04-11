@@ -12,6 +12,13 @@ const state = {
 let rlUnreadCount = 0; // tracked in memory — no extra API call needed
 let iframeScrollY = 0; // last known iframe scroll position
 const readerScrollPositions = {}; // url → scrollY
+const siteCookies = JSON.parse(localStorage.getItem('siteCookies') || '{}'); // domain → cookie string
+
+function saveSiteCookies() { localStorage.setItem('siteCookies', JSON.stringify(siteCookies)); }
+
+function urlDomain(url) {
+  try { return cleanDomain(new URL(url).hostname); } catch { return ''; }
+}
 
 /* ===== Helpers ===== */
 function $(id) { return document.getElementById(id); }
@@ -137,8 +144,25 @@ async function loadUrl(url, addToHistory = true) {
   $('url-read-now').textContent = 'Loading…';
 
   try {
-    const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`);
+    const domain = urlDomain(url);
+    const cookie = siteCookies[domain] || '';
+    const fetchPath = `/api/fetch?url=${encodeURIComponent(url)}${cookie ? `&cookie=${encodeURIComponent(cookie)}` : ''}`;
+    const res  = await fetch(fetchPath);
     const data = await res.json();
+
+    if (res.status === 403) {
+      // Offer to store a subscriber cookie for this domain and retry
+      const entered = window.prompt(
+        `${domain} blocked access (subscriber content?).\n\nTo unlock:\n1. Open ${domain} in a new tab while logged in\n2. Press F12 → Application → Cookies → select the site\n3. Copy all cookie rows as "Name=Value; Name2=Value2…" and paste below\n\nLeave blank to cancel.`
+      );
+      if (entered && entered.trim()) {
+        siteCookies[domain] = entered.trim();
+        saveSiteCookies();
+        return loadUrl(url, addToHistory); // retry with cookie
+      }
+      throw new Error(data.error || 'Access denied (403)');
+    }
+
     if (!res.ok) throw new Error(data.error || 'Failed to load page');
 
     // Track navigation history so back works correctly
