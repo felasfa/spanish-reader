@@ -132,7 +132,7 @@ async function loadUrl(url, addToHistory = true) {
   $('url-read-now').textContent = 'Loading…';
 
   try {
-    const res  = await fetch(`${API_BASE}/api/fetch?url=${encodeURIComponent(url)}`);
+    const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Failed to load page');
 
