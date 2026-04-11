@@ -14,11 +14,15 @@ let rlUnreadCount = 0; // tracked in memory — no extra API call needed
 /* ===== Helpers ===== */
 function $(id) { return document.getElementById(id); }
 
+const scrollPositions = {};
+
 function showView(name) {
+  scrollPositions[state.currentView] = window.scrollY;
   if (state.currentView !== name) state.previousView = state.currentView;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   $(`view-${name}`).classList.add('active');
   state.currentView = name;
+  window.scrollTo(0, scrollPositions[name] || 0);
 }
 
 $('reader-share').addEventListener('click', async () => {
@@ -315,27 +319,43 @@ function renderVocabulary(vocab) {
   const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
 
   $('vocab-tbody').innerHTML = vocab.map(e => {
-    const domain  = e.url ? (() => { try { return new URL(e.url).hostname; } catch { return e.url; } })() : null;
-    const isNew   = e.date && e.date > lastViewed;
-    return `<tr class="${isNew ? 'vocab-new' : ''}">
-      <td><span class="vocab-word">${escapeHtml(e.word)}</span></td>
-      <td><span class="vocab-translation">${escapeHtml(e.translation || '—')}</span></td>
-      <td><span class="vocab-sentence-es">${escapeHtml(e.sentence || '—')}</span></td>
-      <td class="vocab-source-date">
-        ${domain ? `<a href="${escapeHtml(e.url)}" target="_blank" rel="noopener">${escapeHtml(domain)}</a>` : '—'}
-        ${e.date ? `<br><span class="vocab-date-text">${formatDate(e.date)}</span>` : ''}
-      </td>
-      <td><button class="vocab-delete-btn" data-id="${e.id}" title="Delete" aria-label="Delete">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="3,6 5,6 21,6"/>
-          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-        </svg>
-      </button></td>
-    </tr>`;
+    const domain = e.url ? (() => { try { return cleanDomain(new URL(e.url).hostname); } catch { return ''; } })() : '';
+    const isNew  = e.date && e.date > lastViewed;
+    return `<div class="vocab-entry${isNew ? ' vocab-new' : ''}" data-id="${e.id}">
+      <div class="vocab-summary">
+        <span class="vocab-word">${escapeHtml(e.word)}</span>
+        <span class="vocab-sep">→</span>
+        <span class="vocab-translation">${escapeHtml(e.translation || '—')}</span>
+        <div class="vocab-entry-actions">
+          <svg class="vocab-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,18 15,12 9,6"/></svg>
+          <button class="vocab-delete-btn" data-id="${e.id}" title="Delete" aria-label="Delete">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3,6 5,6 21,6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="vocab-detail">
+        ${e.sentence    ? `<p class="vocab-sentence-es">${escapeHtml(e.sentence)}</p>` : ''}
+        ${e.sentenceTranslation ? `<p class="vocab-sentence-en">${escapeHtml(e.sentenceTranslation)}</p>` : ''}
+        ${domain || e.date ? `<div class="vocab-source">
+          ${domain ? `<a href="${escapeHtml(e.url)}" target="_blank" rel="noopener">${escapeHtml(domain)}</a>` : ''}
+          ${e.date ? `<span class="vocab-date-text">${formatDate(e.date)}</span>` : ''}
+        </div>` : ''}
+      </div>
+    </div>`;
   }).join('');
 
-  $('vocab-tbody').querySelectorAll('.vocab-delete-btn').forEach(btn => {
-    btn.addEventListener('click', () => deleteVocabEntry(btn.dataset.id));
+  // Toggle expand on row click (but not on delete button)
+  $('vocab-tbody').querySelectorAll('.vocab-entry').forEach(entry => {
+    entry.querySelector('.vocab-summary').addEventListener('click', (e) => {
+      if (e.target.closest('.vocab-delete-btn')) return;
+      entry.classList.toggle('vocab-expanded');
+    });
+    entry.querySelector('.vocab-delete-btn').addEventListener('click', () => {
+      deleteVocabEntry(entry.dataset.id);
+    });
   });
 
   // Clear highlights and badge 2 seconds after the list opens

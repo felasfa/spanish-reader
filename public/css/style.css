@@ -583,60 +583,62 @@ html, body {
 .vocab-empty p { font-size: 14px; max-width: 300px; }
 
 .vocab-table-wrap {
-  overflow-x: auto;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
   background: var(--surface);
-}
-
-.vocab-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.vocab-table th {
-  padding: 12px 16px;
-  background: var(--surface-2);
-  text-align: left;
-  font-weight: 600;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-
-.vocab-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border-light);
-  vertical-align: top;
-  line-height: 1.5;
-}
-
-.vocab-table tr:last-child td { border-bottom: none; }
-.vocab-table tr:hover td { background: var(--surface-2); }
-
-.vocab-word { font-weight: 700; color: var(--primary); font-size: 15px; }
-.vocab-translation { font-weight: 600; color: var(--success); }
-.vocab-sentence-es { color: var(--text-2); max-width: 200px; }
-.vocab-source-date a {
-  color: var(--primary);
-  text-decoration: none;
-  font-size: 12px;
-  display: block;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 110px;
 }
-.vocab-source-date a:hover { text-decoration: underline; }
-.vocab-date-text { color: var(--text-muted); font-size: 11px; }
 
-tr.vocab-new td { background: rgba(198,40,40,.07); transition: background 0.8s ease; }
-tr td { transition: background 0.8s ease; }
+/* ── Entry row ── */
+.vocab-entry {
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+}
+.vocab-entry:last-child { border-bottom: none; }
+.vocab-entry.vocab-new { background: rgba(198,40,40,.07); transition: background 0.8s ease; }
+
+.vocab-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  transition: background 0.12s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.vocab-entry:hover .vocab-summary { background: var(--surface-2); }
+
+.vocab-word        { font-weight: 700; color: var(--primary); font-size: 15px; flex-shrink: 0; }
+.vocab-sep         { color: var(--text-muted); font-size: 13px; flex-shrink: 0; }
+.vocab-translation { font-weight: 600; color: var(--success); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.vocab-entry-actions { display: flex; align-items: center; gap: 2px; margin-left: auto; flex-shrink: 0; }
+
+.vocab-chevron { color: var(--text-muted); transition: transform 0.2s; display: block; }
+.vocab-entry.vocab-expanded .vocab-chevron { transform: rotate(90deg); }
+
+/* ── Expanded detail ── */
+.vocab-detail { display: none; padding: 0 16px 12px 16px; }
+.vocab-entry.vocab-expanded .vocab-detail { display: block; }
+
+.vocab-sentence-es {
+  font-size: 13px; color: var(--text-2); line-height: 1.5;
+  margin: 0 0 4px;
+  font-style: italic;
+}
+.vocab-sentence-en {
+  font-size: 13px; color: var(--text-muted); line-height: 1.5;
+  margin: 0 0 8px;
+}
+.vocab-source {
+  display: flex; align-items: center; gap: 10px;
+}
+.vocab-source a {
+  color: var(--primary); text-decoration: none; font-size: 12px;
+}
+.vocab-source a:hover { text-decoration: underline; }
+.vocab-date-text { color: var(--text-muted); font-size: 11px; }
 
 .vocab-delete-btn {
   background: none;
@@ -649,7 +651,6 @@ tr td { transition: background 0.8s ease; }
   align-items: center;
   transition: color 0.15s, background 0.15s;
 }
-
 .vocab-delete-btn:hover { color: var(--danger); background: var(--danger-light); }
 
 /* ===== Buttons ===== */
