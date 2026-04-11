@@ -151,16 +151,9 @@ async function loadUrl(url, addToHistory = true) {
     const data = await res.json();
 
     if (res.status === 403) {
-      // Offer to store a subscriber cookie for this domain and retry
-      const entered = window.prompt(
-        `${domain} blocked access (subscriber content?).\n\nTo unlock:\n1. Open ${domain} in a new tab while logged in\n2. Press F12 → Application → Cookies → select the site\n3. Copy all cookie rows as "Name=Value; Name2=Value2…" and paste below\n\nLeave blank to cancel.`
-      );
-      if (entered && entered.trim()) {
-        siteCookies[domain] = entered.trim();
-        saveSiteCookies();
-        return loadUrl(url, addToHistory); // retry with cookie
-      }
-      throw new Error(data.error || 'Access denied (403)');
+      // Show modal to collect subscriber cookie, then retry
+      showCookieModal(domain, url, addToHistory, data.error);
+      return; // modal handles retry
     }
 
     if (!res.ok) throw new Error(data.error || 'Failed to load page');
@@ -640,9 +633,50 @@ $('rl-gmail-import').addEventListener('click', async () => {
   });
 })();
 
+/* ===== Cookie modal ===== */
+(function () {
+  const overlay = $('cookie-modal');
+  const domainEl = $('cookie-modal-domain');
+  const textarea = $('cookie-input');
+  let _pendingDomain, _pendingUrl, _pendingHistory;
+
+  // Tab switching
+  overlay.querySelectorAll('.cookie-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      overlay.querySelectorAll('.cookie-tab').forEach(t => t.classList.remove('active'));
+      overlay.querySelectorAll('.cookie-tab-content').forEach(c => c.style.display = 'none');
+      tab.classList.add('active');
+      $('cookie-tab-' + tab.dataset.tab).style.display = 'block';
+    });
+  });
+
+  $('cookie-cancel').addEventListener('click', () => {
+    overlay.style.display = 'none';
+    $('url-read-now').disabled = false;
+    $('url-read-now').innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg> Read Now`;
+  });
+
+  $('cookie-save').addEventListener('click', () => {
+    const val = textarea.value.trim();
+    if (!val) return;
+    siteCookies[_pendingDomain] = val;
+    saveSiteCookies();
+    overlay.style.display = 'none';
+    loadUrl(_pendingUrl, _pendingHistory);
+  });
+
+  window.showCookieModal = function (domain, url, addToHistory) {
+    _pendingDomain = domain;
+    _pendingUrl = url;
+    _pendingHistory = addToHistory;
+    domainEl.textContent = domain;
+    textarea.value = siteCookies[domain] || '';
+    overlay.style.display = 'flex';
+    textarea.focus();
+  };
+})();
+
 /* ===== Init ===== */
 updateVocabCount();
-loadReadingList();
-showView('reading-list');
 loadReadingList();
 showView('reading-list');
