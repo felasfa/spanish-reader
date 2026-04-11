@@ -1,3 +1,5 @@
+const API_BASE = 'https://api.felasfa.app';
+
 /* ===== State ===== */
 const state = {
   currentView: 'url',
@@ -117,7 +119,7 @@ async function loadUrl(url, addToHistory = true) {
   $('url-read-now').textContent = 'Loading…';
 
   try {
-    const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`);
+    const res  = await fetch(`${API_BASE}/api/fetch?url=${encodeURIComponent(url)}`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Failed to load page');
 
@@ -223,7 +225,7 @@ function showTranslationPopup(word, sentence) {
   popup.style.display = 'block';
   state.pendingTranslation = { word, sentence };
 
-  fetch('/api/translate', {
+  fetch(`${API_BASE}/api/translate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ word, sentence }),
@@ -252,7 +254,7 @@ $('popup-save').addEventListener('click', async () => {
   const t = state.pendingTranslation;
   if (!t) return;
   try {
-    const res = await fetch('/api/vocabulary', {
+    const res = await fetch(`${API_BASE}/api/vocabulary`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -274,7 +276,7 @@ $('popup-save').addEventListener('click', async () => {
 /* ===== Vocabulary (GitHub API) ===== */
 async function updateVocabCount() {
   try {
-    const res   = await fetch('/api/vocabulary');
+    const res   = await fetch(`${API_BASE}/api/vocabulary`);
     const vocab = await res.json();
     const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
     const hasNew = vocab.some(e => e.date && e.date > lastViewed);
@@ -287,7 +289,7 @@ async function loadVocabulary() {
   $('vocab-table-wrap').style.display = 'none';
   $('vocab-empty').style.display = 'none';
   try {
-    const res   = await fetch('/api/vocabulary');
+    const res   = await fetch(`${API_BASE}/api/vocabulary`);
     const vocab = await res.json();
     renderVocabulary(vocab);
   } catch (e) {
@@ -347,20 +349,20 @@ function renderVocabulary(vocab) {
 }
 
 async function deleteVocabEntry(id) {
-  await fetch(`/api/vocabulary/${id}`, { method: 'DELETE' });
+  await fetch(`${API_BASE}/api/vocabulary/${id}`, { method: 'DELETE' });
   loadVocabulary();
   updateVocabCount();
 }
 
 $('vocab-clear').addEventListener('click', async () => {
   if (!confirm('Clear all vocabulary entries? This cannot be undone.')) return;
-  await fetch('/api/vocabulary', { method: 'DELETE' });
+  await fetch(`${API_BASE}/api/vocabulary`, { method: 'DELETE' });
   loadVocabulary();
   updateVocabCount();
 });
 
 $('vocab-export').addEventListener('click', async () => {
-  const res   = await fetch('/api/vocabulary');
+  const res   = await fetch(`${API_BASE}/api/vocabulary`);
   const vocab = await res.json();
   if (!vocab.length) { alert('No vocabulary to export.'); return; }
   const headers = ['Word', 'Translation', 'Spanish Sentence', 'English Sentence', 'URL', 'Date'];
@@ -383,7 +385,7 @@ $('vocab-export').addEventListener('click', async () => {
 async function addToReadingList(url) {
   showToast('Fetching article info…', 'info');
   try {
-    const res  = await fetch('/api/reading-list', {
+    const res  = await fetch(`${API_BASE}/api/reading-list`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url }),
@@ -411,7 +413,7 @@ async function loadReadingList() {
   $('rl-list').innerHTML = '';
   $('rl-empty').style.display = 'none';
   try {
-    const res  = await fetch('/api/reading-list');
+    const res  = await fetch(`${API_BASE}/api/reading-list`);
     const list = await res.json();
     rlUnreadCount = list.filter(i => !i.read).length;
     updateRLCount();
@@ -469,7 +471,7 @@ function renderReadingList(list) {
       const id    = parseInt(item.dataset.id, 10);
       const url   = item.dataset.url;
       // Mark as read (fire-and-forget)
-      fetch(`/api/reading-list/${id}`, { method: 'PATCH' }).then(() => {
+      fetch(`${API_BASE}/api/reading-list/${id}`, { method: 'PATCH' }).then(() => {
         if (!item.classList.contains('rl-read')) {
           rlUnreadCount = Math.max(0, rlUnreadCount - 1);
           updateRLCount();
@@ -492,7 +494,7 @@ function renderReadingList(list) {
         rlUnreadCount = Math.max(0, rlUnreadCount - 1);
         updateRLCount();
       }
-      await fetch(`/api/reading-list/${id}`, { method: 'DELETE' });
+      await fetch(`${API_BASE}/api/reading-list/${id}`, { method: 'DELETE' });
       item.remove();
       // Re-check empty
       if (!$('rl-list').querySelector('.rl-item')) {
@@ -509,7 +511,7 @@ function renderReadingList(list) {
 
 $('rl-clear').addEventListener('click', async () => {
   if (!confirm('Remove all saved articles?')) return;
-  await fetch('/api/reading-list', { method: 'DELETE' });
+  await fetch(`${API_BASE}/api/reading-list`, { method: 'DELETE' });
   rlUnreadCount = 0;
   updateRLCount();
   loadReadingList();
@@ -530,7 +532,7 @@ $('rl-gmail-import').addEventListener('click', async () => {
   btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Checking…`;
   showToast('Checking Gmail inbox…', 'info');
   try {
-    const res  = await fetch('/api/gmail-import', { method: 'POST' });
+    const res  = await fetch(`${API_BASE}/api/gmail-import`, { method: 'POST' });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Import failed');
     localStorage.setItem('gmailLastCheck', Date.now().toString());
@@ -570,5 +572,7 @@ $('rl-gmail-import').addEventListener('click', async () => {
 
 /* ===== Init ===== */
 updateVocabCount();
+loadReadingList();
+showView('reading-list');
 loadReadingList();
 showView('reading-list');
