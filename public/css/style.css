@@ -64,6 +64,12 @@ html, body {
   flex-shrink: 0;
 }
 
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
