@@ -23,6 +23,13 @@ function showView(name) {
   $(`view-${name}`).classList.add('active');
   state.currentView = name;
   window.scrollTo(0, scrollPositions[name] || 0);
+
+  // Show "Back to article" in RL and vocab views when an article is loaded
+  const showBack = !!state.currentUrl && name !== 'reader';
+  ['rl-resume', 'vocab-resume'].forEach(id => {
+    const el = $(id);
+    if (el) el.style.display = showBack ? 'inline-flex' : 'none';
+  });
 }
 
 $('reader-share').addEventListener('click', async () => {
@@ -106,6 +113,8 @@ $('nav-vocabulary').addEventListener('click', () => {
 
 $('vocab-go-read').addEventListener('click', () => showView('url'));
 $('rl-go-read').addEventListener('click', () => showView('url'));
+$('rl-resume').addEventListener('click', () => showView('reader'));
+$('vocab-resume').addEventListener('click', () => showView('reader'));
 
 /* ===== URL Suggestions ===== */
 document.querySelectorAll('.suggestion-chip').forEach(chip => {
@@ -147,8 +156,13 @@ async function loadUrl(url, addToHistory = true) {
       iframe.style.visibility = 'visible';
     };
   } catch (e) {
-    showError($('url-error'), `Error: ${e.message}`);
-    showView('url');
+    if (state.currentView === 'reader') {
+      // Link clicked from within the reader — stay in reader, show toast
+      showToast(`Could not load link: ${e.message}`, 'error');
+    } else {
+      showError($('url-error'), `Error: ${e.message}`);
+      showView('url');
+    }
   } finally {
     $('url-read-now').disabled = false;
     $('url-read-now').innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg> Read Now`;

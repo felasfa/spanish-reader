@@ -548,6 +548,23 @@ html, body {
 /* ===== Vocabulary View ===== */
 #view-vocabulary { padding: 32px 24px; max-width: 1400px; margin: 0 auto; }
 
+.resume-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0;
+  margin-bottom: 6px;
+  transition: color 0.15s;
+  font-family: inherit;
+}
+.resume-link:hover { color: var(--primary); }
+
 .vocab-header {
   display: flex;
   align-items: center;
