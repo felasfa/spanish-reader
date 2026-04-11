@@ -124,6 +124,19 @@ const INTERACTION_SCRIPT = `
     clearTimeout(selTimer);
     selTimer = setTimeout(sendSelection, 600);
   });
+
+  // ── Scroll position reporting ─────────────────────────────────────
+  var scrollReportTimer;
+  document.addEventListener('scroll', function () {
+    clearTimeout(scrollReportTimer);
+    scrollReportTimer = setTimeout(function () {
+      window.parent.postMessage({ type: 'scroll-update', y: window.scrollY }, '*');
+    }, 150);
+  }, { passive: true });
+
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'scroll-to') window.scrollTo(0, e.data.y);
+  });
 })();
 </script>`;
 

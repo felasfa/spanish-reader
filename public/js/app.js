@@ -10,6 +10,8 @@ const state = {
 };
 
 let rlUnreadCount = 0; // tracked in memory — no extra API call needed
+let iframeScrollY = 0; // last known iframe scroll position
+const readerScrollPositions = {}; // url → scrollY
 
 /* ===== Helpers ===== */
 function $(id) { return document.getElementById(id); }
@@ -54,6 +56,7 @@ $('reader-share').addEventListener('click', async () => {
 
 $('reader-back').addEventListener('click', () => {
   if (state.readerHistory.length > 0) {
+    readerScrollPositions[state.currentUrl] = iframeScrollY;
     loadUrl(state.readerHistory.pop(), false);
   } else {
     showView(state.previousView || 'url');
@@ -102,11 +105,13 @@ function showToast(msg, type = 'info') {
 $('nav-new-url').addEventListener('click', () => showView('url'));
 
 $('nav-reading-list').addEventListener('click', () => {
+  if (state.currentView === 'reading-list' && state.currentUrl) { showView('reader'); return; }
   loadReadingList();
   showView('reading-list');
 });
 
 $('nav-vocabulary').addEventListener('click', () => {
+  if (state.currentView === 'vocabulary' && state.currentUrl) { showView('reader'); return; }
   loadVocabulary();
   showView('vocabulary');
 });
@@ -154,6 +159,8 @@ async function loadUrl(url, addToHistory = true) {
     iframe.onload = () => {
       $('reader-loading').style.display = 'none';
       iframe.style.visibility = 'visible';
+      const savedY = readerScrollPositions[url];
+      if (savedY) setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y: savedY }, '*'), 100);
     };
   } catch (e) {
     if (state.currentView === 'reader') {
@@ -198,9 +205,14 @@ window.addEventListener('message', async (event) => {
     showTranslationPopup(word, sentence);
   }
 
+  if (event.data.type === 'scroll-update') {
+    iframeScrollY = event.data.y;
+  }
+
   if (event.data.type === 'link-clicked') {
     const { href } = event.data;
     if (href && href.startsWith('http')) {
+      readerScrollPositions[state.currentUrl] = iframeScrollY;
       $('url-input').value = href;
       loadUrl(href);
     }
