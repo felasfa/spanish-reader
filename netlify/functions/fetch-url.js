@@ -168,7 +168,13 @@ exports.handler = async (event) => {
         'sec-fetch-user': '?1',
         'upgrade-insecure-requests': '1',
     };
-    if (passCookie) reqHeaders['Cookie'] = passCookie;
+    if (passCookie) {
+      reqHeaders['Cookie'] = passCookie;
+      // Remove the Google Referer when sending subscriber cookies — sites
+      // may distrust a logged-in session that claims to come from Google.
+      delete reqHeaders['Referer'];
+      reqHeaders['sec-fetch-site'] = 'none';
+    }
 
     const response = await fetch(url, {
       headers: reqHeaders,
