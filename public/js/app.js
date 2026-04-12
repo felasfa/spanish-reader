@@ -10,13 +10,14 @@ const state = {
 };
 
 let rlUnreadCount = 0; // tracked in memory — no extra API call needed
-let iframeScrollY = 0; // last known iframe scroll position
-const readerScrollPositions = {}; // url → scrollY
-let rlData = []; // cached reading-list items for cross-device scroll lookup
+let iframeScrollY = 0;   // last known iframe scroll position (pixels, local use)
+let iframeScrollPct = 0; // fraction 0–1 of scrollable height (cross-device sync)
+const readerScrollPositions = {}; // url → { y, pct }
+let rlData = []; // cached reading-list items
 
-function syncScrollToServer(url, scrollY, useBeacon = false) {
-  if (!url || !scrollY) return;
-  const body = JSON.stringify({ url, scrollY });
+function syncScrollToServer(url, pct, useBeacon = false) {
+  if (!url || !pct) return;
+  const body = JSON.stringify({ url, scrollPct: pct });
   // Use sendBeacon only when the page is unloading (guaranteed delivery).
   // For normal saves (interval, navigation) use fetch so failures are visible in console.
   if (useBeacon && navigator.sendBeacon) {
@@ -38,9 +39,9 @@ const scrollPositions = {};
 
 function showView(name) {
   // Sync reader scroll position to server when leaving the reader
-  if (state.currentView === 'reader' && name !== 'reader' && state.currentUrl && iframeScrollY > 0) {
-    readerScrollPositions[state.currentUrl] = iframeScrollY;
-    syncScrollToServer(state.currentUrl, iframeScrollY);
+  if (state.currentView === 'reader' && name !== 'reader' && state.currentUrl && iframeScrollPct > 0) {
+    readerScrollPositions[state.currentUrl] = { y: iframeScrollY, pct: iframeScrollPct };
+    syncScrollToServer(state.currentUrl, iframeScrollPct);
   }
   scrollPositions[state.currentView] = window.scrollY;
   if (state.currentView !== name) state.previousView = state.currentView;
@@ -79,7 +80,7 @@ $('reader-share').addEventListener('click', async () => {
 
 $('reader-back').addEventListener('click', () => {
   if (state.readerHistory.length > 0) {
-    readerScrollPositions[state.currentUrl] = iframeScrollY;
+    readerScrollPositions[state.currentUrl] = { y: iframeScrollY, pct: iframeScrollPct };
     loadUrl(state.readerHistory.pop(), false);
   } else {
     showView(state.previousView || 'url');
@@ -190,14 +191,18 @@ async function loadUrl(url, addToHistory = true) {
     iframe.onload = () => {
       $('reader-loading').style.display = 'none';
       iframe.style.visibility = 'visible';
-      // Fetch cross-device scroll position. The iframe's own scroll handler
-      // retries until the page has rendered enough height to land correctly.
-      const localY = readerScrollPositions[url];
-      const send = (y) => iframe.contentWindow.postMessage({ type: 'scroll-to', y }, '*');
+      // Prefer fractional position (works across different screen sizes).
+      // Falls back to local cache if server is unavailable.
+      const local = readerScrollPositions[url];
+      const send = (pct, y) => iframe.contentWindow.postMessage({ type: 'scroll-to', pct, y }, '*');
       fetch(`${API_BASE}/api/reading-list/scroll?url=${encodeURIComponent(url)}`)
         .then(r => r.json())
-        .then(d => { const y = (d.scrollY > 0) ? d.scrollY : localY; if (y) send(y); })
-        .catch(() => { if (localY) send(localY); });
+        .then(d => {
+          const pct = (d.scrollPct > 0) ? d.scrollPct : (local && local.pct);
+          const y   = local && local.y;
+          if (pct || y) send(pct, y);
+        })
+        .catch(() => { if (local) send(local.pct, local.y); });
     };
   } catch (e) {
     if (state.currentView === 'reader') {
@@ -243,13 +248,14 @@ window.addEventListener('message', async (event) => {
   }
 
   if (event.data.type === 'scroll-update') {
-    iframeScrollY = event.data.y;
+    iframeScrollY   = event.data.y;
+    iframeScrollPct = event.data.pct || 0;
   }
 
   if (event.data.type === 'link-clicked') {
     const { href } = event.data;
     if (href && href.startsWith('http')) {
-      readerScrollPositions[state.currentUrl] = iframeScrollY;
+      readerScrollPositions[state.currentUrl] = { y: iframeScrollY, pct: iframeScrollPct };
       $('url-input').value = href;
       loadUrl(href);
     }
@@ -680,17 +686,17 @@ $('bookmarklet-link').addEventListener('click', (e) => {
 
 // Save scroll position when user backgrounds/closes the app (iOS home button, tab switch, etc.)
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden' && state.currentView === 'reader' && state.currentUrl && iframeScrollY > 0) {
-    readerScrollPositions[state.currentUrl] = iframeScrollY;
-    syncScrollToServer(state.currentUrl, iframeScrollY, true); // beacon for unload reliability
+  if (document.visibilityState === 'hidden' && state.currentView === 'reader' && state.currentUrl && iframeScrollPct > 0) {
+    readerScrollPositions[state.currentUrl] = { y: iframeScrollY, pct: iframeScrollPct };
+    syncScrollToServer(state.currentUrl, iframeScrollPct, true); // beacon for unload reliability
   }
 });
 
 // Periodically save scroll position while reading so cross-device sync
 // is always recent, not only on navigation or app-backgrounding
 setInterval(() => {
-  if (state.currentView === 'reader' && state.currentUrl && iframeScrollY > 0) {
-    syncScrollToServer(state.currentUrl, iframeScrollY);
+  if (state.currentView === 'reader' && state.currentUrl && iframeScrollPct > 0) {
+    syncScrollToServer(state.currentUrl, iframeScrollPct);
   }
 }, 15000);
 

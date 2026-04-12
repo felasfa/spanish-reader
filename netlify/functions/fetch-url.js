@@ -149,28 +149,35 @@ const INTERACTION_SCRIPT = `
   document.addEventListener('scroll', function () {
     clearTimeout(scrollReportTimer);
     scrollReportTimer = setTimeout(function () {
-      window.parent.postMessage({ type: 'scroll-update', y: window.scrollY }, '*');
+      var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      window.parent.postMessage({ type: 'scroll-update', y: window.scrollY, pct: pct }, '*');
     }, 150);
   }, { passive: true });
 
   // ── Scroll restoration ───────────────────────────────────────────
-  // When the parent sends scroll-to, retry until the page has rendered
-  // enough height to actually land at the target. Stop as soon as the
-  // user touches the screen so we never interrupt intentional scrolling.
+  // Accepts { pct } (fraction of scrollable height) which works across
+  // different screen sizes, falling back to { y } (absolute pixels).
+  // Retries until the page has rendered enough height to land correctly.
+  // Stops immediately if the user touches the screen.
   window.addEventListener('message', function (e) {
     if (e.data && e.data.type !== 'scroll-to') return;
-    var target = e.data.y;
+    var pct = e.data.pct;
     var userTouched = false;
     document.addEventListener('touchstart', function () { userTouched = true; }, { once: true, passive: true });
+    function getTarget() {
+      var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      return pct !== undefined ? Math.round(pct * maxScroll) : (e.data.y || 0);
+    }
     function tryScroll(attemptsLeft) {
       if (userTouched) return;
+      var target = getTarget();
       window.scrollTo(0, target);
-      // If we didn't land close enough (page still short), retry
       if (Math.abs(window.scrollY - target) > 50 && attemptsLeft > 0) {
         setTimeout(function () { tryScroll(attemptsLeft - 1); }, 400);
       }
     }
-    tryScroll(4); // up to 4 retries × 400ms = ~1.6s window
+    tryScroll(4);
   });
 })();
 </script>`;
