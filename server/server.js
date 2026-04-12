@@ -5,6 +5,8 @@ const cheerio  = require('cheerio');
 const Anthropic = require('@anthropic-ai/sdk');
 const { ImapFlow }    = require('imapflow');
 const { simpleParser } = require('mailparser');
+const fs   = require('fs');
+const path = require('path');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -18,13 +20,11 @@ const allowedOrigins = new Set([
 
 app.use(cors({
   origin(origin, cb) {
-    // Allow requests with no origin (curl, Postman, same-origin)
-    if (!origin) return cb(null, true);
-    if (allowedOrigins.has(origin) || origin.endsWith('.netlify.app')) {
-      return cb(null, true);
-    }
-    cb(new Error(`CORS: origin ${origin} not allowed`));
+    // Allow all origins — needed for the bookmarklet which runs on third-party sites.
+    // The API holds only personal reading-list data so broad access is acceptable.
+    cb(null, true);
   },
+  credentials: true,  // required: Safari sends credentials with cross-origin requests
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
@@ -85,6 +85,39 @@ async function ghWrite(path, data, sha, message) {
     throw new Error(`GitHub write ${res.status}: ${e.message || JSON.stringify(e)}`);
   }
   return res.json();
+}
+
+// ─── Local filesystem helpers ─────────────────────────────────────────────────
+const DATA_DIR    = path.join(__dirname, 'data');
+const RL_LOCAL    = path.join(DATA_DIR, 'reading-list.json');
+const VOCAB_LOCAL = path.join(DATA_DIR, 'vocabulary.json');
+
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+
+function localRead(file) {
+  try {
+    const raw = JSON.parse(fs.readFileSync(file, 'utf8'));
+    return Array.isArray(raw) ? raw : [];
+  } catch {
+    return [];
+  }
+}
+
+function localWrite(file, data) {
+  fs.writeFileSync(file, JSON.stringify(data, null, 2));
+}
+
+// One-time migration: if local file missing, pull once from GitHub then save locally
+async function migrateIfNeeded(localFile, ghPath) {
+  if (fs.existsSync(localFile)) return;
+  try {
+    const { data } = await ghRead(ghPath);
+    localWrite(localFile, Array.isArray(data) ? data : []);
+    console.log(`Migrated ${ghPath} → ${localFile}`);
+  } catch (e) {
+    console.warn(`Migration from GitHub failed for ${ghPath}: ${e.message}`);
+    localWrite(localFile, []);
+  }
 }
 
 // ─── /api/fetch ───────────────────────────────────────────────────────────────
@@ -348,22 +381,17 @@ Respond ONLY with valid JSON in this exact format, no other text:
 });
 
 // ─── /api/vocabulary ─────────────────────────────────────────────────────────
-const VOCAB_FILE = 'data/vocabulary.json';
+const VOCAB_FILE = 'data/vocabulary.json';  // kept for migration only
 
-app.get('/api/vocabulary', async (_req, res) => {
-  try {
-    const { data } = await ghRead(VOCAB_FILE);
-    res.json(data);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+app.get('/api/vocabulary', (_req, res) => {
+  res.json(localRead(VOCAB_LOCAL));
 });
 
-app.post('/api/vocabulary', async (req, res) => {
+app.post('/api/vocabulary', (req, res) => {
   const { word, translation, sentence, sentenceTranslation, url } = req.body || {};
   if (!word) return res.status(400).json({ error: 'word required' });
   try {
-    const { data, sha } = await ghRead(VOCAB_FILE);
+    const data = localRead(VOCAB_LOCAL);
     const entry = {
       id: Date.now(),
       word,
@@ -374,28 +402,27 @@ app.post('/api/vocabulary', async (req, res) => {
       date: new Date().toISOString(),
     };
     data.unshift(entry);
-    await ghWrite(VOCAB_FILE, data, sha, `Add vocabulary: ${word}`);
+    localWrite(VOCAB_LOCAL, data);
     res.json(entry);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-app.delete('/api/vocabulary/:id', async (req, res) => {
+app.delete('/api/vocabulary/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const { data, sha } = await ghRead(VOCAB_FILE);
-    await ghWrite(VOCAB_FILE, data.filter(v => v.id !== id), sha, 'Remove vocabulary entry');
+    const data = localRead(VOCAB_LOCAL);
+    localWrite(VOCAB_LOCAL, data.filter(v => v.id !== id));
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-app.delete('/api/vocabulary', async (_req, res) => {
+app.delete('/api/vocabulary', (_req, res) => {
   try {
-    const { sha } = await ghRead(VOCAB_FILE);
-    await ghWrite(VOCAB_FILE, [], sha, 'Clear vocabulary');
+    localWrite(VOCAB_LOCAL, []);
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -403,7 +430,7 @@ app.delete('/api/vocabulary', async (_req, res) => {
 });
 
 // ─── /api/reading-list ────────────────────────────────────────────────────────
-const RL_FILE = 'data/reading-list.json';
+const RL_FILE = 'data/reading-list.json';  // kept for migration only
 
 async function fetchMeta(url) {
   const response = await fetch(url, {
@@ -458,20 +485,15 @@ async function getSummary(meta, url) {
   return msg.content[0].text.trim();
 }
 
-app.get('/api/reading-list', async (_req, res) => {
-  try {
-    const { data } = await ghRead(RL_FILE);
-    res.json(data);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+app.get('/api/reading-list', (_req, res) => {
+  res.json(localRead(RL_LOCAL));
 });
 
 app.post('/api/reading-list', async (req, res) => {
   const { url } = req.body || {};
   if (!url) return res.status(400).json({ error: 'url required' });
   try {
-    const { data, sha } = await ghRead(RL_FILE);
+    const data = localRead(RL_LOCAL);
     if (data.some(i => i.url === url)) return res.json({ duplicate: true });
 
     const meta    = await fetchMeta(url);
@@ -487,42 +509,84 @@ app.post('/api/reading-list', async (req, res) => {
       read:      false,
     };
     data.unshift(entry);
-    await ghWrite(RL_FILE, data, sha, `Add to reading list: ${meta.title}`);
+    localWrite(RL_LOCAL, data);
     res.json(entry);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-app.patch('/api/reading-list/:id', async (req, res) => {
+app.patch('/api/reading-list/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const { data, sha } = await ghRead(RL_FILE);
+    const data = localRead(RL_LOCAL);
     const item = data.find(i => i.id === id);
     if (!item) return res.status(404).json({ error: 'Not found' });
     item.read = true;
-    await ghWrite(RL_FILE, data, sha, 'Mark article as read');
+    localWrite(RL_LOCAL, data);
     res.json(item);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-app.delete('/api/reading-list/:id', async (req, res) => {
+// ─── /api/scroll — cross-device scroll position sync ────────────────────────
+// Stored on the VPS local filesystem (NOT in GitHub) so that frequent writes
+// don't trigger Netlify deploys. The file persists across pm2 restarts.
+const SCROLL_LOCAL = path.join(__dirname, 'scroll-positions.json');
+
+function readScrollStore() {
+  try {
+    return JSON.parse(fs.readFileSync(SCROLL_LOCAL, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+function writeScrollStore(store) {
+  fs.writeFileSync(SCROLL_LOCAL, JSON.stringify(store, null, 2));
+}
+
+app.get('/api/debug/scroll', (_req, res) => {
+  res.json(readScrollStore());
+});
+
+app.get('/api/reading-list/scroll', (req, res) => {
+  const url = req.query.url;
+  if (!url) return res.status(400).json({ error: 'url required' });
+  const store = readScrollStore();
+  res.json({ scrollPct: store[url] || 0 });
+});
+
+function handleScrollSave(req, res) {
+  const { url, scrollPct } = req.body || {};
+  if (!url) return res.status(400).json({ error: 'url required' });
+  try {
+    const store = readScrollStore();
+    store[url] = scrollPct || 0;
+    writeScrollStore(store);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+}
+app.patch('/api/reading-list/scroll', handleScrollSave);
+app.post('/api/reading-list/scroll',  handleScrollSave);
+
+app.delete('/api/reading-list/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const { data, sha } = await ghRead(RL_FILE);
-    await ghWrite(RL_FILE, data.filter(i => i.id !== id), sha, 'Remove from reading list');
+    const data = localRead(RL_LOCAL);
+    localWrite(RL_LOCAL, data.filter(i => i.id !== id));
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-app.delete('/api/reading-list', async (_req, res) => {
+app.delete('/api/reading-list', (_req, res) => {
   try {
-    const { sha } = await ghRead(RL_FILE);
-    await ghWrite(RL_FILE, [], sha, 'Clear reading list');
+    localWrite(RL_LOCAL, []);
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -719,10 +783,10 @@ app.post('/api/gmail-import', async (_req, res) => {
         return res.json({ imported: 0, message: 'Could not extract article URLs from newsletters' });
       }
 
-      const { data, sha } = await ghRead(RL_FILE);
-      const existingUrls  = new Set(data.map(i => i.url));
-      const newEntries    = [];
-      const toArchive     = [];
+      const data         = localRead(RL_LOCAL);
+      const existingUrls = new Set(data.map(i => i.url));
+      const newEntries   = [];
+      const toArchive    = [];
 
       for (let i = 0; i < enriched.length; i++) {
         const item = enriched[i];
@@ -746,12 +810,7 @@ app.post('/api/gmail-import', async (_req, res) => {
       }
 
       if (newEntries.length > 0) {
-        await ghWrite(
-          RL_FILE,
-          [...newEntries, ...data],
-          sha,
-          `Import ${newEntries.length} newsletter(s) from Gmail`
-        );
+        localWrite(RL_LOCAL, [...newEntries, ...data]);
       }
 
       if (toArchive.length > 0) {
@@ -777,6 +836,12 @@ app.post('/api/gmail-import', async (_req, res) => {
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────
+// Migrate any GitHub-stored data to local filesystem on first boot
+Promise.all([
+  migrateIfNeeded(RL_LOCAL,    RL_FILE),
+  migrateIfNeeded(VOCAB_LOCAL, VOCAB_FILE),
+]).catch(e => console.error('Startup migration error:', e));
+
 app.listen(PORT, () => {
   console.log(`Spanish Reader API listening on port ${PORT}`);
   console.log(`Data branch: ${DATA_BRANCH}`);
