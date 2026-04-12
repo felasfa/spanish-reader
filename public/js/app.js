@@ -146,14 +146,26 @@ async function loadUrl(url, addToHistory = true) {
   try {
     const domain = urlDomain(url);
     const cookie = siteCookies[domain] || '';
-    const fetchPath = `/api/fetch?url=${encodeURIComponent(url)}${cookie ? `&cookie=${encodeURIComponent(cookie)}` : ''}`;
-    const res  = await fetch(fetchPath);
+    // Send cookie as a request header to avoid URL length/encoding issues
+    const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`, {
+      headers: cookie ? { 'x-site-cookie': cookie } : {},
+    });
     const data = await res.json();
 
     if (res.status === 403) {
-      // Show modal to collect subscriber cookie, then retry
-      showCookieModal(domain, url, addToHistory, data.error);
-      return; // modal handles retry
+      if (cookie && data.cookieSent === false) {
+        // Cookie exists locally but wasn't received by the function — header issue
+        showToast('Cookie not transmitted — please try saving it again', 'error');
+        showCookieModal(domain, url, addToHistory);
+      } else if (cookie && data.cookieSent) {
+        // Cookie was sent but site still rejected it — bot detection or expired session
+        showToast(`Cookie sent (${data.cookieLength} chars) but site still blocked — session may be expired or site blocks server access`, 'error');
+        showCookieModal(domain, url, addToHistory);
+      } else {
+        // No cookie yet — first time hitting this paywall
+        showCookieModal(domain, url, addToHistory);
+      }
+      return;
     }
 
     if (!res.ok) throw new Error(data.error || 'Failed to load page');

@@ -157,7 +157,8 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'URL required' }) };
   }
 
-  const passCookie = (event.queryStringParameters || {}).cookie || '';
+  // Cookie is sent as a request header (avoids URL length/encoding limits)
+  const passCookie = (event.headers || {})['x-site-cookie'] || '';
 
   try {
     const reqHeaders = {
@@ -193,7 +194,11 @@ exports.handler = async (event) => {
       return {
         statusCode: response.status,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: `Remote server returned ${response.status}: ${response.statusText}` }),
+        body: JSON.stringify({
+          error: `Remote server returned ${response.status}: ${response.statusText}`,
+          cookieSent: !!passCookie,
+          cookieLength: passCookie.length,
+        }),
       };
     }
 
