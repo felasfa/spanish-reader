@@ -153,18 +153,16 @@ async function loadUrl(url, addToHistory = true) {
     const data = await res.json();
 
     if (res.status === 403) {
-      if (cookie && data.cookieSent === false) {
-        // Cookie exists locally but wasn't received by the function — header issue
-        showToast('Cookie not transmitted — please try saving it again', 'error');
-        showCookieModal(domain, url, addToHistory);
-      } else if (cookie && data.cookieSent) {
-        // Cookie was sent but site still rejected it — bot detection or expired session
-        showToast(`Cookie sent (${data.cookieLength} chars) but site still blocked — session may be expired or site blocks server access`, 'error');
-        showCookieModal(domain, url, addToHistory);
-      } else {
-        // No cookie yet — first time hitting this paywall
-        showCookieModal(domain, url, addToHistory);
+      if (cookie) {
+        // Already tried with a cookie — tell the user what happened
+        const detail = data.cookieSent === true
+          ? `Cookie reached the site (${data.cookieLength} chars) but was rejected — session may be expired`
+          : data.cookieSent === false
+            ? 'Cookie was not transmitted — please try saving it again'
+            : 'Cookie may not have reached the site — check the value and try again';
+        showToast(detail, 'error');
       }
+      showCookieModal(domain, url, addToHistory);
       return;
     }
 
