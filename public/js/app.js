@@ -16,11 +16,18 @@ let rlData = []; // cached reading-list items for cross-device scroll lookup
 
 function syncScrollToServer(url, scrollY) {
   if (!url || !scrollY) return;
-  fetch(`${API_BASE}/api/reading-list/scroll`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url, scrollY }),
-  }).catch(() => {}); // fire-and-forget, silently ignore errors
+  const body = JSON.stringify({ url, scrollY });
+  // sendBeacon is guaranteed to fire even when the page is being closed/backgrounded on iOS
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(`${API_BASE}/api/reading-list/scroll`,
+      new Blob([body], { type: 'application/json' }));
+  } else {
+    fetch(`${API_BASE}/api/reading-list/scroll`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+    }).catch(() => {});
+  }
 }
 
 /* ===== Helpers ===== */
@@ -107,17 +114,13 @@ function hideError(el)       { el.style.display = 'none'; }
 
 /* ===== Toast ===== */
 let toastTimer;
-function showToast(msg, type = 'info', link = null) {
+function showToast(msg, type = 'info') {
   const t = $('toast');
-  if (link) {
-    t.innerHTML = `${msg} <a href="${link}" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;margin-left:6px;">Open ↗</a>`;
-  } else {
-    t.textContent = msg;
-  }
+  t.textContent = msg;
   t.className = `toast toast-${type}`;
   t.style.display = 'block';
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.style.display = 'none'; }, link ? 9000 : 3000);
+  toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3000);
 }
 
 /* ===== Navigation ===== */
@@ -160,8 +163,9 @@ async function loadUrl(url, addToHistory = true) {
     const data = await res.json();
 
     if (res.status === 403) {
-      // window.open after await is blocked by popup blockers — show tappable link instead
-      showToast('Subscriber content', 'info', url);
+      // Real DOM element set before user taps — iOS Safari allows this, unlike window.open after await
+      $('subscriber-bar-link').href = url;
+      $('subscriber-bar').style.display = 'flex';
       return;
     }
 
@@ -667,6 +671,10 @@ $('rl-gmail-import').addEventListener('click', async () => {
     showView('reading-list');
   });
 })();
+
+// Subscriber bar
+$('subscriber-bar-close').addEventListener('click', () => { $('subscriber-bar').style.display = 'none'; });
+$('subscriber-bar-link').addEventListener('click', () => { $('subscriber-bar').style.display = 'none'; });
 
 // Bookmarklet: clicking it in the app just shows a hint
 $('bookmarklet-link').addEventListener('click', (e) => {

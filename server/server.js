@@ -519,20 +519,23 @@ app.get('/api/reading-list/scroll', async (req, res) => {
 });
 
 // Save scroll position for cross-device reading progress
-app.patch('/api/reading-list/scroll', async (req, res) => {
+// Accepts both PATCH (fetch) and POST (sendBeacon — used when app is backgrounded)
+async function handleScrollSave(req, res) {
   const { url, scrollY } = req.body || {};
   if (!url) return res.status(400).json({ error: 'url required' });
   try {
     const { data, sha } = await ghRead(RL_FILE);
     const item = data.find(i => i.url === url);
-    if (!item) return res.json({ notFound: true }); // not in list — ignore silently
+    if (!item) return res.json({ notFound: true });
     item.scrollY = Math.round(scrollY) || 0;
-    await ghWrite(RL_FILE, data, sha, `Sync scroll position`);
+    await ghWrite(RL_FILE, data, sha, 'Sync scroll position');
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
-});
+}
+app.patch('/api/reading-list/scroll', handleScrollSave);
+app.post('/api/reading-list/scroll',  handleScrollSave);
 
 app.delete('/api/reading-list/:id', async (req, res) => {
   const id = parseInt(req.params.id, 10);

@@ -888,3 +888,24 @@ html, body {
   width: 36px; height: 4px; border-radius: 2px;
   background: var(--border); margin: 10px auto 0;
 }
+
+/* ===== Subscriber bar ===== */
+.subscriber-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #1d1d1f; color: #fff;
+  padding: 14px 16px; gap: 12px;
+  align-items: center; z-index: 3000;
+  font-size: 14px; font-family: inherit;
+}
+.subscriber-bar-msg { flex: 1; }
+.subscriber-bar-open {
+  color: #fff; font-weight: 700;
+  padding: 9px 16px; border-radius: 8px;
+  background: rgba(255,255,255,.18); text-decoration: none;
+  white-space: nowrap; -webkit-tap-highlight-color: rgba(255,255,255,.3);
+}
+.subscriber-bar-close {
+  background: none; border: none; color: rgba(255,255,255,.6);
+  font-size: 18px; cursor: pointer; padding: 4px 8px; margin-left: 4px;
+  font-family: inherit;
+}
