@@ -514,8 +514,10 @@ app.get('/api/reading-list/scroll', async (req, res) => {
   const url = req.query.url;
   if (!url) return res.status(400).json({ error: 'url required' });
   try {
-    const { data } = await ghRead(SCROLL_FILE);
-    res.json({ scrollY: (data && data[url]) || 0 });
+    const { data: raw } = await ghRead(SCROLL_FILE);
+    // ghRead returns [] for missing files (array fallback); we need an object
+    const positions = (raw && !Array.isArray(raw)) ? raw : {};
+    res.json({ scrollY: positions[url] || 0 });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -525,8 +527,9 @@ async function handleScrollSave(req, res) {
   const { url, scrollY } = req.body || {};
   if (!url) return res.status(400).json({ error: 'url required' });
   try {
-    const { data: positions, sha } = await ghRead(SCROLL_FILE);
-    const store = positions || {};
+    const { data: raw, sha } = await ghRead(SCROLL_FILE);
+    // ghRead returns [] for missing files (array fallback); we need an object
+    const store = (raw && !Array.isArray(raw)) ? raw : {};
     store[url] = Math.round(scrollY) || 0;
     await ghWrite(SCROLL_FILE, store, sha, 'Sync scroll position');
     res.json({ success: true });

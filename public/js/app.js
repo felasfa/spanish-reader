@@ -685,6 +685,14 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
+// Periodically save scroll position while reading so cross-device sync
+// is always recent, not only on navigation or app-backgrounding
+setInterval(() => {
+  if (state.currentView === 'reader' && state.currentUrl && iframeScrollY > 0) {
+    syncScrollToServer(state.currentUrl, iframeScrollY);
+  }
+}, 15000);
+
 /* ===== Init ===== */
 updateVocabCount();
 loadReadingList();
