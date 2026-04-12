@@ -295,7 +295,7 @@ function showTranslationPopup(word, sentence) {
   $('popup-error').style.display = 'none';
   $('popup-saved').style.display = 'none';
   $('popup-save').style.display = 'inline-flex';
-  popup.style.display = 'block';
+  popup.style.display = 'flex';
   state.pendingTranslation = { word, sentence };
 
   fetch(`${API_BASE}/api/translate`, {
@@ -322,15 +322,18 @@ function showTranslationPopup(word, sentence) {
 
 $('popup-close').addEventListener('click', () => { $('translation-popup').style.display = 'none'; });
 
-// Swipe down to dismiss translation popup
+// Swipe down to dismiss translation popup — only from drag handle / header,
+// not from the scrollable content area
 (function () {
   const popup = $('translation-popup');
-  let startY = 0, startX = 0;
+  let startY = -1, startX = 0;
   popup.addEventListener('touchstart', function (e) {
+    if (e.target.closest('.popup-content')) { startY = -1; return; }
     startY = e.touches[0].clientY;
     startX = e.touches[0].clientX;
   }, { passive: true });
   popup.addEventListener('touchend', function (e) {
+    if (startY < 0) return;
     const dy = e.changedTouches[0].clientY - startY;
     const dx = Math.abs(e.changedTouches[0].clientX - startX);
     if (dy > 60 && dx < 80) popup.style.display = 'none';
