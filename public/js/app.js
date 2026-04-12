@@ -14,11 +14,12 @@ let iframeScrollY = 0; // last known iframe scroll position
 const readerScrollPositions = {}; // url → scrollY
 let rlData = []; // cached reading-list items for cross-device scroll lookup
 
-function syncScrollToServer(url, scrollY) {
+function syncScrollToServer(url, scrollY, useBeacon = false) {
   if (!url || !scrollY) return;
   const body = JSON.stringify({ url, scrollY });
-  // sendBeacon is guaranteed to fire even when the page is being closed/backgrounded on iOS
-  if (navigator.sendBeacon) {
+  // Use sendBeacon only when the page is unloading (guaranteed delivery).
+  // For normal saves (interval, navigation) use fetch so failures are visible in console.
+  if (useBeacon && navigator.sendBeacon) {
     navigator.sendBeacon(`${API_BASE}/api/reading-list/scroll`,
       new Blob([body], { type: 'application/json' }));
   } else {
@@ -26,7 +27,7 @@ function syncScrollToServer(url, scrollY) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body,
-    }).catch(() => {});
+    }).then(r => r.json()).then(d => console.log('[scroll save]', d)).catch(e => console.error('[scroll save error]', e));
   }
 }
 
@@ -681,7 +682,7 @@ $('bookmarklet-link').addEventListener('click', (e) => {
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden' && state.currentView === 'reader' && state.currentUrl && iframeScrollY > 0) {
     readerScrollPositions[state.currentUrl] = iframeScrollY;
-    syncScrollToServer(state.currentUrl, iframeScrollY);
+    syncScrollToServer(state.currentUrl, iframeScrollY, true); // beacon for unload reliability
   }
 });
 

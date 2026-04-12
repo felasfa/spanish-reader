@@ -510,6 +510,16 @@ app.patch('/api/reading-list/:id', async (req, res) => {
 // Works for any URL (not limited to reading-list items).
 const SCROLL_FILE = 'data/scroll-positions.json';
 
+// Diagnostic: dump the entire scroll-positions store (for debugging)
+app.get('/api/debug/scroll', async (_req, res) => {
+  try {
+    const { data: raw } = await ghRead(SCROLL_FILE);
+    res.json({ raw, isArray: Array.isArray(raw), type: typeof raw });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.get('/api/reading-list/scroll', async (req, res) => {
   const url = req.query.url;
   if (!url) return res.status(400).json({ error: 'url required' });
