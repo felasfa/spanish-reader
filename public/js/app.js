@@ -189,25 +189,14 @@ async function loadUrl(url, addToHistory = true) {
     iframe.onload = () => {
       $('reader-loading').style.display = 'none';
       iframe.style.visibility = 'visible';
-      // Fetch fresh scroll position from server (cross-device sync).
-      // We delay the actual scroll-to because onload fires before CSS/images
-      // have finished rendering — scrollTo(0, y) would land at the right pixel
-      // but then the page reflows and ends up in the wrong place.
+      // Fetch cross-device scroll position. The iframe's own scroll handler
+      // retries until the page has rendered enough height to land correctly.
       const localY = readerScrollPositions[url];
+      const send = (y) => iframe.contentWindow.postMessage({ type: 'scroll-to', y }, '*');
       fetch(`${API_BASE}/api/reading-list/scroll?url=${encodeURIComponent(url)}`)
         .then(r => r.json())
-        .then(d => {
-          const y = (d.scrollY > 0) ? d.scrollY : localY;
-          if (!y) return;
-          // First attempt at 500ms; retry at 1500ms in case the page is still rendering
-          setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y }, '*'), 500);
-          setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y }, '*'), 1500);
-        })
-        .catch(() => {
-          if (!localY) return;
-          setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y: localY }, '*'), 500);
-          setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y: localY }, '*'), 1500);
-        });
+        .then(d => { const y = (d.scrollY > 0) ? d.scrollY : localY; if (y) send(y); })
+        .catch(() => { if (localY) send(localY); });
     };
   } catch (e) {
     if (state.currentView === 'reader') {

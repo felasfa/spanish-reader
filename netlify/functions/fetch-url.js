@@ -98,19 +98,29 @@ const INTERACTION_SCRIPT = `
 
   // ── Text selection ────────────────────────────────────────────
   function getSentence(selectionText, container) {
-    var text = '';
-    var walker = document.createTreeWalker(
-      container.closest('p,li,td,h1,h2,h3,h4,h5,h6,article,blockquote,section') || container,
-      NodeFilter.SHOW_TEXT
-    );
-    var n;
-    while ((n = walker.nextNode())) text += n.textContent;
-    if (!text) text = container.innerText || container.textContent || selectionText;
+    // Find the nearest block element with enough text; walk up if too short
+    var root = container.closest('p,li,blockquote,td,h1,h2,h3,h4,h5,h6') || container;
+    var txt = (root.innerText || root.textContent || '').trim();
+    if (txt.length < 80) {
+      var bigger = root.closest('div,section,article,main');
+      if (bigger) root = bigger;
+    }
+    var text = (root.innerText || root.textContent || '').replace(/\\s+/g, ' ').trim();
+    if (!text) text = selectionText;
     var sentences = text.match(/[^.!?¡¿\\n]+[.!?\\n]*/g) || [];
     for (var i = 0; i < sentences.length; i++) {
       if (sentences[i].includes(selectionText)) return sentences[i].trim();
     }
-    return text.trim().slice(0, 300);
+    // Fallback: grab text from the nearest sentence boundary around the word
+    var idx = text.indexOf(selectionText);
+    if (idx >= 0) {
+      var start = text.lastIndexOf('.', idx - 1);
+      start = (start >= 0) ? start + 1 : Math.max(0, idx - 120);
+      var end = text.indexOf('.', idx + selectionText.length);
+      end = (end >= 0) ? end + 1 : Math.min(text.length, idx + selectionText.length + 120);
+      return text.slice(start, end).trim();
+    }
+    return text.slice(0, 300);
   }
 
   function sendSelection() {
@@ -143,8 +153,24 @@ const INTERACTION_SCRIPT = `
     }, 150);
   }, { passive: true });
 
+  // ── Scroll restoration ───────────────────────────────────────────
+  // When the parent sends scroll-to, retry until the page has rendered
+  // enough height to actually land at the target. Stop as soon as the
+  // user touches the screen so we never interrupt intentional scrolling.
   window.addEventListener('message', function (e) {
-    if (e.data && e.data.type === 'scroll-to') window.scrollTo(0, e.data.y);
+    if (e.data && e.data.type !== 'scroll-to') return;
+    var target = e.data.y;
+    var userTouched = false;
+    document.addEventListener('touchstart', function () { userTouched = true; }, { once: true, passive: true });
+    function tryScroll(attemptsLeft) {
+      if (userTouched) return;
+      window.scrollTo(0, target);
+      // If we didn't land close enough (page still short), retry
+      if (Math.abs(window.scrollY - target) > 50 && attemptsLeft > 0) {
+        setTimeout(function () { tryScroll(attemptsLeft - 1); }, 400);
+      }
+    }
+    tryScroll(4); // up to 4 retries × 400ms = ~1.6s window
   });
 })();
 </script>`;
