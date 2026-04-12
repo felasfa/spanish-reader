@@ -12,12 +12,15 @@ const state = {
 let rlUnreadCount = 0; // tracked in memory — no extra API call needed
 let iframeScrollY = 0; // last known iframe scroll position
 const readerScrollPositions = {}; // url → scrollY
-const siteCookies = JSON.parse(localStorage.getItem('siteCookies') || '{}'); // domain → cookie string
+let rlData = []; // cached reading-list items for cross-device scroll lookup
 
-function saveSiteCookies() { localStorage.setItem('siteCookies', JSON.stringify(siteCookies)); }
-
-function urlDomain(url) {
-  try { return cleanDomain(new URL(url).hostname); } catch { return ''; }
+function syncScrollToServer(url, scrollY) {
+  if (!url || !scrollY) return;
+  fetch(`${API_BASE}/api/reading-list/scroll`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url, scrollY }),
+  }).catch(() => {}); // fire-and-forget, silently ignore errors
 }
 
 /* ===== Helpers ===== */
@@ -26,6 +29,11 @@ function $(id) { return document.getElementById(id); }
 const scrollPositions = {};
 
 function showView(name) {
+  // Sync reader scroll position to server when leaving the reader
+  if (state.currentView === 'reader' && name !== 'reader' && state.currentUrl && iframeScrollY > 0) {
+    readerScrollPositions[state.currentUrl] = iframeScrollY;
+    syncScrollToServer(state.currentUrl, iframeScrollY);
+  }
   scrollPositions[state.currentView] = window.scrollY;
   if (state.currentView !== name) state.previousView = state.currentView;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -144,25 +152,12 @@ async function loadUrl(url, addToHistory = true) {
   $('url-read-now').textContent = 'Loading…';
 
   try {
-    const domain = urlDomain(url);
-    const cookie = siteCookies[domain] || '';
-    // Send cookie as a request header to avoid URL length/encoding issues
-    const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`, {
-      headers: cookie ? { 'x-site-cookie': cookie } : {},
-    });
+    const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`);
     const data = await res.json();
 
     if (res.status === 403) {
-      if (cookie) {
-        // Already tried with a cookie — tell the user what happened
-        const detail = data.cookieSent === true
-          ? `Cookie reached the site (${data.cookieLength} chars) but was rejected — session may be expired`
-          : data.cookieSent === false
-            ? 'Cookie was not transmitted — please try saving it again'
-            : 'Cookie may not have reached the site — check the value and try again';
-        showToast(detail, 'error');
-      }
-      showCookieModal(domain, url, addToHistory);
+      window.open(url, '_blank');
+      showToast('Subscriber content — opened in browser where you\'re logged in', 'info');
       return;
     }
 
@@ -186,7 +181,9 @@ async function loadUrl(url, addToHistory = true) {
     iframe.onload = () => {
       $('reader-loading').style.display = 'none';
       iframe.style.visibility = 'visible';
-      const savedY = readerScrollPositions[url];
+      // Prefer server-synced position (cross-device), fall back to local cache
+      const rlItem = rlData.find(i => i.url === url);
+      const savedY = (rlItem && rlItem.scrollY) || readerScrollPositions[url];
       if (savedY) setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y: savedY }, '*'), 100);
     };
   } catch (e) {
@@ -305,6 +302,21 @@ function showTranslationPopup(word, sentence) {
 }
 
 $('popup-close').addEventListener('click', () => { $('translation-popup').style.display = 'none'; });
+
+// Swipe down to dismiss translation popup
+(function () {
+  const popup = $('translation-popup');
+  let startY = 0, startX = 0;
+  popup.addEventListener('touchstart', function (e) {
+    startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+  popup.addEventListener('touchend', function (e) {
+    const dy = e.changedTouches[0].clientY - startY;
+    const dx = Math.abs(e.changedTouches[0].clientX - startX);
+    if (dy > 60 && dx < 80) popup.style.display = 'none';
+  }, { passive: true });
+})();
 
 /* ===== Save to Vocabulary (GitHub API) ===== */
 $('popup-save').addEventListener('click', async () => {
@@ -488,6 +500,7 @@ async function loadReadingList() {
   try {
     const res  = await fetch(`${API_BASE}/api/reading-list`);
     const list = await res.json();
+    rlData = list; // cache for cross-device scroll lookup
     rlUnreadCount = list.filter(i => !i.read).length;
     updateRLCount();
     renderReadingList(list);
@@ -643,50 +656,11 @@ $('rl-gmail-import').addEventListener('click', async () => {
   });
 })();
 
-/* ===== Cookie modal ===== */
-(function () {
-  const overlay = $('cookie-modal');
-  const domainEl = $('cookie-modal-domain');
-  const textarea = $('cookie-input');
-  let _pendingDomain, _pendingUrl, _pendingHistory;
-
-  // Tab switching
-  overlay.querySelectorAll('.cookie-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      overlay.querySelectorAll('.cookie-tab').forEach(t => t.classList.remove('active'));
-      overlay.querySelectorAll('.cookie-tab-content').forEach(c => c.style.display = 'none');
-      tab.classList.add('active');
-      $('cookie-tab-' + tab.dataset.tab).style.display = 'block';
-    });
-  });
-
-  $('cookie-cancel').addEventListener('click', () => {
-    overlay.style.display = 'none';
-    $('url-read-now').disabled = false;
-    $('url-read-now').innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg> Read Now`;
-  });
-
-  $('cookie-save').addEventListener('click', () => {
-    let val = textarea.value.trim();
-    if (!val) return;
-    // Accept the full header line ("Cookie: nyt-a=…") or just the value
-    val = val.replace(/^cookie\s*:\s*/i, '');
-    siteCookies[_pendingDomain] = val;
-    saveSiteCookies();
-    overlay.style.display = 'none';
-    loadUrl(_pendingUrl, _pendingHistory);
-  });
-
-  window.showCookieModal = function (domain, url, addToHistory) {
-    _pendingDomain = domain;
-    _pendingUrl = url;
-    _pendingHistory = addToHistory;
-    domainEl.textContent = domain;
-    textarea.value = siteCookies[domain] || '';
-    overlay.style.display = 'flex';
-    textarea.focus();
-  };
-})();
+// Bookmarklet: clicking it in the app just shows a hint
+$('bookmarklet-link').addEventListener('click', (e) => {
+  e.preventDefault();
+  showToast('Drag the button to your bookmarks bar, then click it on any page to save', 'info');
+});
 
 /* ===== Init ===== */
 updateVocabCount();

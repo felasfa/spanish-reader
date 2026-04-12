@@ -99,7 +99,11 @@
           <span class="suggestions-label">Try:</span>
           <button class="suggestion-chip" data-url="https://elpais.com">El País</button>
           <button class="suggestion-chip" data-url="https://www.bbc.com/mundo">BBC Mundo</button>
-          <button class="suggestion-chip" data-url="https://www.nytimes.com/es/">NYT Español</button>
+        </div>
+        <div class="bookmarklet-row">
+          <span class="bookmarklet-label">Save any page:</span>
+          <a id="bookmarklet-link" class="bookmarklet-btn" href="javascript:(function(){var u=location.href,t=document.title,d=document.createElement('div');d.style.cssText='position:fixed;top:20px;right:20px;background:#1d1d1f;color:#fff;padding:12px 18px;border-radius:10px;font:14px/1 -apple-system,sans-serif;z-index:2147483647;transition:opacity .4s';d.textContent='Saving\u2026';document.body.appendChild(d);fetch('https://api.felasfa.app/api/reading-list',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:u,title:t})}).then(function(r){return r.json()}).then(function(j){d.textContent=j.duplicate?'Already saved \u2713':'Saved to Spanish Reader \u2713';setTimeout(function(){d.style.opacity='0';setTimeout(function(){d.remove()},400)},1500)}).catch(function(){d.textContent='Error \u2014 check connection';setTimeout(function(){d.remove()},2000)})})();">+ Save to Reader</a>
+          <span class="bookmarklet-hint">← drag to bookmarks bar</span>
         </div>
       </div>
     </div>
@@ -243,6 +247,7 @@
 
   <!-- Translation Popup -->
   <div id="translation-popup" class="translation-popup" style="display:none">
+    <div class="popup-drag-handle"></div>
     <div class="popup-header">
       <div class="popup-word" id="popup-word"></div>
       <button class="popup-close" id="popup-close" aria-label="Close">
@@ -288,65 +293,6 @@
 
   <!-- Toast notification -->
   <div id="toast" class="toast" style="display:none"></div>
-
-  <!-- Cookie modal -->
-  <div id="cookie-modal" class="cookie-modal-overlay" style="display:none" role="dialog" aria-modal="true">
-    <div class="cookie-modal-box">
-      <h3 class="cookie-modal-title">Subscriber Access — <span id="cookie-modal-domain"></span></h3>
-      <p class="cookie-modal-intro">This site blocked access. If you're a subscriber, paste your session cookie below to unlock it.</p>
-
-      <div class="cookie-platform-tabs">
-        <button class="cookie-tab active" data-tab="chrome">Chrome (Mac/Win)</button>
-        <button class="cookie-tab" data-tab="safari-mac">Safari (Mac)</button>
-        <button class="cookie-tab" data-tab="ios">iPhone / iPad</button>
-      </div>
-
-      <div class="cookie-tab-content" id="cookie-tab-chrome">
-        <ol class="cookie-steps">
-          <li>Open the site in Chrome while logged in</li>
-          <li>Press <kbd>⌘⌥I</kbd> (Mac) or <kbd>Ctrl+Shift+I</kbd> (Windows) to open DevTools</li>
-          <li>Click the <strong>Network</strong> tab, then reload the page (<kbd>⌘R</kbd> / <kbd>F5</kbd>)</li>
-          <li>Click any request to the site in the list (e.g. the top one)</li>
-          <li>In the right panel scroll down to <strong>Request Headers</strong> → find <strong>cookie</strong></li>
-          <li>Click the row to expand it if needed, then select and copy the entire cookie line — it will look like <code>Cookie: nyt-a=…; NYT-S=…; …</code></li>
-          <li>Paste it below — the <code>Cookie:</code> prefix is stripped automatically</li>
-        </ol>
-      </div>
-
-      <div class="cookie-tab-content" id="cookie-tab-safari-mac" style="display:none">
-        <ol class="cookie-steps">
-          <li>Open the site in Safari while logged in</li>
-          <li>Enable DevTools if needed: Safari → <strong>Settings</strong> → <strong>Advanced</strong> → turn on <em>Show features for web developers</em></li>
-          <li>Press <kbd>⌘⌥I</kbd> to open Web Inspector (or <strong>Develop</strong> menu → Show Web Inspector)</li>
-          <li>Click the <strong>Network</strong> tab, then reload the page (<kbd>⌘R</kbd>)</li>
-          <li>Click any request to the site in the list</li>
-          <li>In the right panel click <strong>Headers</strong> → scroll to <strong>Request</strong> section → find <strong>Cookie</strong></li>
-          <li>Triple-click the row to select the full line (it looks like <code>Cookie: nyt-a=…; NYT-S=…; …</code>), then copy</li>
-          <li>Paste it below — the <code>Cookie:</code> prefix is stripped automatically</li>
-        </ol>
-      </div>
-
-      <div class="cookie-tab-content" id="cookie-tab-ios" style="display:none">
-        <p class="cookie-steps-intro">iOS doesn't have built-in DevTools. The easiest path: grab the cookie on a Mac (using the Chrome or Safari tab above) and paste it here — it's saved and works on all devices.</p>
-        <p class="cookie-steps-intro">If you only have an iPhone/iPad, use <strong>remote inspection</strong> from a Mac:</p>
-        <ol class="cookie-steps">
-          <li>On iPhone: <strong>Settings → Safari → Advanced</strong> → turn on <em>Web Inspector</em></li>
-          <li>Open the site in Safari on iPhone while logged in</li>
-          <li>Connect iPhone to Mac via USB cable, tap <em>Trust</em> on iPhone</li>
-          <li>On Mac, open Safari → <strong>Develop</strong> menu → your iPhone → tap the site tab</li>
-          <li>In Web Inspector: <strong>Network</strong> tab → reload → click a request → <strong>Headers → Request → Cookie</strong></li>
-          <li>Copy the full line and paste it below</li>
-        </ol>
-      </div>
-
-      <textarea id="cookie-input" class="cookie-textarea" rows="3" placeholder="Paste the cookie line here — either the full 'Cookie: nyt-a=…; NYT-S=…; …' line or just the values after the colon"></textarea>
-
-      <div class="cookie-modal-actions">
-        <button id="cookie-cancel" class="cookie-btn-cancel">Cancel</button>
-        <button id="cookie-save" class="cookie-btn-save">Save &amp; Retry</button>
-      </div>
-    </div>
-  </div>
 
   <script src="/js/app.js"></script>
 </body>

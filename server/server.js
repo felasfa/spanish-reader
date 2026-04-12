@@ -18,12 +18,9 @@ const allowedOrigins = new Set([
 
 app.use(cors({
   origin(origin, cb) {
-    // Allow requests with no origin (curl, Postman, same-origin)
-    if (!origin) return cb(null, true);
-    if (allowedOrigins.has(origin) || origin.endsWith('.netlify.app')) {
-      return cb(null, true);
-    }
-    cb(new Error(`CORS: origin ${origin} not allowed`));
+    // Allow all origins — needed for the bookmarklet which runs on third-party sites.
+    // The API holds only personal reading-list data so broad access is acceptable.
+    cb(null, true);
   },
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -503,6 +500,22 @@ app.patch('/api/reading-list/:id', async (req, res) => {
     item.read = true;
     await ghWrite(RL_FILE, data, sha, 'Mark article as read');
     res.json(item);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Sync scroll position for cross-device reading progress
+app.patch('/api/reading-list/scroll', async (req, res) => {
+  const { url, scrollY } = req.body || {};
+  if (!url) return res.status(400).json({ error: 'url required' });
+  try {
+    const { data, sha } = await ghRead(RL_FILE);
+    const item = data.find(i => i.url === url);
+    if (!item) return res.json({ notFound: true }); // not in list — ignore silently
+    item.scrollY = Math.round(scrollY) || 0;
+    await ghWrite(RL_FILE, data, sha, `Sync scroll position`);
+    res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

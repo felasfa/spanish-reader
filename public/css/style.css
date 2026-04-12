@@ -863,64 +863,28 @@ html, body {
   .nav-brand-text { display: none; }
 }
 
-/* ===== Cookie modal ===== */
-.cookie-modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.45);
-  z-index: 9000; display: flex; align-items: center; justify-content: center;
-  padding: 16px;
+/* ===== Bookmarklet ===== */
+.bookmarklet-row {
+  display: flex; align-items: center; gap: 10px; margin-top: 14px;
+  flex-wrap: wrap;
 }
-.cookie-modal-box {
-  background: #fff; border-radius: 14px; padding: 24px;
-  width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+.bookmarklet-label {
+  font-size: 13px; color: var(--text-muted);
 }
-.cookie-modal-title {
-  font-size: 17px; font-weight: 700; margin: 0 0 6px; color: var(--text-primary);
+.bookmarklet-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 20px;
+  background: var(--accent); color: #fff;
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  cursor: grab; user-select: none; -webkit-user-select: none;
+  white-space: nowrap;
 }
-.cookie-modal-intro {
-  font-size: 14px; color: var(--text-secondary); margin: 0 0 16px;
+.bookmarklet-hint {
+  font-size: 12px; color: var(--text-muted); font-style: italic;
 }
-.cookie-platform-tabs {
-  display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap;
-}
-.cookie-tab {
-  padding: 6px 12px; font-size: 13px; border-radius: 20px; border: 1px solid var(--border);
-  background: #f5f5f7; color: var(--text-secondary); cursor: pointer; font-family: inherit;
-}
-.cookie-tab.active {
-  background: var(--accent); color: #fff; border-color: var(--accent);
-}
-.cookie-steps-intro {
-  font-size: 13px; color: var(--text-secondary); margin: 0 0 10px; line-height: 1.5;
-}
-.cookie-steps {
-  font-size: 13px; color: var(--text-primary); padding-left: 20px;
-  margin: 0 0 14px; line-height: 1.9;
-}
-.cookie-steps kbd {
-  background: #f0f0f0; border: 1px solid #ccc; border-radius: 4px;
-  padding: 1px 5px; font-size: 12px; font-family: monospace;
-}
-.cookie-steps code {
-  background: #f0f0f0; border-radius: 4px; padding: 1px 5px;
-  font-size: 12px; font-family: monospace;
-}
-.cookie-textarea {
-  width: 100%; box-sizing: border-box; border: 1px solid var(--border);
-  border-radius: 8px; padding: 10px 12px; font-size: 13px;
-  font-family: monospace; resize: vertical; margin-bottom: 16px;
-}
-.cookie-textarea:focus { outline: none; border-color: var(--accent); }
-.cookie-modal-actions {
-  display: flex; gap: 10px; justify-content: flex-end;
-}
-.cookie-btn-cancel {
-  padding: 9px 18px; border-radius: 8px; border: 1px solid var(--border);
-  background: #f5f5f7; color: var(--text-secondary); cursor: pointer;
-  font-size: 14px; font-family: inherit;
-}
-.cookie-btn-save {
-  padding: 9px 18px; border-radius: 8px; border: none;
-  background: var(--accent); color: #fff; cursor: pointer;
-  font-size: 14px; font-weight: 600; font-family: inherit;
+
+/* ===== Popup drag handle ===== */
+.popup-drag-handle {
+  width: 36px; height: 4px; border-radius: 2px;
+  background: var(--border); margin: 10px auto 0;
 }

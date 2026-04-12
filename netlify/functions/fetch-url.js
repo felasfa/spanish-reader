@@ -157,9 +157,6 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'URL required' }) };
   }
 
-  // Cookie is sent as a request header (avoids URL length/encoding limits)
-  const passCookie = (event.headers || {})['x-site-cookie'] || '';
-
   try {
     const reqHeaders = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
@@ -176,13 +173,6 @@ exports.handler = async (event) => {
         'sec-fetch-user': '?1',
         'upgrade-insecure-requests': '1',
     };
-    if (passCookie) {
-      reqHeaders['Cookie'] = passCookie;
-      // Remove the Google Referer when sending subscriber cookies — sites
-      // may distrust a logged-in session that claims to come from Google.
-      delete reqHeaders['Referer'];
-      reqHeaders['sec-fetch-site'] = 'none';
-    }
 
     const response = await fetch(url, {
       headers: reqHeaders,
@@ -194,11 +184,7 @@ exports.handler = async (event) => {
       return {
         statusCode: response.status,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          error: `Remote server returned ${response.status}: ${response.statusText}`,
-          cookieSent: !!passCookie,
-          cookieLength: passCookie.length,
-        }),
+        body: JSON.stringify({ error: `Remote server returned ${response.status}: ${response.statusText}` }),
       };
     }
 
