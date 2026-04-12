@@ -107,13 +107,17 @@ function hideError(el)       { el.style.display = 'none'; }
 
 /* ===== Toast ===== */
 let toastTimer;
-function showToast(msg, type = 'info') {
+function showToast(msg, type = 'info', link = null) {
   const t = $('toast');
-  t.textContent = msg;
+  if (link) {
+    t.innerHTML = `${msg} <a href="${link}" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;margin-left:6px;">Open ↗</a>`;
+  } else {
+    t.textContent = msg;
+  }
   t.className = `toast toast-${type}`;
   t.style.display = 'block';
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3000);
+  toastTimer = setTimeout(() => { t.style.display = 'none'; }, link ? 9000 : 3000);
 }
 
 /* ===== Navigation ===== */
@@ -156,8 +160,8 @@ async function loadUrl(url, addToHistory = true) {
     const data = await res.json();
 
     if (res.status === 403) {
-      window.open(url, '_blank');
-      showToast('Subscriber content — opened in browser where you\'re logged in', 'info');
+      // window.open after await is blocked by popup blockers — show tappable link instead
+      showToast('Subscriber content', 'info', url);
       return;
     }
 
@@ -181,10 +185,18 @@ async function loadUrl(url, addToHistory = true) {
     iframe.onload = () => {
       $('reader-loading').style.display = 'none';
       iframe.style.visibility = 'visible';
-      // Prefer server-synced position (cross-device), fall back to local cache
-      const rlItem = rlData.find(i => i.url === url);
-      const savedY = (rlItem && rlItem.scrollY) || readerScrollPositions[url];
-      if (savedY) setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y: savedY }, '*'), 100);
+      // Fetch fresh scroll position from server (cross-device sync like Kindle).
+      // Falls back to local cache if server is unavailable.
+      const localY = readerScrollPositions[url];
+      fetch(`${API_BASE}/api/reading-list/scroll?url=${encodeURIComponent(url)}`)
+        .then(r => r.json())
+        .then(d => {
+          const y = (d.scrollY > 0) ? d.scrollY : localY;
+          if (y) iframe.contentWindow.postMessage({ type: 'scroll-to', y }, '*');
+        })
+        .catch(() => {
+          if (localY) iframe.contentWindow.postMessage({ type: 'scroll-to', y: localY }, '*');
+        });
     };
   } catch (e) {
     if (state.currentView === 'reader') {
@@ -660,6 +672,14 @@ $('rl-gmail-import').addEventListener('click', async () => {
 $('bookmarklet-link').addEventListener('click', (e) => {
   e.preventDefault();
   showToast('Drag the button to your bookmarks bar, then click it on any page to save', 'info');
+});
+
+// Save scroll position when user backgrounds/closes the app (iOS home button, tab switch, etc.)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden' && state.currentView === 'reader' && state.currentUrl && iframeScrollY > 0) {
+    readerScrollPositions[state.currentUrl] = iframeScrollY;
+    syncScrollToServer(state.currentUrl, iframeScrollY);
+  }
 });
 
 /* ===== Init ===== */

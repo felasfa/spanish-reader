@@ -505,7 +505,20 @@ app.patch('/api/reading-list/:id', async (req, res) => {
   }
 });
 
-// Sync scroll position for cross-device reading progress
+// Get last-read scroll position for a URL (cross-device sync)
+app.get('/api/reading-list/scroll', async (req, res) => {
+  const url = req.query.url;
+  if (!url) return res.status(400).json({ error: 'url required' });
+  try {
+    const { data } = await ghRead(RL_FILE);
+    const item = data.find(i => i.url === url);
+    res.json({ scrollY: (item && item.scrollY) || 0 });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Save scroll position for cross-device reading progress
 app.patch('/api/reading-list/scroll', async (req, res) => {
   const { url, scrollY } = req.body || {};
   if (!url) return res.status(400).json({ error: 'url required' });
