@@ -87,6 +87,22 @@ $('reader-back').addEventListener('click', () => {
   }
 });
 
+// Detect login/auth URLs that require real browser JavaScript to work.
+// These open in a new tab rather than loading through the JS-stripping proxy.
+function isAuthUrl(href) {
+  try {
+    const u = new URL(href);
+    const host = u.hostname.toLowerCase();
+    const path = u.pathname.toLowerCase();
+    const authHosts = ['usuarios.elpais.com', 'accounts.google.com', 'login.microsoftonline.com',
+                       'appleid.apple.com', 'auth0.com', 'okta.com'];
+    if (authHosts.some(h => host === h || host.endsWith('.' + h))) return true;
+    const authPaths = ['login', 'signin', 'sign-in', 'log-in', 'auth', 'oauth',
+                       'identificacion', 'cuenta', 'session', 'sso', 'password'];
+    return authPaths.some(p => path.includes('/' + p));
+  } catch { return false; }
+}
+
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
@@ -255,6 +271,13 @@ window.addEventListener('message', async (event) => {
   if (event.data.type === 'link-clicked') {
     const { href } = event.data;
     if (href && href.startsWith('http')) {
+      // Login/auth pages rely on JavaScript (OAuth flows, form submission) that
+      // we strip from proxied pages. Open them in the real browser instead.
+      if (isAuthUrl(href)) {
+        window.open(href, '_blank', 'noopener');
+        showToast('Opening login in your browser', 'info');
+        return;
+      }
       readerScrollPositions[state.currentUrl] = { y: iframeScrollY, pct: iframeScrollPct };
       $('url-input').value = href;
       loadUrl(href);

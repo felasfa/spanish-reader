@@ -455,7 +455,14 @@ html, body {
 }
 
 .popup-header { flex-shrink: 0; }
-.popup-content { padding: 0 16px 16px; overflow-y: auto; flex: 1; min-height: 0; }
+.popup-content {
+  padding: 0 16px 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
+  overscroll-behavior: contain;      /* stop touch from bleeding through to page */
+}
 
 .popup-translation-row {
   padding: 12px 0 8px;
