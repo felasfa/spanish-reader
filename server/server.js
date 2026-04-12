@@ -5,6 +5,8 @@ const cheerio  = require('cheerio');
 const Anthropic = require('@anthropic-ai/sdk');
 const { ImapFlow }    = require('imapflow');
 const { simpleParser } = require('mailparser');
+const fs   = require('fs');
+const path = require('path');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -507,40 +509,40 @@ app.patch('/api/reading-list/:id', async (req, res) => {
 });
 
 // ─── /api/scroll — cross-device scroll position sync ────────────────────────
-// Stored in data/scroll-positions.json as { "url": scrollY, ... }
-// Works for any URL (not limited to reading-list items).
-const SCROLL_FILE = 'data/scroll-positions.json';
+// Stored on the VPS local filesystem (NOT in GitHub) so that frequent writes
+// don't trigger Netlify deploys. The file persists across pm2 restarts.
+const SCROLL_LOCAL = path.join(__dirname, 'scroll-positions.json');
 
-// Diagnostic: dump the entire scroll-positions store (for debugging)
-app.get('/api/debug/scroll', async (_req, res) => {
+function readScrollStore() {
   try {
-    const { data: raw } = await ghRead(SCROLL_FILE);
-    res.json({ raw, isArray: Array.isArray(raw), type: typeof raw });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
+    return JSON.parse(fs.readFileSync(SCROLL_LOCAL, 'utf8'));
+  } catch {
+    return {};
   }
+}
+
+function writeScrollStore(store) {
+  fs.writeFileSync(SCROLL_LOCAL, JSON.stringify(store, null, 2));
+}
+
+app.get('/api/debug/scroll', (_req, res) => {
+  res.json(readScrollStore());
 });
 
-app.get('/api/reading-list/scroll', async (req, res) => {
+app.get('/api/reading-list/scroll', (req, res) => {
   const url = req.query.url;
   if (!url) return res.status(400).json({ error: 'url required' });
-  try {
-    const { data: raw } = await ghRead(SCROLL_FILE);
-    const positions = (raw && !Array.isArray(raw)) ? raw : {};
-    res.json({ scrollPct: positions[url] || 0 });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  const store = readScrollStore();
+  res.json({ scrollPct: store[url] || 0 });
 });
 
-async function handleScrollSave(req, res) {
+function handleScrollSave(req, res) {
   const { url, scrollPct } = req.body || {};
   if (!url) return res.status(400).json({ error: 'url required' });
   try {
-    const { data: raw, sha } = await ghRead(SCROLL_FILE);
-    const store = (raw && !Array.isArray(raw)) ? raw : {};
+    const store = readScrollStore();
     store[url] = scrollPct || 0;
-    await ghWrite(SCROLL_FILE, store, sha, 'Sync scroll position');
+    writeScrollStore(store);
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });

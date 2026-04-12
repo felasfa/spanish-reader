@@ -1,3 +1,7 @@
 node_modules/
 .env
 .netlify/
+# Scroll positions are stored on the VPS filesystem, not in git
+# (frequent writes would trigger Netlify deploys on every scroll save)
+data/scroll-positions.json
+server/scroll-positions.json
