@@ -22,6 +22,7 @@ app.use(cors({
     // The API holds only personal reading-list data so broad access is acceptable.
     cb(null, true);
   },
+  credentials: true,  // required: Safari sends credentials with cross-origin requests
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
