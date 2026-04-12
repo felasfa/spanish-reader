@@ -122,6 +122,8 @@ const INTERACTION_SCRIPT = `
     var container = range.commonAncestorContainer;
     if (container.nodeType === 3) container = container.parentNode;
     window.parent.postMessage({ type: 'word-selected', word: word, sentence: getSentence(word, container) }, '*');
+    // Clear selection to dismiss iOS native context menu before it appears
+    sel.removeAllRanges();
   }
 
   document.addEventListener('mouseup', function () { setTimeout(sendSelection, 20); });

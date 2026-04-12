@@ -617,7 +617,7 @@ html, body {
 
 .vocab-summary {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   padding: 12px 16px;
   transition: background 0.12s;
@@ -626,11 +626,14 @@ html, body {
 }
 .vocab-entry:hover .vocab-summary { background: var(--surface-2); }
 
+.vocab-summary-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.vocab-word-line    { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+
 .vocab-word        { font-weight: 700; color: var(--primary); font-size: 15px; flex-shrink: 0; }
 .vocab-sep         { color: var(--text-muted); font-size: 13px; flex-shrink: 0; }
-.vocab-translation { font-weight: 600; color: var(--success); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vocab-translation { font-weight: 600; color: var(--success); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 
-.vocab-entry-actions { display: flex; align-items: center; gap: 2px; margin-left: auto; flex-shrink: 0; }
+.vocab-entry-actions { display: flex; align-items: center; gap: 2px; flex-shrink: 0; margin-top: 1px; }
 
 .vocab-chevron { color: var(--text-muted); transition: transform 0.2s; display: block; }
 .vocab-entry.vocab-expanded .vocab-chevron { transform: rotate(90deg); }
@@ -641,8 +644,9 @@ html, body {
 
 .vocab-sentence-es {
   font-size: 13px; color: var(--text-2); line-height: 1.5;
-  margin: 0 0 4px;
+  margin: 0;
   font-style: italic;
+  white-space: normal;
 }
 .vocab-sentence-en {
   font-size: 13px; color: var(--text-muted); line-height: 1.5;
