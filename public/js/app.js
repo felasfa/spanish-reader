@@ -657,8 +657,10 @@ $('rl-gmail-import').addEventListener('click', async () => {
   });
 
   $('cookie-save').addEventListener('click', () => {
-    const val = textarea.value.trim();
+    let val = textarea.value.trim();
     if (!val) return;
+    // Accept the full header line ("Cookie: nyt-a=…") or just the value
+    val = val.replace(/^cookie\s*:\s*/i, '');
     siteCookies[_pendingDomain] = val;
     saveSiteCookies();
     overlay.style.display = 'none';

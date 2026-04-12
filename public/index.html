@@ -306,10 +306,10 @@
           <li>Open the site in Chrome while logged in</li>
           <li>Press <kbd>⌘⌥I</kbd> (Mac) or <kbd>Ctrl+Shift+I</kbd> (Windows) to open DevTools</li>
           <li>Click the <strong>Network</strong> tab, then reload the page (<kbd>⌘R</kbd> / <kbd>F5</kbd>)</li>
-          <li>Click any request to the site in the list (e.g. the first one)</li>
-          <li>In the right panel scroll to <strong>Request Headers</strong> → find <strong>cookie:</strong></li>
-          <li>Right-click the cookie value → <strong>Copy value</strong> — this copies the full string</li>
-          <li>Paste it as-is into the box below</li>
+          <li>Click any request to the site in the list (e.g. the top one)</li>
+          <li>In the right panel scroll down to <strong>Request Headers</strong> → find <strong>cookie</strong></li>
+          <li>Click the row to expand it if needed, then select and copy the entire cookie line — it will look like <code>Cookie: nyt-a=…; NYT-S=…; …</code></li>
+          <li>Paste it below — the <code>Cookie:</code> prefix is stripped automatically</li>
         </ol>
       </div>
 
@@ -317,17 +317,17 @@
         <ol class="cookie-steps">
           <li>Open the site in Safari while logged in</li>
           <li>Enable DevTools if needed: Safari → <strong>Settings</strong> → <strong>Advanced</strong> → turn on <em>Show features for web developers</em></li>
-          <li>Press <kbd>⌘⌥I</kbd> to open Web Inspector (or use the <strong>Develop</strong> menu)</li>
+          <li>Press <kbd>⌘⌥I</kbd> to open Web Inspector (or <strong>Develop</strong> menu → Show Web Inspector)</li>
           <li>Click the <strong>Network</strong> tab, then reload the page (<kbd>⌘R</kbd>)</li>
           <li>Click any request to the site in the list</li>
           <li>In the right panel click <strong>Headers</strong> → scroll to <strong>Request</strong> section → find <strong>Cookie</strong></li>
-          <li>Triple-click the cookie value to select the whole line, then copy</li>
-          <li>Paste it as-is into the box below</li>
+          <li>Triple-click the row to select the full line (it looks like <code>Cookie: nyt-a=…; NYT-S=…; …</code>), then copy</li>
+          <li>Paste it below — the <code>Cookie:</code> prefix is stripped automatically</li>
         </ol>
       </div>
 
       <div class="cookie-tab-content" id="cookie-tab-ios" style="display:none">
-        <p class="cookie-steps-intro">iOS doesn't have built-in DevTools. The easiest path: grab the cookie on a Mac (using the Chrome or Safari tab) and paste it here — it's saved once and works everywhere.</p>
+        <p class="cookie-steps-intro">iOS doesn't have built-in DevTools. The easiest path: grab the cookie on a Mac (using the Chrome or Safari tab above) and paste it here — it's saved and works on all devices.</p>
         <p class="cookie-steps-intro">If you only have an iPhone/iPad, use <strong>remote inspection</strong> from a Mac:</p>
         <ol class="cookie-steps">
           <li>On iPhone: <strong>Settings → Safari → Advanced</strong> → turn on <em>Web Inspector</em></li>
@@ -335,11 +335,11 @@
           <li>Connect iPhone to Mac via USB cable, tap <em>Trust</em> on iPhone</li>
           <li>On Mac, open Safari → <strong>Develop</strong> menu → your iPhone → tap the site tab</li>
           <li>In Web Inspector: <strong>Network</strong> tab → reload → click a request → <strong>Headers → Request → Cookie</strong></li>
-          <li>Copy the full cookie value and paste it below</li>
+          <li>Copy the full line and paste it below</li>
         </ol>
       </div>
 
-      <textarea id="cookie-input" class="cookie-textarea" rows="3" placeholder="Paste the full cookie string here (it will look like: nyt-a=Abc…; NYT-S=0^CB8…; nyt-gdpr=0; …)"></textarea>
+      <textarea id="cookie-input" class="cookie-textarea" rows="3" placeholder="Paste the cookie line here — either the full 'Cookie: nyt-a=…; NYT-S=…; …' line or just the values after the colon"></textarea>
 
       <div class="cookie-modal-actions">
         <button id="cookie-cancel" class="cookie-btn-cancel">Cancel</button>
