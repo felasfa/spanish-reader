@@ -505,30 +505,30 @@ app.patch('/api/reading-list/:id', async (req, res) => {
   }
 });
 
-// Get last-read scroll position for a URL (cross-device sync)
+// ─── /api/scroll — cross-device scroll position sync ────────────────────────
+// Stored in data/scroll-positions.json as { "url": scrollY, ... }
+// Works for any URL (not limited to reading-list items).
+const SCROLL_FILE = 'data/scroll-positions.json';
+
 app.get('/api/reading-list/scroll', async (req, res) => {
   const url = req.query.url;
   if (!url) return res.status(400).json({ error: 'url required' });
   try {
-    const { data } = await ghRead(RL_FILE);
-    const item = data.find(i => i.url === url);
-    res.json({ scrollY: (item && item.scrollY) || 0 });
+    const { data } = await ghRead(SCROLL_FILE);
+    res.json({ scrollY: (data && data[url]) || 0 });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-// Save scroll position for cross-device reading progress
-// Accepts both PATCH (fetch) and POST (sendBeacon — used when app is backgrounded)
 async function handleScrollSave(req, res) {
   const { url, scrollY } = req.body || {};
   if (!url) return res.status(400).json({ error: 'url required' });
   try {
-    const { data, sha } = await ghRead(RL_FILE);
-    const item = data.find(i => i.url === url);
-    if (!item) return res.json({ notFound: true });
-    item.scrollY = Math.round(scrollY) || 0;
-    await ghWrite(RL_FILE, data, sha, 'Sync scroll position');
+    const { data: positions, sha } = await ghRead(SCROLL_FILE);
+    const store = positions || {};
+    store[url] = Math.round(scrollY) || 0;
+    await ghWrite(SCROLL_FILE, store, sha, 'Sync scroll position');
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });

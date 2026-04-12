@@ -189,17 +189,24 @@ async function loadUrl(url, addToHistory = true) {
     iframe.onload = () => {
       $('reader-loading').style.display = 'none';
       iframe.style.visibility = 'visible';
-      // Fetch fresh scroll position from server (cross-device sync like Kindle).
-      // Falls back to local cache if server is unavailable.
+      // Fetch fresh scroll position from server (cross-device sync).
+      // We delay the actual scroll-to because onload fires before CSS/images
+      // have finished rendering — scrollTo(0, y) would land at the right pixel
+      // but then the page reflows and ends up in the wrong place.
       const localY = readerScrollPositions[url];
       fetch(`${API_BASE}/api/reading-list/scroll?url=${encodeURIComponent(url)}`)
         .then(r => r.json())
         .then(d => {
           const y = (d.scrollY > 0) ? d.scrollY : localY;
-          if (y) iframe.contentWindow.postMessage({ type: 'scroll-to', y }, '*');
+          if (!y) return;
+          // First attempt at 500ms; retry at 1500ms in case the page is still rendering
+          setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y }, '*'), 500);
+          setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y }, '*'), 1500);
         })
         .catch(() => {
-          if (localY) iframe.contentWindow.postMessage({ type: 'scroll-to', y: localY }, '*');
+          if (!localY) return;
+          setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y: localY }, '*'), 500);
+          setTimeout(() => iframe.contentWindow.postMessage({ type: 'scroll-to', y: localY }, '*'), 1500);
         });
     };
   } catch (e) {
@@ -404,14 +411,9 @@ function renderVocabulary(vocab) {
     const isNew  = e.date && e.date > lastViewed;
     return `<div class="vocab-entry${isNew ? ' vocab-new' : ''}" data-id="${e.id}">
       <div class="vocab-summary">
-        <div class="vocab-summary-text">
-          <div class="vocab-word-line">
-            <span class="vocab-word">${escapeHtml(e.word)}</span>
-            <span class="vocab-sep">→</span>
-            <span class="vocab-translation">${escapeHtml(e.translation || '—')}</span>
-          </div>
-          ${e.sentence ? `<p class="vocab-sentence-es">${escapeHtml(e.sentence)}</p>` : ''}
-        </div>
+        <span class="vocab-word">${escapeHtml(e.word)}</span>
+        <span class="vocab-sep">→</span>
+        <span class="vocab-translation">${escapeHtml(e.translation || '—')}</span>
         <div class="vocab-entry-actions">
           <svg class="vocab-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,18 15,12 9,6"/></svg>
           <button class="vocab-delete-btn" data-id="${e.id}" title="Delete" aria-label="Delete">
@@ -423,6 +425,7 @@ function renderVocabulary(vocab) {
         </div>
       </div>
       <div class="vocab-detail">
+        ${e.sentence ? `<p class="vocab-sentence-es">${escapeHtml(e.sentence)}</p>` : ''}
         ${domain || e.date ? `<div class="vocab-source">
           ${domain ? `<a href="${escapeHtml(e.url)}" target="_blank" rel="noopener">${escapeHtml(domain)}</a>` : ''}
           ${e.date ? `<span class="vocab-date-text">${formatDate(e.date)}</span>` : ''}
