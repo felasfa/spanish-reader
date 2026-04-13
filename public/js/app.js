@@ -385,6 +385,8 @@ async function loadVocabulary() {
     renderVocabulary(vocab);
   } catch (e) {
     console.error('Failed to load vocabulary', e);
+    $('vocab-subtitle').textContent = 'Could not connect to server';
+    $('vocab-empty').style.display = 'flex';
   } finally {
     $('vocab-loading').style.display = 'none';
   }
@@ -527,6 +529,8 @@ async function loadReadingList() {
     renderReadingList(list);
   } catch (e) {
     console.error('Failed to load reading list', e);
+    $('rl-subtitle').textContent = 'Could not connect to server';
+    $('rl-empty').style.display = 'flex';
   } finally {
     $('rl-loading').style.display = 'none';
   }
