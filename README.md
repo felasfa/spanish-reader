@@ -40,7 +40,7 @@ Words saved during reading are stored in a personal vocabulary list with the ori
           │                               │
           ▼                               ▼
 ┌─────────────────────┐       ┌───────────────────────┐
-│  Netlify Function   │       │  VPS (api.felasfa.app) │
+│  Netlify Function   │       │  VPS (api.your-domain) │
 │  /api/fetch         │       │  Node/Express, PM2     │
 │  (article proxy)    │       │                        │
 └─────────────────────┘       │  /api/reading-list     │
@@ -97,7 +97,7 @@ The `/api/fetch` endpoint proxies the target URL, rewrites image/stylesheet URLs
 | `PORT` | No | Port for the Express server. Default: `3000` |
 | `ANTHROPIC_API_KEY` | Yes | Claude API key for translation and article summarisation |
 | `GITHUB_TOKEN` | No | GitHub personal access token (repo read+write). Only needed if using GitHub as a data store instead of local files |
-| `GITHUB_OWNER` | No | GitHub username. Default: `felasfa` |
+| `GITHUB_OWNER` | No | GitHub username. Default: your GitHub username |
 | `GITHUB_REPO` | No | GitHub repository name. Default: `spanish-reader` |
 | `GITHUB_DATA_BRANCH` | No | Branch to read/write data files. Default: `main` |
 | `GMAIL_APP_PASSWORD` | Yes (for Gmail import) | Gmail App Password (not your account password). Enable 2FA and generate one at myaccount.google.com/apppasswords |
@@ -130,4 +130,4 @@ npx serve public
 # or open public/index.html directly in a browser
 ```
 
-The frontend expects the API at `https://api.felasfa.app` by default. To point it at a local server, update `API_BASE` in `public/js/app.js`.
+The frontend expects the API at your VPS URL by default (set via `API_BASE` in `public/js/app.js`). To point it at a local server, update that value.
