@@ -50,6 +50,12 @@ function showView(name) {
   state.currentView = name;
   window.scrollTo(0, scrollPositions[name] || 0);
 
+  // Dim all nav links; highlight the one matching the current view
+  const navMap = { url: 'nav-new-url', 'reading-list': 'nav-reading-list', vocabulary: 'nav-vocabulary' };
+  document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+  const activeNav = navMap[name];
+  if (activeNav) $(activeNav).classList.add('active');
+
   // Show "Back to article" in RL and vocab views when an article is loaded
   const showBack = !!state.currentUrl && name !== 'reader';
   ['rl-resume', 'vocab-resume'].forEach(id => {

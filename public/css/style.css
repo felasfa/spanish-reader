@@ -84,13 +84,14 @@ html, body {
   border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
-  color: rgba(255,255,255,.9);
+  color: rgba(255,255,255,.5);
   text-decoration: none;
   transition: background 0.15s, color 0.15s;
   white-space: nowrap;
 }
 
-.nav-link:hover { background: rgba(255,255,255,.15); color: #fff; }
+.nav-link:hover { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+.nav-link.active { color: rgba(255,255,255,.95); }
 
 .nav-btn {
   background: none;
