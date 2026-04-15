@@ -207,14 +207,14 @@ const INTERACTION_SCRIPT = `
   document.addEventListener('touchend',  function () { clearTimeout(pressTimer); }, false);
 
   function getSentence(selectionText, container) {
-    var text = '';
-    var walker = document.createTreeWalker(
-      container.closest('p,li,td,h1,h2,h3,h4,h5,h6,article,blockquote,section') || container,
-      NodeFilter.SHOW_TEXT
-    );
-    var n;
-    while ((n = walker.nextNode())) text += n.textContent;
-    if (!text) text = container.innerText || container.textContent || selectionText;
+    var root = container.closest('p,li,blockquote,td,h1,h2,h3,h4,h5,h6') || container;
+    var txt = (root.innerText || root.textContent || '').trim();
+    if (txt.length < 80) {
+      var bigger = root.closest('div,section,article,main');
+      if (bigger) root = bigger;
+    }
+    var text = (root.innerText || root.textContent || '').replace(/\\s+/g, ' ').replace(/\\.{2,}/g, '…').trim();
+    if (!text) text = selectionText;
     var sentences = text.match(/[^.!?¡¿\\n]+[.!?\\n]*/g) || [];
     for (var i = 0; i < sentences.length; i++) {
       if (sentences[i].includes(selectionText)) return sentences[i].trim();
@@ -352,7 +352,7 @@ app.post('/api/translate', async (req, res) => {
   try {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const message = await client.messages.create({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 512,
       messages: [{
         role: 'user',
@@ -369,6 +369,9 @@ Respond ONLY with valid JSON in this exact format, no other text:
       }],
     });
 
+    if (!message.content || !message.content[0] || message.content[0].type !== 'text') {
+      throw new Error(`Unexpected API response (stop_reason: ${message.stop_reason || 'unknown'})`);
+    }
     const text = message.content[0].text.trim();
     const match = text.match(/\{[\s\S]*\}/);
     if (!match) throw new Error('Unexpected response from Claude');

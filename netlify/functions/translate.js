@@ -20,7 +20,7 @@ exports.handler = async (event) => {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
     const message = await client.messages.create({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 512,
       messages: [{
         role: 'user',
@@ -37,6 +37,9 @@ Respond ONLY with valid JSON in this exact format, no other text:
       }],
     });
 
+    if (!message.content || !message.content[0] || message.content[0].type !== 'text') {
+      throw new Error(`Unexpected API response (stop_reason: ${message.stop_reason || 'unknown'})`);
+    }
     const text = message.content[0].text.trim();
     const match = text.match(/\{[\s\S]*\}/);
     if (!match) throw new Error('Unexpected response from Claude');

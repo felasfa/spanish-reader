@@ -105,7 +105,7 @@ const INTERACTION_SCRIPT = `
       var bigger = root.closest('div,section,article,main');
       if (bigger) root = bigger;
     }
-    var text = (root.innerText || root.textContent || '').replace(/\\s+/g, ' ').trim();
+    var text = (root.innerText || root.textContent || '').replace(/\\s+/g, ' ').replace(/\\.{2,}/g, '…').trim();
     if (!text) text = selectionText;
     var sentences = text.match(/[^.!?¡¿\\n]+[.!?\\n]*/g) || [];
     for (var i = 0; i < sentences.length; i++) {

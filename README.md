@@ -82,7 +82,7 @@ The `/api/fetch` endpoint proxies the target URL, rewrites image/stylesheet URLs
 | API server | Node.js + Express |
 | Process manager | PM2 |
 | Reverse proxy | Nginx + Let's Encrypt |
-| Translation & summaries | Anthropic Claude API (Sonnet for translation, Haiku for summaries) |
+| Translation & summaries | Anthropic Claude API (Haiku for translation and summaries) |
 | HTML parsing | Cheerio |
 | Gmail access | ImapFlow + mailparser |
 
