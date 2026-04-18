@@ -385,7 +385,6 @@ async function updateVocabCount() {
 let vocabSortMode     = 'date';   // 'date' | 'alpha' | 'semantic'
 let vocabSortReversed = false;
 let vocabCache        = [];
-let vocabGroupCache   = null;     // { ids: string, mapping: {id→category} }
 
 function applyVocabSort(vocab) {
   const sorted = [...vocab];
@@ -452,17 +451,22 @@ function attachEntryListeners() {
 }
 
 async function getSemanticGroups(vocab) {
-  const cacheKey = vocab.map(v => v.id).sort().join(',');
-  if (vocabGroupCache && vocabGroupCache.key === cacheKey) return vocabGroupCache.mapping;
+  let cached = {};
+  try { cached = JSON.parse(localStorage.getItem('vocabGroupCache') || '{}'); } catch {}
+
+  const uncached = vocab.filter(v => !cached[String(v.id)]);
+  if (uncached.length === 0) return cached;
+
   const res = await fetch(`${API_BASE}/api/vocabulary/group`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ words: vocab.map(v => ({ id: v.id, word: v.word, translation: v.translation })) }),
+    body: JSON.stringify({ words: uncached.map(v => ({ id: v.id, word: v.word, translation: v.translation })) }),
   });
   if (!res.ok) throw new Error(`Grouping failed: ${res.status}`);
-  const mapping = await res.json();
-  vocabGroupCache = { key: cacheKey, mapping };
-  return mapping;
+  const fresh = await res.json();
+  Object.assign(cached, fresh);
+  try { localStorage.setItem('vocabGroupCache', JSON.stringify(cached)); } catch {}
+  return cached;
 }
 
 async function loadVocabulary() {
@@ -508,7 +512,12 @@ async function renderVocabulary(vocab) {
 }
 
 async function renderVocabularyGrouped(vocab) {
-  $('vocab-subtitle').textContent = 'Grouping by meaning…';
+  let cached = {};
+  try { cached = JSON.parse(localStorage.getItem('vocabGroupCache') || '{}'); } catch {}
+  const newCount = vocab.filter(v => !cached[String(v.id)]).length;
+  $('vocab-subtitle').textContent = newCount > 0
+    ? `Grouping ${newCount} new word${newCount !== 1 ? 's' : ''}…`
+    : 'Organizing by meaning…';
   $('vocab-table-wrap').style.display = 'none';
 
   let mapping;
