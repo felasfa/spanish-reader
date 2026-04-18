@@ -433,7 +433,23 @@ app.delete('/api/vocabulary', (_req, res) => {
 });
 
 // ─── /api/vocabulary/group ───────────────────────────────────────────────────
-const GROUPS_LOCAL = path.join(DATA_DIR, 'vocab-groups.json');
+const GROUPS_LOCAL    = path.join(DATA_DIR, 'vocab-groups.json');
+const VOCAB_META_LOCAL = path.join(DATA_DIR, 'vocab-meta.json');
+
+function readVocabMeta() {
+  try { return JSON.parse(fs.readFileSync(VOCAB_META_LOCAL, 'utf8')); } catch { return {}; }
+}
+
+app.get('/api/vocabulary/last-viewed', (_req, res) => {
+  res.json({ lastViewed: readVocabMeta().lastViewed || '0' });
+});
+
+app.post('/api/vocabulary/last-viewed', (_req, res) => {
+  const meta = readVocabMeta();
+  meta.lastViewed = new Date().toISOString();
+  try { fs.writeFileSync(VOCAB_META_LOCAL, JSON.stringify(meta, null, 2)); } catch {}
+  res.json({ lastViewed: meta.lastViewed });
+});
 
 app.post('/api/vocabulary/group', async (req, res) => {
   const { words } = req.body || {};

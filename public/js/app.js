@@ -371,12 +371,17 @@ $('popup-save').addEventListener('click', async () => {
 });
 
 /* ===== Vocabulary (GitHub API) ===== */
+let vocabLastViewedCache = '0';
+
 async function updateVocabCount() {
   try {
-    const res   = await fetch(`${API_BASE}/api/vocabulary`);
-    const vocab = await res.json();
-    const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
-    const hasNew = vocab.some(e => e.date && e.date > lastViewed);
+    const [vocabRes, lvRes] = await Promise.all([
+      fetch(`${API_BASE}/api/vocabulary`),
+      fetch(`${API_BASE}/api/vocabulary/last-viewed`),
+    ]);
+    const vocab = await vocabRes.json();
+    vocabLastViewedCache = (await lvRes.json()).lastViewed || '0';
+    const hasNew = vocab.some(e => e.date && e.date > vocabLastViewedCache);
     $('nav-vocab-count').style.display = hasNew ? 'inline-block' : 'none';
   } catch { /* ignore */ }
 }
@@ -444,8 +449,10 @@ function attachEntryListeners() {
   if ($('vocab-tbody').querySelector('.vocab-new')) {
     setTimeout(() => {
       $('vocab-tbody').querySelectorAll('.vocab-new').forEach(r => r.classList.remove('vocab-new'));
-      localStorage.setItem('vocabLastViewed', new Date().toISOString());
       $('nav-vocab-count').style.display = 'none';
+      fetch(`${API_BASE}/api/vocabulary/last-viewed`, { method: 'POST' })
+        .then(r => r.json()).then(d => { vocabLastViewedCache = d.lastViewed || '0'; })
+        .catch(() => {});
     }, 2000);
   }
 }
@@ -465,8 +472,12 @@ async function loadVocabulary() {
   $('vocab-table-wrap').style.display = 'none';
   $('vocab-empty').style.display = 'none';
   try {
-    const res   = await fetch(`${API_BASE}/api/vocabulary`);
-    const vocab = await res.json();
+    const [vocabRes, lvRes] = await Promise.all([
+      fetch(`${API_BASE}/api/vocabulary`),
+      fetch(`${API_BASE}/api/vocabulary/last-viewed`),
+    ]);
+    const vocab = await vocabRes.json();
+    vocabLastViewedCache = (await lvRes.json()).lastViewed || '0';
     await renderVocabulary(vocab);
   } catch (e) {
     console.error('Failed to load vocabulary', e);
@@ -497,7 +508,7 @@ async function renderVocabulary(vocab) {
   $('vocab-empty').style.display = 'none';
   $('vocab-table-wrap').style.display = 'block';
 
-  const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
+  const lastViewed = vocabLastViewedCache;
   $('vocab-tbody').innerHTML = items.map(e => buildEntryHTML(e, lastViewed)).join('');
   attachEntryListeners();
 }
@@ -512,7 +523,7 @@ async function renderVocabularyGrouped(vocab) {
   } catch (e) {
     $('vocab-subtitle').textContent = 'Could not group words — try again';
     $('vocab-table-wrap').style.display = 'block';
-    const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
+    const lastViewed = vocabLastViewedCache;
     $('vocab-tbody').innerHTML = vocab.map(e => buildEntryHTML(e, lastViewed)).join('');
     attachEntryListeners();
     return;
@@ -535,7 +546,7 @@ async function renderVocabularyGrouped(vocab) {
   $('vocab-empty').style.display = 'none';
   $('vocab-table-wrap').style.display = 'block';
 
-  const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
+  const lastViewed = vocabLastViewedCache;
   $('vocab-tbody').innerHTML = cats.map(cat =>
     `<div class="vocab-group-heading">${escapeHtml(cat)}</div>` +
     groups[cat].map(e => buildEntryHTML(e, lastViewed)).join('')
