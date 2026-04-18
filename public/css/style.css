@@ -769,6 +769,40 @@ html, body {
 /* ===== Read Later View ===== */
 #view-reading-list { padding: 32px 24px; max-width: 860px; margin: 0 auto; }
 
+.rl-url-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.rl-url-input {
+  flex: 1;
+  padding: 11px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-family: inherit;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.rl-url-input:focus { border-color: var(--primary); }
+.rl-url-input::placeholder { color: var(--text-muted); }
+
+.rl-bookmarklet-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding: 18px 20px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
 .rl-header {
   display: flex;
   align-items: center;

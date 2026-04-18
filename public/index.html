@@ -179,6 +179,11 @@
         </div>
       </div>
 
+      <div class="rl-url-row">
+        <input type="url" id="rl-url-input" class="rl-url-input" placeholder="Paste a URL to save…" autocomplete="off">
+        <button class="btn btn-primary" id="rl-url-save">Save</button>
+      </div>
+
       <div id="rl-loading" class="rl-loading" style="display:none">
         <div class="spinner"></div>
       </div>
@@ -193,6 +198,11 @@
       </div>
 
       <div id="rl-list" class="rl-list"></div>
+
+      <div class="rl-bookmarklet-card">
+        <span>Drag to your bookmarks bar to save any page:</span>
+        <a class="bookmarklet-btn" href="javascript:(function(){var u=location.href,t=document.title,d=document.createElement('div');d.style.cssText='position:fixed;top:20px;right:20px;background:#1d1d1f;color:#fff;padding:12px 18px;border-radius:10px;font:14px/1 -apple-system,sans-serif;z-index:2147483647;transition:opacity .4s';d.textContent='Saving\u2026';document.body.appendChild(d);fetch('https://api.felasfa.app/api/reading-list',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:u,title:t})}).then(function(r){return r.json()}).then(function(j){d.textContent=j.duplicate?'Already saved \u2713':'Saved to Spanish Reader \u2713';setTimeout(function(){d.style.opacity='0';setTimeout(function(){d.remove()},400)},1500)}).catch(function(){d.textContent='Error \u2014 check connection';setTimeout(function(){d.remove()},2000)})})();">+ Save to Reader</a>
+      </div>
     </div>
 
     <!-- Vocabulary View -->

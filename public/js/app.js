@@ -243,6 +243,18 @@ $('url-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') $('url-read-now').click();
 });
 
+/* ===== Read Later URL input ===== */
+$('rl-url-save').addEventListener('click', () => {
+  const url = $('rl-url-input').value.trim();
+  if (!url) return;
+  $('rl-url-input').value = '';
+  addToReadingList(url).then(() => loadReadingList());
+});
+
+$('rl-url-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') $('rl-url-save').click();
+});
+
 /* ===== Messages from iframe ===== */
 window.addEventListener('message', async (event) => {
   if (!event.data) return;
