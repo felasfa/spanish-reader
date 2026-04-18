@@ -451,22 +451,13 @@ function attachEntryListeners() {
 }
 
 async function getSemanticGroups(vocab) {
-  let cached = {};
-  try { cached = JSON.parse(localStorage.getItem('vocabGroupCache') || '{}'); } catch {}
-
-  const uncached = vocab.filter(v => !cached[String(v.id)]);
-  if (uncached.length === 0) return cached;
-
   const res = await fetch(`${API_BASE}/api/vocabulary/group`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ words: uncached.map(v => ({ id: v.id, word: v.word, translation: v.translation })) }),
+    body: JSON.stringify({ words: vocab.map(v => ({ id: v.id, word: v.word, translation: v.translation })) }),
   });
   if (!res.ok) throw new Error(`Grouping failed: ${res.status}`);
-  const fresh = await res.json();
-  Object.assign(cached, fresh);
-  try { localStorage.setItem('vocabGroupCache', JSON.stringify(cached)); } catch {}
-  return cached;
+  return res.json();
 }
 
 async function loadVocabulary() {
@@ -512,12 +503,7 @@ async function renderVocabulary(vocab) {
 }
 
 async function renderVocabularyGrouped(vocab) {
-  let cached = {};
-  try { cached = JSON.parse(localStorage.getItem('vocabGroupCache') || '{}'); } catch {}
-  const newCount = vocab.filter(v => !cached[String(v.id)]).length;
-  $('vocab-subtitle').textContent = newCount > 0
-    ? `Grouping ${newCount} new word${newCount !== 1 ? 's' : ''}…`
-    : 'Organizing by meaning…';
+  $('vocab-subtitle').textContent = 'Grouping by meaning…';
   $('vocab-table-wrap').style.display = 'none';
 
   let mapping;

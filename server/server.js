@@ -433,32 +433,46 @@ app.delete('/api/vocabulary', (_req, res) => {
 });
 
 // ─── /api/vocabulary/group ───────────────────────────────────────────────────
+const GROUPS_LOCAL = path.join(DATA_DIR, 'vocab-groups.json');
+
 app.post('/api/vocabulary/group', async (req, res) => {
   const { words } = req.body || {};
   if (!Array.isArray(words) || words.length === 0) return res.json({});
-  try {
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 2048,
-      messages: [{
-        role: 'user',
-        content: `Assign each Spanish vocabulary word to a short English semantic category (1–3 words, e.g. "deception", "movement", "emotions", "nature", "time", "money"). Words with related meanings must share the exact same category name.
 
-${words.map(w => `${w.id}: ${w.word} — ${w.translation}`).join('\n')}
+  // Load server-side cache
+  let cached = {};
+  try { cached = JSON.parse(fs.readFileSync(GROUPS_LOCAL, 'utf8')); } catch {}
+
+  const uncached = words.filter(w => !cached[String(w.id)]);
+
+  if (uncached.length > 0) {
+    try {
+      const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+      const message = await client.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 2048,
+        messages: [{
+          role: 'user',
+          content: `Assign each Spanish vocabulary word to a short English semantic category (1–3 words, e.g. "deception", "movement", "emotions", "nature", "time", "money"). Words with related meanings must share the exact same category name.
+
+${uncached.map(w => `${w.id}: ${w.word} — ${w.translation}`).join('\n')}
 
 Respond ONLY with valid JSON mapping each id to its category: {"<id>": "<category>", ...}`,
-      }],
-    });
-    if (!message.content?.[0] || message.content[0].type !== 'text') {
-      throw new Error('Unexpected API response');
+        }],
+      });
+      if (message.content?.[0]?.type === 'text') {
+        const match = message.content[0].text.trim().match(/\{[\s\S]*\}/);
+        if (match) {
+          Object.assign(cached, JSON.parse(match[0]));
+          try { fs.writeFileSync(GROUPS_LOCAL, JSON.stringify(cached, null, 2)); } catch {}
+        }
+      }
+    } catch (e) {
+      console.error('Vocabulary grouping error:', e.message);
     }
-    const match = message.content[0].text.trim().match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('No JSON in response');
-    res.json(JSON.parse(match[0]));
-  } catch (e) {
-    res.status(500).json({ error: e.message });
   }
+
+  res.json(cached);
 });
 
 // ─── /api/reading-list ────────────────────────────────────────────────────────
