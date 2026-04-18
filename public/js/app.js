@@ -661,10 +661,6 @@ async function loadReadingList() {
 }
 
 function renderReadingList(list) {
-  $('rl-subtitle').textContent = list.length
-    ? `${list.length} article${list.length !== 1 ? 's' : ''} saved`
-    : 'Articles saved for later';
-
   if (list.length === 0) {
     $('rl-empty').style.display = 'flex';
     $('rl-list').innerHTML = '';
@@ -735,22 +731,9 @@ function renderReadingList(list) {
       if (!$('rl-list').querySelector('.rl-item')) {
         $('rl-empty').style.display = 'flex';
       }
-      // Update subtitle count
-      const remaining = $('rl-list').querySelectorAll('.rl-item').length;
-      $('rl-subtitle').textContent = remaining
-        ? `${remaining} article${remaining !== 1 ? 's' : ''} saved`
-        : 'Articles saved for later';
     });
   });
 }
-
-$('rl-clear').addEventListener('click', async () => {
-  if (!confirm('Remove all saved articles?')) return;
-  await fetch(`${API_BASE}/api/reading-list`, { method: 'DELETE' });
-  rlUnreadCount = 0;
-  updateRLCount();
-  loadReadingList();
-});
 
 $('rl-gmail-import').addEventListener('click', async () => {
   const COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
