@@ -381,6 +381,30 @@ async function updateVocabCount() {
   } catch { /* ignore */ }
 }
 
+/* ===== Vocabulary sort state ===== */
+let vocabSortMode     = 'date';   // 'date' | 'alpha' | 'definition'
+let vocabSortReversed = false;
+let vocabCache        = [];
+
+function applyVocabSort(vocab) {
+  const sorted = [...vocab];
+  if (vocabSortMode === 'alpha') {
+    sorted.sort((a, b) => (a.word || '').localeCompare(b.word || '', undefined, { sensitivity: 'base' }));
+  } else if (vocabSortMode === 'definition') {
+    sorted.sort((a, b) => (a.translation || '').localeCompare(b.translation || '', undefined, { sensitivity: 'base' }));
+  }
+  if (vocabSortReversed) sorted.reverse();
+  return sorted;
+}
+
+function updateSortMenuUI() {
+  document.querySelectorAll('.vocab-sort-item[data-sort]').forEach(el => {
+    const s = el.dataset.sort;
+    el.classList.toggle('active',
+      s === 'reverse' ? vocabSortReversed : s === vocabSortMode);
+  });
+}
+
 async function loadVocabulary() {
   $('vocab-loading').style.display = 'flex';
   $('vocab-table-wrap').style.display = 'none';
@@ -397,11 +421,14 @@ async function loadVocabulary() {
 }
 
 function renderVocabulary(vocab) {
-  $('vocab-subtitle').textContent = vocab.length
-    ? `${vocab.length} word${vocab.length !== 1 ? 's' : ''} in your collection`
+  vocabCache = vocab;
+  const items = applyVocabSort(vocab);
+
+  $('vocab-subtitle').textContent = items.length
+    ? `${items.length} word${items.length !== 1 ? 's' : ''} in your collection`
     : "Words you've looked up while reading";
 
-  if (vocab.length === 0) {
+  if (items.length === 0) {
     $('vocab-empty').style.display = 'flex';
     $('vocab-table-wrap').style.display = 'none';
     return;
@@ -411,7 +438,7 @@ function renderVocabulary(vocab) {
 
   const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
 
-  $('vocab-tbody').innerHTML = vocab.map(e => {
+  $('vocab-tbody').innerHTML = items.map(e => {
     const domain = e.url ? (() => { try { return cleanDomain(new URL(e.url).hostname); } catch { return ''; } })() : '';
     const isNew  = e.date && e.date > lastViewed;
     return `<div class="vocab-entry${isNew ? ' vocab-new' : ''}" data-id="${e.id}">
@@ -466,11 +493,27 @@ async function deleteVocabEntry(id) {
   updateVocabCount();
 }
 
-$('vocab-clear').addEventListener('click', async () => {
-  if (!confirm('Clear all vocabulary entries? This cannot be undone.')) return;
-  await fetch(`${API_BASE}/api/vocabulary`, { method: 'DELETE' });
-  loadVocabulary();
-  updateVocabCount();
+/* ===== Sort dropdown ===== */
+$('vocab-sort-btn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  $('vocab-sort-menu').classList.toggle('open');
+});
+
+document.addEventListener('click', () => $('vocab-sort-menu').classList.remove('open'));
+
+document.querySelectorAll('.vocab-sort-item[data-sort]').forEach(item => {
+  item.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const s = item.dataset.sort;
+    if (s === 'reverse') {
+      vocabSortReversed = !vocabSortReversed;
+    } else {
+      vocabSortMode = s;
+    }
+    $('vocab-sort-menu').classList.remove('open');
+    updateSortMenuUI();
+    renderVocabulary(vocabCache);
+  });
 });
 
 $('vocab-export').addEventListener('click', async () => {

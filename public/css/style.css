@@ -596,6 +596,39 @@ html, body {
 
 .vocab-header-actions { display: flex; gap: 10px; }
 
+.vocab-sort-wrap { position: relative; }
+
+.vocab-sort-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.12);
+  min-width: 168px;
+  z-index: 200;
+  overflow: hidden;
+}
+.vocab-sort-menu.open { display: block; }
+
+.vocab-sort-item {
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+.vocab-sort-item:hover { background: var(--surface-2); }
+.vocab-sort-item.active { color: var(--primary); font-weight: 500; }
+.vocab-sort-item.active::after { content: '✓'; font-size: 13px; }
+
+.vocab-sort-divider { height: 1px; background: var(--border-light); margin: 3px 0; }
+
 .vocab-empty {
   display: flex;
   flex-direction: column;

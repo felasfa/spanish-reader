@@ -215,13 +215,22 @@
             </svg>
             Export CSV
           </button>
-          <button class="btn btn-danger" id="vocab-clear">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="3,6 5,6 21,6"/>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-            </svg>
-            Clear All
-          </button>
+          <div class="vocab-sort-wrap">
+            <button class="btn btn-outline" id="vocab-sort-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="12" x2="7" y2="12"/><line x1="21" y1="18" x2="11" y2="18"/>
+              </svg>
+              Sort
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg>
+            </button>
+            <div class="vocab-sort-menu" id="vocab-sort-menu">
+              <div class="vocab-sort-item active" data-sort="date">Date added</div>
+              <div class="vocab-sort-item" data-sort="alpha">Word (A–Z)</div>
+              <div class="vocab-sort-item" data-sort="definition">Definition (A–Z)</div>
+              <div class="vocab-sort-divider"></div>
+              <div class="vocab-sort-item" data-sort="reverse">Reverse order</div>
+            </div>
+          </div>
         </div>
       </div>
 
