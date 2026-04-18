@@ -382,16 +382,15 @@ async function updateVocabCount() {
 }
 
 /* ===== Vocabulary sort state ===== */
-let vocabSortMode     = 'date';   // 'date' | 'alpha' | 'definition'
+let vocabSortMode     = 'date';   // 'date' | 'alpha' | 'semantic'
 let vocabSortReversed = false;
 let vocabCache        = [];
+let vocabGroupCache   = null;     // { ids: string, mapping: {id→category} }
 
 function applyVocabSort(vocab) {
   const sorted = [...vocab];
   if (vocabSortMode === 'alpha') {
     sorted.sort((a, b) => (a.word || '').localeCompare(b.word || '', undefined, { sensitivity: 'base' }));
-  } else if (vocabSortMode === 'definition') {
-    sorted.sort((a, b) => (a.translation || '').localeCompare(b.translation || '', undefined, { sensitivity: 'base' }));
   }
   if (vocabSortReversed) sorted.reverse();
   return sorted;
@@ -405,68 +404,35 @@ function updateSortMenuUI() {
   });
 }
 
-async function loadVocabulary() {
-  $('vocab-loading').style.display = 'flex';
-  $('vocab-table-wrap').style.display = 'none';
-  $('vocab-empty').style.display = 'none';
-  try {
-    const res   = await fetch(`${API_BASE}/api/vocabulary`);
-    const vocab = await res.json();
-    renderVocabulary(vocab);
-  } catch (e) {
-    console.error('Failed to load vocabulary', e);
-  } finally {
-    $('vocab-loading').style.display = 'none';
-  }
+function buildEntryHTML(e, lastViewed) {
+  const domain = e.url ? (() => { try { return cleanDomain(new URL(e.url).hostname); } catch { return ''; } })() : '';
+  const isNew  = e.date && e.date > lastViewed;
+  return `<div class="vocab-entry${isNew ? ' vocab-new' : ''}" data-id="${e.id}">
+    <div class="vocab-summary">
+      <span class="vocab-word">${escapeHtml(e.word)}</span>
+      <span class="vocab-sep">→</span>
+      <span class="vocab-translation">${escapeHtml(e.translation || '—')}</span>
+      <div class="vocab-entry-actions">
+        <svg class="vocab-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,18 15,12 9,6"/></svg>
+        <button class="vocab-delete-btn" data-id="${e.id}" title="Delete" aria-label="Delete">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3,6 5,6 21,6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="vocab-detail">
+      ${e.sentence ? `<p class="vocab-sentence-es">${escapeHtml(e.sentence)}</p>` : ''}
+      ${domain || e.date ? `<div class="vocab-source">
+        ${domain ? `<a href="${escapeHtml(e.url)}" target="_blank" rel="noopener">${escapeHtml(domain)}</a>` : ''}
+        ${e.date ? `<span class="vocab-date-text">${formatDate(e.date)}</span>` : ''}
+      </div>` : ''}
+    </div>
+  </div>`;
 }
 
-function renderVocabulary(vocab) {
-  vocabCache = vocab;
-  const items = applyVocabSort(vocab);
-
-  $('vocab-subtitle').textContent = items.length
-    ? `${items.length} word${items.length !== 1 ? 's' : ''} in your collection`
-    : "Words you've looked up while reading";
-
-  if (items.length === 0) {
-    $('vocab-empty').style.display = 'flex';
-    $('vocab-table-wrap').style.display = 'none';
-    return;
-  }
-  $('vocab-empty').style.display = 'none';
-  $('vocab-table-wrap').style.display = 'block';
-
-  const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
-
-  $('vocab-tbody').innerHTML = items.map(e => {
-    const domain = e.url ? (() => { try { return cleanDomain(new URL(e.url).hostname); } catch { return ''; } })() : '';
-    const isNew  = e.date && e.date > lastViewed;
-    return `<div class="vocab-entry${isNew ? ' vocab-new' : ''}" data-id="${e.id}">
-      <div class="vocab-summary">
-        <span class="vocab-word">${escapeHtml(e.word)}</span>
-        <span class="vocab-sep">→</span>
-        <span class="vocab-translation">${escapeHtml(e.translation || '—')}</span>
-        <div class="vocab-entry-actions">
-          <svg class="vocab-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,18 15,12 9,6"/></svg>
-          <button class="vocab-delete-btn" data-id="${e.id}" title="Delete" aria-label="Delete">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="3,6 5,6 21,6"/>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-      <div class="vocab-detail">
-        ${e.sentence ? `<p class="vocab-sentence-es">${escapeHtml(e.sentence)}</p>` : ''}
-        ${domain || e.date ? `<div class="vocab-source">
-          ${domain ? `<a href="${escapeHtml(e.url)}" target="_blank" rel="noopener">${escapeHtml(domain)}</a>` : ''}
-          ${e.date ? `<span class="vocab-date-text">${formatDate(e.date)}</span>` : ''}
-        </div>` : ''}
-      </div>
-    </div>`;
-  }).join('');
-
-  // Toggle expand on row click (but not on delete button)
+function attachEntryListeners() {
   $('vocab-tbody').querySelectorAll('.vocab-entry').forEach(entry => {
     entry.querySelector('.vocab-summary').addEventListener('click', (e) => {
       if (e.target.closest('.vocab-delete-btn')) return;
@@ -476,8 +442,6 @@ function renderVocabulary(vocab) {
       deleteVocabEntry(entry.dataset.id);
     });
   });
-
-  // Clear highlights and badge 2 seconds after the list opens
   if ($('vocab-tbody').querySelector('.vocab-new')) {
     setTimeout(() => {
       $('vocab-tbody').querySelectorAll('.vocab-new').forEach(r => r.classList.remove('vocab-new'));
@@ -485,6 +449,103 @@ function renderVocabulary(vocab) {
       $('nav-vocab-count').style.display = 'none';
     }, 2000);
   }
+}
+
+async function getSemanticGroups(vocab) {
+  const cacheKey = vocab.map(v => v.id).sort().join(',');
+  if (vocabGroupCache && vocabGroupCache.key === cacheKey) return vocabGroupCache.mapping;
+  const res = await fetch(`${API_BASE}/api/vocabulary/group`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ words: vocab.map(v => ({ id: v.id, word: v.word, translation: v.translation })) }),
+  });
+  if (!res.ok) throw new Error(`Grouping failed: ${res.status}`);
+  const mapping = await res.json();
+  vocabGroupCache = { key: cacheKey, mapping };
+  return mapping;
+}
+
+async function loadVocabulary() {
+  $('vocab-loading').style.display = 'flex';
+  $('vocab-table-wrap').style.display = 'none';
+  $('vocab-empty').style.display = 'none';
+  try {
+    const res   = await fetch(`${API_BASE}/api/vocabulary`);
+    const vocab = await res.json();
+    await renderVocabulary(vocab);
+  } catch (e) {
+    console.error('Failed to load vocabulary', e);
+    $('vocab-subtitle').textContent = 'Could not connect to server';
+    $('vocab-empty').style.display = 'flex';
+  } finally {
+    $('vocab-loading').style.display = 'none';
+  }
+}
+
+async function renderVocabulary(vocab) {
+  vocabCache = vocab;
+
+  if (vocab.length === 0) {
+    $('vocab-subtitle').textContent = "Words you've looked up while reading";
+    $('vocab-empty').style.display = 'flex';
+    $('vocab-table-wrap').style.display = 'none';
+    return;
+  }
+
+  if (vocabSortMode === 'semantic') {
+    await renderVocabularyGrouped(vocab);
+    return;
+  }
+
+  const items = applyVocabSort(vocab);
+  $('vocab-subtitle').textContent = `${items.length} word${items.length !== 1 ? 's' : ''} in your collection`;
+  $('vocab-empty').style.display = 'none';
+  $('vocab-table-wrap').style.display = 'block';
+
+  const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
+  $('vocab-tbody').innerHTML = items.map(e => buildEntryHTML(e, lastViewed)).join('');
+  attachEntryListeners();
+}
+
+async function renderVocabularyGrouped(vocab) {
+  $('vocab-subtitle').textContent = 'Grouping by meaning…';
+  $('vocab-table-wrap').style.display = 'none';
+
+  let mapping;
+  try {
+    mapping = await getSemanticGroups(vocab);
+  } catch (e) {
+    $('vocab-subtitle').textContent = 'Could not group words — try again';
+    $('vocab-table-wrap').style.display = 'block';
+    const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
+    $('vocab-tbody').innerHTML = vocab.map(e => buildEntryHTML(e, lastViewed)).join('');
+    attachEntryListeners();
+    return;
+  }
+
+  // Build groups: { categoryName → [entry, ...] }
+  const groups = {};
+  vocab.forEach(e => {
+    const cat = (mapping[e.id] || mapping[String(e.id)] || 'Other').trim();
+    (groups[cat] = groups[cat] || []).push(e);
+  });
+
+  // Sort categories A–Z (reversed = Z–A); words within each group A–Z always
+  let cats = Object.keys(groups).sort((a, b) => a.localeCompare(b));
+  if (vocabSortReversed) cats.reverse();
+  cats.forEach(cat => groups[cat].sort((a, b) => (a.word || '').localeCompare(b.word || '', undefined, { sensitivity: 'base' })));
+
+  const wordCount = vocab.length;
+  $('vocab-subtitle').textContent = `${wordCount} word${wordCount !== 1 ? 's' : ''} in ${cats.length} group${cats.length !== 1 ? 's' : ''}`;
+  $('vocab-empty').style.display = 'none';
+  $('vocab-table-wrap').style.display = 'block';
+
+  const lastViewed = localStorage.getItem('vocabLastViewed') || '0';
+  $('vocab-tbody').innerHTML = cats.map(cat =>
+    `<div class="vocab-group-heading">${escapeHtml(cat)}</div>` +
+    groups[cat].map(e => buildEntryHTML(e, lastViewed)).join('')
+  ).join('');
+  attachEntryListeners();
 }
 
 async function deleteVocabEntry(id) {
@@ -512,7 +573,7 @@ document.querySelectorAll('.vocab-sort-item[data-sort]').forEach(item => {
     }
     $('vocab-sort-menu').classList.remove('open');
     updateSortMenuUI();
-    renderVocabulary(vocabCache);
+    renderVocabulary(vocabCache).catch(e => console.error('render error', e));
   });
 });
 
