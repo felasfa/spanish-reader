@@ -257,9 +257,9 @@ $('rl-url-input').addEventListener('keydown', e => {
 
 /* ===== Vocabulary lookup input ===== */
 $('vocab-lookup-btn').addEventListener('click', () => {
-  const word = $('vocab-lookup-input').value.trim();
-  if (!word) return;
-  showTranslationPopup(word, '');
+  const text = $('vocab-lookup-input').value.trim();
+  if (!text) return;
+  showTranslationPopup(text, text.includes(' ') ? text : '');
   $('vocab-lookup-input').value = '';
 });
 
