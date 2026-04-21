@@ -45,6 +45,7 @@ function showView(name) {
   }
   scrollPositions[state.currentView] = window.scrollY;
   if (state.currentView !== name) state.previousView = state.currentView;
+  if (state.currentView === 'vocabulary') collapseLookup();
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   $(`view-${name}`).classList.add('active');
   state.currentView = name;
@@ -266,10 +267,11 @@ function autoResizeLookup() {
 }
 
 function collapseLookup() {
-  vocabLookupEl.style.height = '';
+  vocabLookupEl.style.height = '';  // shrinks to rows="1"; content preserved
 }
 
 vocabLookupEl.addEventListener('input', autoResizeLookup);
+vocabLookupEl.addEventListener('focus', autoResizeLookup);  // re-expand when user taps back in
 
 vocabLookupEl.addEventListener('paste', () => {
   vocabJustPasted = true;
@@ -278,6 +280,10 @@ vocabLookupEl.addEventListener('paste', () => {
     vocabJustPasted = false;
   }, 0);
 });
+
+window.addEventListener('scroll', () => {
+  if (state.currentView === 'vocabulary' && vocabLookupEl.style.height) collapseLookup();
+}, { passive: true });
 
 function checkVocabSelection() {
   if (vocabJustPasted) return;
