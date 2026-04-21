@@ -255,6 +255,18 @@ $('rl-url-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') $('rl-url-save').click();
 });
 
+/* ===== Vocabulary lookup input ===== */
+$('vocab-lookup-btn').addEventListener('click', () => {
+  const word = $('vocab-lookup-input').value.trim();
+  if (!word) return;
+  showTranslationPopup(word, '');
+  $('vocab-lookup-input').value = '';
+});
+
+$('vocab-lookup-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') $('vocab-lookup-btn').click();
+});
+
 /* ===== Messages from iframe ===== */
 window.addEventListener('message', async (event) => {
   if (!event.data) return;
