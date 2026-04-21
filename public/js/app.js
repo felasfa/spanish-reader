@@ -255,16 +255,50 @@ $('rl-url-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') $('rl-url-save').click();
 });
 
-/* ===== Vocabulary lookup input ===== */
-$('vocab-lookup-btn').addEventListener('click', () => {
-  const text = $('vocab-lookup-input').value.trim();
-  if (!text) return;
-  showTranslationPopup(text, text.includes(' ') ? text : '');
-  $('vocab-lookup-input').value = '';
+/* ===== Vocabulary lookup box ===== */
+let vocabLookupTimer;
+let vocabJustPasted = false;
+const vocabLookupEl = $('vocab-lookup-input');
+
+function autoResizeLookup() {
+  vocabLookupEl.style.height = 'auto';
+  vocabLookupEl.style.height = vocabLookupEl.scrollHeight + 'px';
+}
+
+function collapseLookup() {
+  vocabLookupEl.style.height = '';
+}
+
+vocabLookupEl.addEventListener('input', autoResizeLookup);
+
+vocabLookupEl.addEventListener('paste', () => {
+  vocabJustPasted = true;
+  setTimeout(() => {
+    autoResizeLookup();
+    vocabJustPasted = false;
+  }, 0);
 });
 
-$('vocab-lookup-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') $('vocab-lookup-btn').click();
+function checkVocabSelection() {
+  if (vocabJustPasted) return;
+  const start = vocabLookupEl.selectionStart;
+  const end   = vocabLookupEl.selectionEnd;
+  if (start === end) return;
+  const selected = vocabLookupEl.value.slice(start, end).trim();
+  if (!selected) return;
+  collapseLookup();
+  showTranslationPopup(selected, vocabLookupEl.value.trim());
+}
+
+vocabLookupEl.addEventListener('mouseup', () => {
+  clearTimeout(vocabLookupTimer);
+  vocabLookupTimer = setTimeout(checkVocabSelection, 50);
+});
+
+document.addEventListener('selectionchange', () => {
+  if (document.activeElement !== vocabLookupEl) return;
+  clearTimeout(vocabLookupTimer);
+  vocabLookupTimer = setTimeout(checkVocabSelection, 600);
 });
 
 /* ===== Messages from iframe ===== */
@@ -299,6 +333,19 @@ window.addEventListener('message', async (event) => {
   }
 });
 
+/* ===== Translation Popup open/close ===== */
+function openPopup() {
+  const popup = $('translation-popup');
+  popup.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => popup.classList.add('popup-visible')));
+}
+
+function closePopup() {
+  const popup = $('translation-popup');
+  popup.classList.remove('popup-visible');
+  popup.addEventListener('transitionend', () => { popup.style.display = 'none'; }, { once: true });
+}
+
 /* ===== Translation Popup ===== */
 function showTranslationPopup(word, sentence) {
   const popup = $('translation-popup');
@@ -325,7 +372,7 @@ function showTranslationPopup(word, sentence) {
   $('popup-error').style.display = 'none';
   $('popup-saved').style.display = 'none';
   $('popup-save').style.display = 'inline-flex';
-  popup.style.display = 'flex';
+  openPopup();
   state.pendingTranslation = { word, sentence };
 
   fetch(`${API_BASE}/api/translate`, {
@@ -350,7 +397,7 @@ function showTranslationPopup(word, sentence) {
     });
 }
 
-$('popup-close').addEventListener('click', () => { $('translation-popup').style.display = 'none'; });
+$('popup-close').addEventListener('click', () => { closePopup(); });
 
 // Swipe down to dismiss translation popup — only from drag handle / header,
 // not from the scrollable content area
@@ -366,7 +413,7 @@ $('popup-close').addEventListener('click', () => { $('translation-popup').style.
     if (startY < 0) return;
     const dy = e.changedTouches[0].clientY - startY;
     const dx = Math.abs(e.changedTouches[0].clientX - startX);
-    if (dy > 60 && dx < 80) popup.style.display = 'none';
+    if (dy > 60 && dx < 80) closePopup();
   }, { passive: true });
 })();
 
