@@ -271,7 +271,8 @@ function collapseLookup() {
 }
 
 vocabLookupEl.addEventListener('input', autoResizeLookup);
-vocabLookupEl.addEventListener('focus', autoResizeLookup);  // re-expand when user taps back in
+vocabLookupEl.addEventListener('focus', autoResizeLookup);
+vocabLookupEl.addEventListener('blur', collapseLookup);
 
 vocabLookupEl.addEventListener('paste', () => {
   vocabJustPasted = true;
@@ -292,7 +293,6 @@ function checkVocabSelection() {
   if (start === end) return;
   const selected = vocabLookupEl.value.slice(start, end).trim();
   if (!selected) return;
-  collapseLookup();
   showTranslationPopup(selected, vocabLookupEl.value.trim());
 }
 
