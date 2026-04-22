@@ -340,17 +340,8 @@ window.addEventListener('message', async (event) => {
 });
 
 /* ===== Translation Popup open/close ===== */
-function openPopup() {
-  const popup = $('translation-popup');
-  popup.style.display = 'flex';
-  requestAnimationFrame(() => requestAnimationFrame(() => popup.classList.add('popup-visible')));
-}
-
-function closePopup() {
-  const popup = $('translation-popup');
-  popup.classList.remove('popup-visible');
-  popup.addEventListener('transitionend', () => { popup.style.display = 'none'; }, { once: true });
-}
+function openPopup()  { $('translation-popup').classList.add('popup-visible'); }
+function closePopup() { $('translation-popup').classList.remove('popup-visible'); }
 
 /* ===== Translation Popup ===== */
 function showTranslationPopup(word, sentence) {
