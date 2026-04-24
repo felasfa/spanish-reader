@@ -17,6 +17,12 @@ let rlData = []; // cached reading-list items
 
 function syncScrollToServer(url, pct, useBeacon = false) {
   if (!url || !pct) return;
+  // Always persist locally — used for offline scroll restore
+  OfflineCache.saveScrollLocal(url, pct);
+  if (!OfflineCache.isOnline()) {
+    OfflineCache.queueScroll(url, pct);
+    return;
+  }
   const body = JSON.stringify({ url, scrollPct: pct });
   // Use sendBeacon only when the page is unloading (guaranteed delivery).
   // For normal saves (interval, navigation) use fetch so failures are visible in console.
@@ -161,11 +167,68 @@ document.querySelectorAll('.suggestion-chip').forEach(chip => {
 });
 
 /* ===== URL Submission ===== */
+
+// Mount HTML into the reader iframe and restore scroll position.
+function _mountHtml(iframe, html, url) {
+  iframe.style.visibility = 'hidden';
+  iframe.srcdoc = html;
+  iframe.onload = () => {
+    $('reader-loading').style.display = 'none';
+    iframe.style.visibility = 'visible';
+    const local = readerScrollPositions[url];
+    const send  = (pct, y) => iframe.contentWindow?.postMessage({ type: 'scroll-to', pct, y }, '*');
+    fetch(`${API_BASE}/api/reading-list/scroll?url=${encodeURIComponent(url)}`)
+      .then(r => r.json())
+      .then(d => {
+        const pct = (d.scrollPct > 0) ? d.scrollPct
+                  : (local && local.pct) || OfflineCache.getScrollLocal(url);
+        const y   = local && local.y;
+        if (pct || y) send(pct, y);
+      })
+      .catch(() => {
+        const pct = (local && local.pct) || OfflineCache.getScrollLocal(url);
+        const y   = local && local.y;
+        if (pct || y) send(pct, y);
+      });
+  };
+}
+
+// Commit url to navigation state and switch to reader view.
+function _commitNav(url, addToHistory) {
+  if (state.currentView === 'reader') {
+    if (addToHistory && state.currentUrl) state.readerHistory.push(state.currentUrl);
+  } else {
+    state.readerHistory = [];
+  }
+  state.currentUrl = url;
+  $('reader-url-display').textContent = url;
+  showView('reader');
+  $('reader-loading').style.display = 'flex';
+}
+
+const _READ_NOW_HTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg> Read Now`;
+
 async function loadUrl(url, addToHistory = true) {
   if (!url) return;
   hideError($('url-error'));
   $('url-read-now').disabled = true;
   $('url-read-now').textContent = 'Loading…';
+
+  const cached = await OfflineCache.getCachedArticle(url);
+
+  // ── Offline: serve from cache or show message ────────────────────────────
+  if (!OfflineCache.isOnline()) {
+    if (cached) {
+      _commitNav(url, addToHistory);
+      _mountHtml($('reader-iframe'), cached, url);
+      showToast('Loaded from cache', 'info');
+    } else {
+      showToast("You're offline and this article hasn't been cached yet", 'error');
+    }
+    $('url-read-now').disabled = false;
+    $('url-read-now').innerHTML = _READ_NOW_HTML;
+    return;
+  }
 
   try {
     const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`);
@@ -180,40 +243,17 @@ async function loadUrl(url, addToHistory = true) {
 
     if (!res.ok) throw new Error(data.error || 'Failed to load page');
 
-    // Track navigation history so back works correctly
-    if (state.currentView === 'reader') {
-      if (addToHistory && state.currentUrl) state.readerHistory.push(state.currentUrl);
-    } else {
-      state.readerHistory = []; // fresh entry into reader, clear old history
-    }
+    _commitNav(url, addToHistory);
+    OfflineCache.cacheArticle(url, data.html); // fire-and-forget
+    _mountHtml($('reader-iframe'), data.html, url);
 
-    state.currentUrl = url;
-    $('reader-url-display').textContent = url;
-    showView('reader');
-    $('reader-loading').style.display = 'flex';
-    $('reader-iframe').style.visibility = 'hidden';
-
-    const iframe = $('reader-iframe');
-    iframe.srcdoc = data.html;
-    iframe.onload = () => {
-      $('reader-loading').style.display = 'none';
-      iframe.style.visibility = 'visible';
-      // Prefer fractional position (works across different screen sizes).
-      // Falls back to local cache if server is unavailable.
-      const local = readerScrollPositions[url];
-      const send = (pct, y) => iframe.contentWindow.postMessage({ type: 'scroll-to', pct, y }, '*');
-      fetch(`${API_BASE}/api/reading-list/scroll?url=${encodeURIComponent(url)}`)
-        .then(r => r.json())
-        .then(d => {
-          const pct = (d.scrollPct > 0) ? d.scrollPct : (local && local.pct);
-          const y   = local && local.y;
-          if (pct || y) send(pct, y);
-        })
-        .catch(() => { if (local) send(local.pct, local.y); });
-    };
   } catch (e) {
-    if (state.currentView === 'reader') {
-      // Link clicked from within the reader — stay in reader, show toast
+    if (cached) {
+      // Network error but we have a cached copy — serve it silently
+      _commitNav(url, addToHistory);
+      _mountHtml($('reader-iframe'), cached, url);
+      showToast('Loaded from cache', 'info');
+    } else if (state.currentView === 'reader') {
       showToast(`Could not load link: ${e.message}`, 'error');
     } else {
       showError($('url-error'), `Error: ${e.message}`);
@@ -221,7 +261,7 @@ async function loadUrl(url, addToHistory = true) {
     }
   } finally {
     $('url-read-now').disabled = false;
-    $('url-read-now').innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg> Read Now`;
+    $('url-read-now').innerHTML = _READ_NOW_HTML;
   }
 }
 
@@ -699,18 +739,33 @@ function updateRLCount() {
 }
 
 async function loadReadingList() {
-  $('rl-loading').style.display = 'flex';
-  $('rl-list').innerHTML = '';
   $('rl-empty').style.display = 'none';
+
+  // Serve cached list immediately — no spinner if we have data
+  const cached = OfflineCache.loadList();
+  if (cached) {
+    rlData = cached;
+    rlUnreadCount = cached.filter(i => !i.read).length;
+    updateRLCount();
+    renderReadingList(cached);
+  } else {
+    $('rl-loading').style.display = 'flex';
+    $('rl-list').innerHTML = '';
+  }
+
+  if (!OfflineCache.isOnline()) { $('rl-loading').style.display = 'none'; return; }
+
   try {
     const res  = await fetch(`${API_BASE}/api/reading-list`);
     const list = await res.json();
-    rlData = list; // cache for cross-device scroll lookup
+    rlData = list;
+    OfflineCache.saveList(list);
     rlUnreadCount = list.filter(i => !i.read).length;
     updateRLCount();
     renderReadingList(list);
   } catch (e) {
     console.error('Failed to load reading list', e);
+    // keep cached render — don't flash an error over good data
   } finally {
     $('rl-loading').style.display = 'none';
   }
@@ -871,6 +926,26 @@ setInterval(() => {
 }, 15000);
 
 /* ===== Init ===== */
+OfflineCache.init({ dbName: 'spanish-reader' });
 updateVocabCount();
 loadReadingList();
 showView('reading-list');
+
+// Flush queued scroll syncs when network returns
+window.addEventListener('online', () => {
+  OfflineCache.flushScrollQueue(async (url, pct) => {
+    await fetch(`${API_BASE}/api/reading-list/scroll`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, scrollPct: pct }),
+    });
+  });
+});
+
+// Re-sync reading list when tab regains focus with network (picks up adds from other devices)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && OfflineCache.isOnline() &&
+      state.currentView === 'reading-list') {
+    loadReadingList();
+  }
+});
