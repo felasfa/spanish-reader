@@ -949,3 +949,10 @@ document.addEventListener('visibilitychange', () => {
     loadReadingList();
   }
 });
+
+// Register service worker to cache the app shell for offline load
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js').catch(e =>
+    console.warn('[SW] registration failed:', e)
+  );
+}
