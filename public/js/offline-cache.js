@@ -1,58 +1,66 @@
 'use strict';
-
-/* OfflineCache — shared module for Spanish Reader
+/**
+ * OfflineCache — portable offline reading module
  *
- * Provides:
- *   IndexedDB  — article HTML cache (7-day TTL, pruned on init)
- *   localStorage — reading-list mirror, scroll positions, pending sync queue
+ * Used by: medical-ai-news, spanish-reader (and any future reader app)
  *
- * Usage:
- *   OfflineCache.init({ dbName: 'spanish-reader' });
+ * Call once on startup:
+ *   OfflineCache.init({ dbName: 'medical-ai-news' });
+ *
+ * Public API:
+ *   OfflineCache.cacheArticle(url, html)          store processed article HTML
+ *   OfflineCache.getCachedArticle(url)            → html string | null
+ *   OfflineCache.saveList(items)                  persist reading list to localStorage
+ *   OfflineCache.loadList()                       → items array | null
+ *   OfflineCache.saveScrollLocal(url, pct)        persist last-known scroll position
+ *   OfflineCache.getScrollLocal(url)              → pct number | 0
+ *   OfflineCache.queueScroll(url, pct)            queue a scroll sync for when online
+ *   OfflineCache.flushScrollQueue(syncFn)         flush queued syncs; syncFn(url,pct)→Promise
+ *   OfflineCache.isOnline()                       → boolean
  */
 const OfflineCache = (() => {
   const TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
-  let _prefix = 'offline';
-  let _db = null;
+  let _prefix    = 'app';
+  let _dbPromise = null;
 
-  // ── localStorage key helpers ──────────────────────────────────────────────
+  // ── localStorage helpers ──────────────────────────────────────────────────
 
-  const k = name => `${_prefix}:${name}`;
-
-  function lsGet(name) {
-    try { return JSON.parse(localStorage.getItem(k(name))); } catch { return null; }
-  }
-  function lsSet(name, val) {
-    try { localStorage.setItem(k(name), JSON.stringify(val)); } catch { /* quota */ }
-  }
-  function lsDel(name) {
-    try { localStorage.removeItem(k(name)); } catch { /* ignore */ }
-  }
+  const k = name => _prefix + ':' + name;
+  function lsGet(name) { try { return JSON.parse(localStorage.getItem(k(name))); } catch { return null; } }
+  function lsSet(name, val) { try { localStorage.setItem(k(name), JSON.stringify(val)); } catch {} }
+  function lsDel(name) { try { localStorage.removeItem(k(name)); } catch {} }
 
   // ── IndexedDB ─────────────────────────────────────────────────────────────
 
-  function _openDB() {
+  function _openDb() {
     return new Promise((resolve, reject) => {
-      const req = indexedDB.open(`${_prefix}-articles`, 1);
+      const req = indexedDB.open(_prefix + '-articles', 1);
       req.onupgradeneeded = e => {
         const db = e.target.result;
         if (!db.objectStoreNames.contains('articles')) {
-          const store = db.createObjectStore('articles', { keyPath: 'url' });
-          store.createIndex('ts', 'ts');
+          db.createObjectStore('articles', { keyPath: 'url' });
         }
       };
-      req.onsuccess  = e => resolve(e.target.result);
-      req.onerror    = e => reject(e.target.error);
+      req.onsuccess = e => {
+        const db = e.target.result;
+        // Reset on unexpected close (e.g. iOS Safari backgrounding the tab)
+        db.onclose = () => { _dbPromise = null; };
+        resolve(db);
+      };
+      req.onerror = e => { _dbPromise = null; reject(e.target.error); };
     });
   }
 
-  async function _db_() {
-    if (!_db) _db = await _openDB();
-    return _db;
+  function _getDb() {
+    if (!_dbPromise) _dbPromise = _openDb();
+    return _dbPromise;
   }
 
+  // Use .then() — never async/await — to create transactions.
+  // WebKit silently drops IDB transactions created after `await` in async functions.
   function _tx(mode, fn) {
-    return _db_().then(db => new Promise((resolve, reject) => {
+    return _getDb().then(db => new Promise((resolve, reject) => {
       const tx    = db.transaction('articles', mode);
       const store = tx.objectStore('articles');
       const req   = fn(store);
@@ -61,44 +69,8 @@ const OfflineCache = (() => {
     }));
   }
 
-  // ── Prune expired entries on startup ──────────────────────────────────────
+  // ── Article cache (IndexedDB) ─────────────────────────────────────────────
 
-  async function _prune() {
-    try {
-      const db     = await _db_();
-      const cutoff = Date.now() - TTL_MS;
-      const tx     = db.transaction('articles', 'readwrite');
-      const range  = IDBKeyRange.upperBound(cutoff);
-      const req    = tx.objectStore('articles').index('ts').openCursor(range);
-      req.onsuccess = e => {
-        const cur = e.target.result;
-        if (cur) { cur.delete(); cur.continue(); }
-      };
-    } catch (e) {
-      console.warn('[OfflineCache] prune failed:', e);
-    }
-  }
-
-  // ── Public API ────────────────────────────────────────────────────────────
-
-  async function init({ dbName } = {}) {
-    if (dbName) _prefix = dbName;
-    _prune(); // fire-and-forget
-  }
-
-  function isOnline() {
-    return navigator.onLine !== false;
-  }
-
-  // Reading-list mirror
-  function saveList(items) {
-    lsSet('rl', items);
-  }
-  function loadList() {
-    return lsGet('rl'); // null if never saved
-  }
-
-  // Article HTML (IndexedDB)
   async function cacheArticle(url, html) {
     try {
       await _tx('readwrite', store => store.put({ url, html, ts: Date.now() }));
@@ -116,47 +88,73 @@ const OfflineCache = (() => {
         return null;
       }
       return row.html;
-    } catch {
-      return null;
-    }
+    } catch { return null; }
   }
 
-  // Scroll positions (localStorage, per-URL map)
+  function _pruneExpired() {
+    _getDb().then(db => {
+      const tx  = db.transaction('articles', 'readwrite');
+      const req = tx.objectStore('articles').openCursor();
+      req.onsuccess = e => {
+        const cursor = e.target.result;
+        if (!cursor) return;
+        if (Date.now() - cursor.value.ts > TTL_MS) cursor.delete();
+        cursor.continue();
+      };
+    }).catch(() => {});
+  }
+
+  // ── Reading list (localStorage) ───────────────────────────────────────────
+
+  function saveList(items) { lsSet('rl', items); }
+  function loadList()      { return lsGet('rl'); }
+
+  // ── Scroll positions (localStorage) ──────────────────────────────────────
+
   function saveScrollLocal(url, pct) {
     const map = lsGet('scroll') || {};
     map[url] = pct;
     lsSet('scroll', map);
   }
+
   function getScrollLocal(url) {
     return (lsGet('scroll') || {})[url] || 0;
   }
 
-  // Pending scroll sync queue (flushed when back online)
+  // ── Scroll sync queue (localStorage) ─────────────────────────────────────
+
   function queueScroll(url, pct) {
     const q = lsGet('scroll-queue') || {};
     q[url] = pct;
     lsSet('scroll-queue', q);
   }
 
-  async function flushScrollQueue(callback) {
+  async function flushScrollQueue(syncFn) {
     const q = lsGet('scroll-queue') || {};
     if (!Object.keys(q).length) return;
     lsDel('scroll-queue');
-    for (const [url, pct] of Object.entries(q)) {
-      try { await callback(url, pct); } catch { /* ignore individual failures */ }
+    for (const entry of Object.entries(q)) {
+      try { await syncFn(entry[0], entry[1]); } catch {}
     }
+  }
+
+  // ── Online status ─────────────────────────────────────────────────────────
+
+  function isOnline() { return navigator.onLine !== false; }
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+
+  function init(opts) {
+    if (opts && opts.dbName) _prefix = opts.dbName;
+    _pruneExpired();
   }
 
   return {
     init,
+    cacheArticle, getCachedArticle,
+    saveList, loadList,
+    saveScrollLocal, getScrollLocal,
+    queueScroll, flushScrollQueue,
     isOnline,
-    saveList,
-    loadList,
-    cacheArticle,
-    getCachedArticle,
-    saveScrollLocal,
-    getScrollLocal,
-    queueScroll,
-    flushScrollQueue,
   };
 })();
