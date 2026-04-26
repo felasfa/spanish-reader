@@ -909,11 +909,17 @@ $('bookmarklet-link').addEventListener('click', (e) => {
   showToast('Drag the button to your bookmarks bar, then click it on any page to save', 'info');
 });
 
-// Save scroll position when user backgrounds/closes the app (iOS home button, tab switch, etc.)
+// Save scroll on backgrounding; re-sync reading list on return to foreground
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden' && state.currentView === 'reader' && state.currentUrl && iframeScrollPct > 0) {
-    readerScrollPositions[state.currentUrl] = { y: iframeScrollY, pct: iframeScrollPct };
-    syncScrollToServer(state.currentUrl, iframeScrollPct, true); // beacon for unload reliability
+  if (document.visibilityState === 'hidden') {
+    if (state.currentView === 'reader' && state.currentUrl && iframeScrollPct > 0) {
+      readerScrollPositions[state.currentUrl] = { y: iframeScrollY, pct: iframeScrollPct };
+      syncScrollToServer(state.currentUrl, iframeScrollPct, true); // beacon for unload reliability
+    }
+  } else if (document.visibilityState === 'visible') {
+    if (OfflineCache.isOnline() && state.currentView === 'reading-list') {
+      loadReadingList();
+    }
   }
 });
 
@@ -940,14 +946,6 @@ window.addEventListener('online', () => {
       body: JSON.stringify({ url, scrollPct: pct }),
     });
   });
-});
-
-// Re-sync reading list when tab regains focus with network (picks up adds from other devices)
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && OfflineCache.isOnline() &&
-      state.currentView === 'reading-list') {
-    loadReadingList();
-  }
 });
 
 // Register service worker to cache the app shell for offline load
