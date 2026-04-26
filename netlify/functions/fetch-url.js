@@ -182,6 +182,31 @@ const INTERACTION_SCRIPT = `
 })();
 </script>`;
 
+async function inlineImages($) {
+  const imgs = [];
+  $('img[src]').each((_, el) => {
+    const src = $(el).attr('src') || '';
+    if (src.startsWith('http') && imgs.length < 8) imgs.push({ el, src });
+  });
+  if (!imgs.length) return;
+  const MAX_BYTES = 300 * 1024;
+  await Promise.all(imgs.map(async ({ el, src }) => {
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 4000);
+      const resp = await fetch(src, { signal: controller.signal });
+      clearTimeout(timer);
+      if (!resp.ok) return;
+      const ct = (resp.headers.get('content-type') || 'image/jpeg').split(';')[0].trim();
+      if (!ct.startsWith('image/')) return;
+      const buf = await resp.arrayBuffer();
+      if (buf.byteLength > MAX_BYTES) return;
+      const b64 = Buffer.from(buf).toString('base64');
+      $(el).attr('src', `data:${ct};base64,${b64}`);
+    } catch {}
+  }));
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'GET') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -305,6 +330,10 @@ exports.handler = async (event) => {
     });
 
     $('body').append(INTERACTION_SCRIPT);
+
+    if ((event.queryStringParameters || {}).inlineImages === '1') {
+      await inlineImages($);
+    }
 
     return {
       statusCode: 200,

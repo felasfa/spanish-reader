@@ -171,7 +171,6 @@ document.querySelectorAll('.suggestion-chip').forEach(chip => {
 // Mount HTML into the reader iframe and restore scroll position.
 function _mountHtml(iframe, html, url) {
   iframe.style.visibility = 'hidden';
-  iframe.srcdoc = html;
   iframe.onload = () => {
     $('reader-loading').style.display = 'none';
     iframe.style.visibility = 'visible';
@@ -191,6 +190,7 @@ function _mountHtml(iframe, html, url) {
         if (pct || y) send(pct, y);
       });
   };
+  iframe.srcdoc = html;
 }
 
 // Commit url to navigation state and switch to reader view.
@@ -738,6 +738,40 @@ function updateRLCount() {
   $('nav-rl-count').style.display = rlUnreadCount > 0 ? 'inline-block' : 'none';
 }
 
+function _setCacheStatus(msg) {
+  const bar = $('rl-cache-status');
+  if (!bar) return;
+  if (!msg) {
+    bar.hidden = true;
+    return;
+  }
+  $('rl-cache-msg').textContent = msg;
+  bar.hidden = false;
+}
+
+async function precacheAll(list) {
+  const uncached = [];
+  for (const item of list) {
+    const hit = await OfflineCache.getCachedArticle(item.url);
+    if (!hit) uncached.push(item);
+  }
+  if (!uncached.length) { _setCacheStatus(null); return; }
+  _setCacheStatus(`Caching for offline: 0 / ${uncached.length}`);
+  let done = 0;
+  for (const item of uncached) {
+    try {
+      const res = await fetch(`/api/fetch?url=${encodeURIComponent(item.url)}&inlineImages=1`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.html) await OfflineCache.cacheArticle(item.url, data.html);
+      }
+    } catch {}
+    done++;
+    _setCacheStatus(`Caching for offline: ${done} / ${uncached.length}`);
+  }
+  _setCacheStatus(null);
+}
+
 async function loadReadingList() {
   $('rl-empty').style.display = 'none';
 
@@ -763,6 +797,7 @@ async function loadReadingList() {
     rlUnreadCount = list.filter(i => !i.read).length;
     updateRLCount();
     renderReadingList(list);
+    precacheAll(list); // fire-and-forget: background caching with progress bar
   } catch (e) {
     console.error('Failed to load reading list', e);
     // keep cached render — don't flash an error over good data

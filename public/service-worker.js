@@ -39,24 +39,30 @@ self.addEventListener('fetch', event => {
   // Skip Netlify functions — let them go straight to network
   if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/.netlify/')) return;
 
-  // Navigation requests (page load / reload) → serve index.html from cache if offline
+  // Navigation requests: network-first, update cached '/' on success, fall back to index.html
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request).catch(() => caches.match('/index.html'))
+      fetch(request)
+        .then(res => {
+          caches.open(CACHE).then(c => c.put('/', res.clone()));
+          return res;
+        })
+        .catch(() => caches.match('/index.html'))
     );
     return;
   }
 
-  // Shell assets: network-first so deploys are picked up immediately;
-  // fall back to cache when offline
+  // Static shell assets: stale-while-revalidate — serve from cache instantly,
+  // fetch from network in background to keep cache fresh
   event.respondWith(
-    fetch(request)
-      .then(response => {
-        if (response.ok) {
-          caches.open(CACHE).then(c => c.put(request, response.clone()));
-        }
-        return response;
+    caches.open(CACHE).then(cache =>
+      cache.match(request).then(cached => {
+        const networkFetch = fetch(request).then(res => {
+          if (res.ok) cache.put(request, res.clone());
+          return res;
+        }).catch(() => null);
+        return cached || networkFetch;
       })
-      .catch(() => caches.match(request))
+    )
   );
 });
