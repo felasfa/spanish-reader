@@ -749,27 +749,35 @@ function _setCacheStatus(msg) {
   bar.hidden = false;
 }
 
+let _precaching = false;
+
 async function precacheAll(list) {
-  const uncached = [];
-  for (const item of list) {
-    const hit = await OfflineCache.getCachedArticle(item.url);
-    if (!hit) uncached.push(item);
+  if (_precaching) return;
+  _precaching = true;
+  try {
+    const uncached = [];
+    for (const item of list) {
+      const hit = await OfflineCache.getCachedArticle(item.url);
+      if (!hit) uncached.push(item);
+    }
+    if (!uncached.length) return;
+    _setCacheStatus(`Caching for offline: 0 / ${uncached.length}`);
+    let done = 0;
+    for (const item of uncached) {
+      try {
+        const res = await fetch(`/api/fetch?url=${encodeURIComponent(item.url)}&inlineImages=1`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.html) await OfflineCache.cacheArticle(item.url, data.html);
+        }
+      } catch {}
+      done++;
+      _setCacheStatus(`Caching for offline: ${done} / ${uncached.length}`);
+    }
+  } finally {
+    _precaching = false;
+    _setCacheStatus(null);
   }
-  if (!uncached.length) { _setCacheStatus(null); return; }
-  _setCacheStatus(`Caching for offline: 0 / ${uncached.length}`);
-  let done = 0;
-  for (const item of uncached) {
-    try {
-      const res = await fetch(`/api/fetch?url=${encodeURIComponent(item.url)}&inlineImages=1`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.html) await OfflineCache.cacheArticle(item.url, data.html);
-      }
-    } catch {}
-    done++;
-    _setCacheStatus(`Caching for offline: ${done} / ${uncached.length}`);
-  }
-  _setCacheStatus(null);
 }
 
 async function loadReadingList() {
