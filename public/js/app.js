@@ -742,11 +742,11 @@ function _setCacheStatus(msg) {
   const bar = $('rl-cache-status');
   if (!bar) return;
   if (!msg) {
-    bar.hidden = true;
+    bar.style.display = 'none';
     return;
   }
   $('rl-cache-msg').textContent = msg;
-  bar.hidden = false;
+  bar.style.display = 'flex';
 }
 
 let _precaching = false;
