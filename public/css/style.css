@@ -848,35 +848,38 @@ html, body {
 
 .rl-loading { display: flex; justify-content: center; padding: 40px 0; }
 
-.rl-list { display: flex; flex-direction: column; gap: 1px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+.rl-list { display: flex; flex-direction: column; gap: 10px; }
 
 .rl-item {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  padding: 14px 16px;
+  padding: 16px 18px;
   background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
   transition: background 0.12s;
   position: relative;
 }
-.rl-item + .rl-item { border-top: 1px solid var(--border-light); }
+.rl-item + .rl-item { border-top: none; }
 .rl-item.rl-read { opacity: 0.6; }
 
 .rl-thumb-wrap { flex-shrink: 0; cursor: pointer; }
 
 .rl-thumb {
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 8px;
   display: block;
   background: var(--surface-2);
 }
 
 .rl-thumb-placeholder {
-  width: 72px;
-  height: 72px;
-  border-radius: 6px;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
   background: var(--surface-2);
   display: flex;
   align-items: center;
@@ -887,11 +890,11 @@ html, body {
 .rl-content { flex: 1; min-width: 0; }
 
 .rl-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
   line-height: 1.4;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   cursor: pointer;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -901,10 +904,10 @@ html, body {
 .rl-title:hover { color: var(--primary); }
 
 .rl-summary {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-2);
   line-height: 1.5;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -915,13 +918,13 @@ html, body {
 }
 .rl-summary.rl-unread {
   background: #fff9e6;
-  padding: 4px 7px;
+  padding: 5px 8px;
   border-left: 3px solid #f4a261;
 }
 
 .rl-meta { display: flex; gap: 10px; align-items: center; }
-.rl-domain { font-size: 11px; color: var(--text-muted); }
-.rl-date   { font-size: 11px; color: var(--text-muted); }
+.rl-domain { font-size: 12px; color: var(--text-muted); }
+.rl-date   { font-size: 12px; color: var(--text-muted); }
 
 .rl-remove-btn {
   flex-shrink: 0;
