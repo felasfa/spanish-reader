@@ -23,7 +23,7 @@
   --shadow-lg: 0 10px 40px rgba(0,0,0,.15);
   --radius: 8px;
   --radius-lg: 12px;
-  --navbar-h: 60px;
+  --navbar-h: 52px;
   --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -54,10 +54,10 @@ html, body {
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-weight: 700;
-  font-size: 17px;
-  letter-spacing: -0.3px;
+  font-size: 15px;
+  letter-spacing: -0.2px;
   color: #fff;
   text-decoration: none;
   white-space: nowrap;
@@ -79,10 +79,10 @@ html, body {
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 14px;
+  gap: 6px;
+  padding: 6px 11px;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: rgba(255,255,255,.5);
   text-decoration: none;
@@ -800,7 +800,7 @@ html, body {
 .btn-danger:hover { background: var(--danger-light); border-color: var(--danger); }
 
 /* ===== Read Later View ===== */
-#view-reading-list { padding: 32px 24px; max-width: 860px; margin: 0 auto; }
+#view-reading-list { padding: 28px 20px; max-width: 680px; margin: 0 auto; }
 
 .rl-url-row {
   display: flex;
