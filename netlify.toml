@@ -1,3 +1,7 @@
+[[edge_functions]]
+  path = "/*"
+  function = "auth-check"
+
 [build]
   publish = "public"
   functions = "netlify/functions"
