@@ -39,15 +39,15 @@ self.addEventListener('fetch', event => {
   // Skip Netlify functions — let them go straight to network
   if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/.netlify/')) return;
 
-  // Navigation requests: network-first, update cached '/' on success, fall back to index.html
+  // Navigation requests: network-first, fall back to cached version of the
+  // requested page (or '/') so cached content is reachable when offline.
+  // The auth edge function only runs when the request reaches the server —
+  // a cache hit here bypasses it entirely, which is intentional for offline use.
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request)
-        .then(res => {
-          caches.open(CACHE).then(c => c.put('/', res.clone()));
-          return res;
-        })
-        .catch(() => caches.match('/index.html'))
+      fetch(request).catch(() =>
+        caches.match(request).then(r => r || caches.match('/'))
+      )
     );
     return;
   }
