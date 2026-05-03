@@ -91,6 +91,12 @@ const OfflineCache = (() => {
     } catch { return null; }
   }
 
+  async function deleteCachedArticle(url) {
+    try {
+      await _tx('readwrite', store => store.delete(url));
+    } catch {}
+  }
+
   function _pruneExpired() {
     _getDb().then(db => {
       const tx  = db.transaction('articles', 'readwrite');
@@ -119,6 +125,12 @@ const OfflineCache = (() => {
 
   function getScrollLocal(url) {
     return (lsGet('scroll') || {})[url] || 0;
+  }
+
+  function deleteScrollLocal(url) {
+    const map = lsGet('scroll') || {};
+    delete map[url];
+    lsSet('scroll', map);
   }
 
   // ── Scroll sync queue (localStorage) ─────────────────────────────────────
@@ -151,9 +163,9 @@ const OfflineCache = (() => {
 
   return {
     init,
-    cacheArticle, getCachedArticle,
+    cacheArticle, getCachedArticle, deleteCachedArticle,
     saveList, loadList,
-    saveScrollLocal, getScrollLocal,
+    saveScrollLocal, getScrollLocal, deleteScrollLocal,
     queueScroll, flushScrollQueue,
     isOnline,
   };

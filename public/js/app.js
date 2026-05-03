@@ -872,19 +872,29 @@ function renderReadingList(list) {
 
   // Remove buttons
   $('rl-list').querySelectorAll('.rl-remove-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
+    btn.addEventListener('click', () => {
       const id   = parseInt(btn.dataset.id, 10);
       const item = btn.closest('.rl-item');
+      const url  = item.dataset.url;
+
+      // Optimistic UI removal
       if (!item.classList.contains('rl-read')) {
         rlUnreadCount = Math.max(0, rlUnreadCount - 1);
         updateRLCount();
       }
-      await fetch(`${API_BASE}/api/reading-list/${id}`, { method: 'DELETE' });
       item.remove();
-      // Re-check empty
       if (!$('rl-list').querySelector('.rl-item')) {
         $('rl-empty').style.display = 'flex';
       }
+
+      // Update local cache — remove from list, article HTML, and scroll position
+      rlData = rlData.filter(i => i.id !== id);
+      OfflineCache.saveList(rlData);
+      OfflineCache.deleteCachedArticle(url);
+      OfflineCache.deleteScrollLocal(url);
+
+      // Best-effort server sync — ignore failures (e.g. offline)
+      fetch(`${API_BASE}/api/reading-list/${id}`, { method: 'DELETE' }).catch(() => {});
     });
   });
 }
