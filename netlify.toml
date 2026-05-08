@@ -14,6 +14,11 @@
 [functions."gmail-import"]
   timeout = 26
 
+[[redirects]]
+  from = "/api/test-cookie-auth"
+  to   = "/.netlify/functions/test-cookie-auth"
+  status = 200
+
 # Route /api/* to the corresponding Netlify Function
 [[redirects]]
   from = "/api/fetch"
