@@ -365,9 +365,15 @@ window.addEventListener('message', async (event) => {
   if (event.data.type === 'link-clicked') {
     const { href } = event.data;
     if (href && href.startsWith('http')) {
-      readerScrollPositions[state.currentUrl] = { y: iframeScrollY, pct: iframeScrollPct };
-      $('url-input').value = href;
-      loadUrl(href);
+      // Auth/login paths can't work inside the reader (scripts stripped) — open in real browser tab
+      const isAuthLink = /\/(login|logout|signin|signup|register|auth|iniciar[-_]?sesion|cuenta|account|subscribe|suscri)/i.test(new URL(href).pathname);
+      if (isAuthLink) {
+        window.open(href, '_blank', 'noopener');
+      } else {
+        readerScrollPositions[state.currentUrl] = { y: iframeScrollY, pct: iframeScrollPct };
+        $('url-input').value = href;
+        loadUrl(href);
+      }
     }
   }
 
