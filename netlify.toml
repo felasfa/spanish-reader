@@ -15,6 +15,11 @@
   timeout = 26
 
 [[redirects]]
+  from = "/api/site-settings"
+  to   = "/.netlify/functions/site-settings"
+  status = 200
+
+[[redirects]]
   from = "/api/test-cookie-auth"
   to   = "/.netlify/functions/test-cookie-auth"
   status = 200

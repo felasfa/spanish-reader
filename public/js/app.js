@@ -998,6 +998,29 @@ updateVocabCount();
 loadReadingList();
 showView('reading-list');
 
+// Load persisted site settings (e.g. elpais cookie) and wire up auto-save
+fetch(`${API_BASE}/api/site-settings`)
+  .then(r => r.json())
+  .then(s => {
+    if (s.elpaisCookie && $('cookie-raw')) {
+      $('cookie-raw').value = s.elpaisCookie;
+    }
+  })
+  .catch(() => {});
+
+let _cookieSaveTimer = null;
+document.addEventListener('input', e => {
+  if (e.target.id !== 'cookie-raw') return;
+  clearTimeout(_cookieSaveTimer);
+  _cookieSaveTimer = setTimeout(() => {
+    fetch(`${API_BASE}/api/site-settings`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ elpaisCookie: e.target.value.trim() }),
+    }).catch(() => {});
+  }, 1500);
+});
+
 // Flush queued scroll syncs when network returns
 window.addEventListener('online', () => {
   OfflineCache.flushScrollQueue(async (url, pct) => {
