@@ -1011,13 +1011,17 @@ fetch(`${API_BASE}/api/site-settings`)
 let _cookieSaveTimer = null;
 document.addEventListener('input', e => {
   if (e.target.id !== 'cookie-raw') return;
+  const status = $('cookie-save-status');
+  if (status) status.textContent = 'unsaved…';
   clearTimeout(_cookieSaveTimer);
   _cookieSaveTimer = setTimeout(() => {
     fetch(`${API_BASE}/api/site-settings`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ elpaisCookie: e.target.value.trim() }),
-    }).catch(() => {});
+    })
+    .then(() => { if (status) status.textContent = 'saved ✓'; })
+    .catch(() => { if (status) status.textContent = 'save failed'; });
   }, 1500);
 });
 
