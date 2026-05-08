@@ -102,10 +102,8 @@
         <details class="cookie-test-panel">
           <summary>Site cookies (optional — for testing subscriber access)</summary>
           <div class="cookie-test-fields">
-            <label for="cookie-pmuser">pmuser</label>
-            <textarea id="cookie-pmuser" rows="2" placeholder='{"skus":["ISPPAREN..."],...}' spellcheck="false"></textarea>
-            <label for="cookie-arcid">ArcId.USER_INFO</label>
-            <textarea id="cookie-arcid" rows="2" placeholder="eyJ1dWlk..." spellcheck="false"></textarea>
+            <label for="cookie-raw">Cookie header value <span style="font-weight:400;color:var(--text-muted)">— Network tab → document request → Request Headers → Cookie</span></label>
+            <textarea id="cookie-raw" rows="3" placeholder="uid=NBG342...; pmsegments={...}; ArcId.USER_INFO=eyJ..." spellcheck="false"></textarea>
           </div>
         </details>
         <div class="url-suggestions">

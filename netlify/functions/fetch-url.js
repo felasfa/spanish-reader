@@ -218,10 +218,8 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'URL required' }) };
   }
 
-  // Optional site cookies for subscriber access testing
-  const cookieParts = [];
-  if (params.pmuser) cookieParts.push(`pmuser=${params.pmuser}`);
-  if (params.arcId)  cookieParts.push(`ArcId.USER_INFO=${params.arcId}`);
+  // Optional raw cookie string for subscriber access testing
+  const siteCookie = params.siteCookie || '';
 
   try {
     const reqHeaders = {
@@ -238,7 +236,7 @@ exports.handler = async (event) => {
         'sec-fetch-site': 'cross-site',
         'sec-fetch-user': '?1',
         'upgrade-insecure-requests': '1',
-        ...(cookieParts.length ? { 'Cookie': cookieParts.join('; ') } : {}),
+        ...(siteCookie ? { 'Cookie': siteCookie } : {}),
     };
 
     const response = await fetch(url, {
