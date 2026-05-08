@@ -231,7 +231,12 @@ async function loadUrl(url, addToHistory = true) {
   }
 
   try {
-    const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}`);
+    const pmuser = $('cookie-pmuser')?.value.trim();
+    const arcId  = $('cookie-arcid')?.value.trim();
+    const cookieParam = (pmuser || arcId)
+      ? '&pmuser=' + encodeURIComponent(pmuser) + '&arcId=' + encodeURIComponent(arcId)
+      : '';
+    const res  = await fetch(`/api/fetch?url=${encodeURIComponent(url)}${cookieParam}`);
     const data = await res.json();
 
     if (res.status === 403) {

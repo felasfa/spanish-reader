@@ -244,6 +244,53 @@ html, body {
   text-align: left;
 }
 
+.cookie-test-panel {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+.cookie-test-panel summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  user-select: none;
+  padding: 4px 0;
+  list-style: none;
+}
+.cookie-test-panel summary::-webkit-details-marker { display: none; }
+.cookie-test-panel summary::before { content: '▶ '; font-size: 10px; }
+.cookie-test-panel[open] summary::before { content: '▼ '; }
+.cookie-test-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.cookie-test-fields label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: -2px;
+}
+.cookie-test-fields textarea {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  background: var(--surface-2);
+  color: var(--text);
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.cookie-test-fields textarea:focus { border-color: var(--primary); }
+
 .url-suggestions {
   display: flex;
   align-items: center;
