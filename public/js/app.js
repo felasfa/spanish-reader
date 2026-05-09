@@ -1004,6 +1004,8 @@ fetch('/api/site-settings')
   .then(s => {
     if (s.elpaisCookie && $('cookie-raw')) {
       $('cookie-raw').value = s.elpaisCookie;
+      const panel = $('cookie-raw').closest('details');
+      if (panel) panel.open = true;
     }
   })
   .catch(() => {});
