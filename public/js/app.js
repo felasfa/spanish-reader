@@ -399,7 +399,7 @@ function showTranslationPopup(word, sentence) {
   const wordEl = $('popup-word');
   if (word.includes(' ')) {
     wordEl.innerHTML = word.replace(
-      /([\u00C0-\u024F\w]+)/g,
+      /([À-ɏ\w]+)/g,
       '<span class="popup-word-chip">$1</span>'
     );
     wordEl.querySelectorAll('.popup-word-chip').forEach(chip => {
@@ -999,7 +999,7 @@ loadReadingList();
 showView('reading-list');
 
 // Load persisted site settings (e.g. elpais cookie) and wire up auto-save
-fetch(`${API_BASE}/api/site-settings`)
+fetch('/api/site-settings')
   .then(r => r.json())
   .then(s => {
     if (s.elpaisCookie && $('cookie-raw')) {
@@ -1015,12 +1015,12 @@ document.addEventListener('input', e => {
   if (status) status.textContent = 'unsaved…';
   clearTimeout(_cookieSaveTimer);
   _cookieSaveTimer = setTimeout(() => {
-    fetch(`${API_BASE}/api/site-settings`, {
+    fetch('/api/site-settings', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ elpaisCookie: e.target.value.trim() }),
     })
-    .then(() => { if (status) status.textContent = 'saved ✓'; })
+    .then(r => { if (status) status.textContent = r.ok ? 'saved ✓' : 'save failed'; })
     .catch(() => { if (status) status.textContent = 'save failed'; });
   }, 1500);
 });
