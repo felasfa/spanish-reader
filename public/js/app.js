@@ -947,6 +947,8 @@ $('rl-gmail-import').addEventListener('click', async () => {
   }
 });
 
+$('rl-refresh').addEventListener('click', () => loadReadingList());
+
 /* ===== URL parameter: ?url=... adds to Read Later ===== */
 (function handleUrlParam() {
   const params  = new URLSearchParams(window.location.search);

@@ -93,7 +93,8 @@ function isSpanishContent(text) {
 // ─── URL extraction ─────────────────────────────────────────────────────────────────────────────────
 // Priority 1: "view in browser" link (shows the full newsletter as a web page)
 // Priority 2: first meaningful article link
-function extractNewsletterUrl(html) {
+// fromAddress: pass sender so known senders get looser fallback rules
+function extractNewsletterUrl(html, fromAddress) {
   if (!html) return null;
   const $ = cheerio.load(html);
 
@@ -103,12 +104,21 @@ function extractNewsletterUrl(html) {
   $('a[href]').each((_, el) => {
     if (url) return false;
     const href = $(el).attr('href') || '';
-    const text = $(el).text().replace(/\s+/g, ' ').trim();
-    if (href.startsWith('http') && viewPattern.test(text)) url = href;
+    if (!href.startsWith('http')) return;
+    // Check visible text AND alt text of any child image (image-only links)
+    const text = $(el).text().replace(/\s+/g, ' ').trim()
+               || $(el).find('img').attr('alt') || '';
+    if (viewPattern.test(text)) url = href;
   });
   if (url) return url;
 
-  const skip = /unsubscrib|track|click\.|open\.|pixel|logo|icon|manage|preference|footer|privacy|terms|contact|social|facebook|twitter|instagram|linkedin/i;
+  // For known senders (e.g. NYT) all links go through their click tracker —
+  // don't skip click.* URLs, just skip unsubscribe/privacy noise
+  const isKnownSender = KNOWN_SPANISH_SENDERS.includes((fromAddress || '').toLowerCase());
+  const skip = isKnownSender
+    ? /unsubscrib|pixel|manage|preference|privacy|terms|unsubscribe/i
+    : /unsubscrib|track|click\.|open\.|pixel|logo|icon|manage|preference|footer|privacy|terms|contact|social|facebook|twitter|instagram|linkedin/i;
+
   $('a[href]').each((_, el) => {
     if (url) return false;
     const href = $(el).attr('href') || '';
@@ -239,7 +249,7 @@ exports.handler = async (event) => {
 
         const knownSender = KNOWN_SPANISH_SENDERS.includes(fromAddress.toLowerCase());
         if (knownSender || isSpanishContent(combined)) {
-          candidates.push({ uid: msg.uid, subject: subject.trim() });
+          candidates.push({ uid: msg.uid, subject: subject.trim(), fromAddress });
         }
       }
 
@@ -265,7 +275,7 @@ exports.handler = async (event) => {
           try {
             const mail = await simpleParser(source);
             const html = mail.html || mail.textAsHtml || '';
-            const url  = extractNewsletterUrl(html);
+            const url  = extractNewsletterUrl(html, c.fromAddress);
             if (!url) return null;
 
             const meta    = await fetchMeta(url);
