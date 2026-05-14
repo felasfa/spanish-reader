@@ -3,7 +3,7 @@ const { simpleParser } = require('mailparser');
 const cheerio = require('cheerio');
 const Anthropic = require('@anthropic-ai/sdk');
 
-// ─── Config ──────────────────────────────────────────────────────────────────
+// ─── Config ───────────────────────────────────────────────────────────────────────────────
 const GMAIL_USER = 'felasfa@gmail.com';
 const GH_OWNER   = process.env.GITHUB_OWNER || 'felasfa';
 const GH_REPO    = process.env.GITHUB_REPO  || 'spanish-reader';
@@ -11,7 +11,7 @@ const GH_TOKEN   = process.env.GITHUB_TOKEN;
 const GH_BASE    = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents`;
 const RL_FILE    = 'data/reading-list.json';
 
-// ─── GitHub helpers (same pattern as other functions) ────────────────────────
+// ─── GitHub helpers (same pattern as other functions) ──────────────────────────────────
 let _branch = null;
 async function getDataBranch() {
   if (_branch) return _branch;
@@ -68,7 +68,13 @@ async function ghWrite(path, data, sha, message) {
   return res.json();
 }
 
-// ─── Spanish detection ────────────────────────────────────────────────────────
+// ─── Known Spanish newsletter senders ────────────────────────────────────────────────
+// Always import from these addresses regardless of subject/content detection
+const KNOWN_SPANISH_SENDERS = [
+  'nytdirect@nytimes.com',    // NYT El Times
+];
+
+// ─── Spanish detection ─────────────────────────────────────────────────────────────────
 // Accented/special chars are a strong signal; fall back to keyword frequency
 function isSpanishContent(text) {
   // Strong signal: accented chars or inverted punctuation
@@ -76,7 +82,7 @@ function isSpanishContent(text) {
   const lower = text.toLowerCase();
   // Spanish words that rarely appear as standalone words in English text
   const keywords = [
-    'el', 'la', 'de', 'un', 'una', 'con', 'que', 'por',    // articles / prepositions
+    'el', 'la', 'de', 'un', 'una', 'con', 'que', 'por', 'en', // articles / prepositions
     'del', 'las', 'los', 'hay', 'muy', 'como', 'para', 'pero', 'este', 'esta',
     'sobre', 'entre', 'cuando', 'mundo', 'hace', 'nuevo', 'nueva',
     'noticias', 'semana', 'edición', 'gobierno', 'internacional', // common in newsletters
@@ -84,7 +90,7 @@ function isSpanishContent(text) {
   return keywords.filter(w => new RegExp(`\\b${w}\\b`).test(lower)).length >= 2;
 }
 
-// ─── URL extraction ───────────────────────────────────────────────────────────
+// ─── URL extraction ─────────────────────────────────────────────────────────────────────────────────
 // Priority 1: "view in browser" link (shows the full newsletter as a web page)
 // Priority 2: first meaningful article link
 function extractNewsletterUrl(html) {
@@ -112,7 +118,7 @@ function extractNewsletterUrl(html) {
   return url;
 }
 
-// ─── Metadata + summary ───────────────────────────────────────────────────────
+// ─── Metadata + summary ─────────────────────────────────────────────────────────────────────────────
 async function fetchMeta(url) {
   try {
     const res = await fetch(url, {
@@ -157,7 +163,7 @@ async function getSummary(meta, emailSubject) {
   }
 }
 
-// ─── First non-banner image from email HTML ───────────────────────────────────
+// ─── First non-banner image from email HTML ───────────────────────────────────────────────────
 function extractEmailImage(html) {
   if (!html) return '';
   const $ = cheerio.load(html);
@@ -179,7 +185,7 @@ function extractEmailImage(html) {
 }
 
 
-// ─── Handler ─────────────────────────────────────────────────────────────────
+// ─── Handler ───────────────────────────────────────────────────────────────────────────────────
 exports.handler = async (event) => {
   // Accept POST (manual "Check Gmail" button) or scheduled invocation (GET/no method)
   const method = event.httpMethod || 'GET';
@@ -205,7 +211,7 @@ exports.handler = async (event) => {
     const lock = await imap.getMailboxLock('INBOX');
 
     try {
-      // ── Step 1: count inbox messages ─────────────────────────────────────
+      // ── Step 1: count inbox messages ─────────────────────────────────────────────────────────────────
       const status = await imap.status('INBOX', { messages: true });
       const total  = status.messages;
       if (total === 0) return ok({ imported: 0, message: 'Inbox is empty' });
@@ -213,7 +219,7 @@ exports.handler = async (event) => {
       // Scan all messages (inbox is small; cap at 200 to be safe)
       const start = Math.max(1, total - 199);
 
-      // ── Step 2: fetch headers as Buffer — check for newsletter markers ────
+      // ── Step 2: fetch headers as Buffer — check for newsletter markers ────────────────────
       const candidates = [];
       for await (const msg of imap.fetch(`${start}:${total}`, {
         envelope: true,
@@ -231,7 +237,8 @@ exports.handler = async (event) => {
         const subject     = msg.envelope.subject || '';
         const combined    = `${subject} ${fromName} ${fromAddress}`;
 
-        if (isSpanishContent(combined)) {
+        const knownSender = KNOWN_SPANISH_SENDERS.includes(fromAddress.toLowerCase());
+        if (knownSender || isSpanishContent(combined)) {
           candidates.push({ uid: msg.uid, subject: subject.trim() });
         }
       }
@@ -240,7 +247,7 @@ exports.handler = async (event) => {
         return ok({ imported: 0, message: 'No Spanish newsletters found in inbox' });
       }
 
-      // ── Step 3: fetch full source for candidates ──────────────────────────
+      // ── Step 3: fetch full source for candidates ────────────────────────────────────────────────
       const sources = new Map();
       for await (const msg of imap.fetch(
         candidates.map(c => c.uid),
@@ -250,7 +257,7 @@ exports.handler = async (event) => {
         sources.set(msg.uid, msg.source);
       }
 
-      // ── Step 4: parse HTML and extract URLs + metadata (parallel) ─────────
+      // ── Step 4: parse HTML and extract URLs + metadata (parallel) ───────────────────────
       const enriched = (await Promise.all(
         candidates.map(async (c) => {
           const source = sources.get(c.uid);
@@ -282,7 +289,7 @@ exports.handler = async (event) => {
         return ok({ imported: 0, message: 'Could not extract article URLs from newsletters' });
       }
 
-      // ── Step 5: deduplicate against existing list, write in one commit ────
+      // ── Step 5: deduplicate against existing list, write in one commit ────────────────────
       const { data, sha } = await ghRead(RL_FILE);
       const existingUrls  = new Set(data.map(i => i.url));
 
