@@ -922,7 +922,7 @@ $('rl-gmail-import').addEventListener('click', async () => {
   btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Checking…`;
   showToast('Checking Gmail inbox…', 'info');
   try {
-    const res  = await fetch(`${API_BASE}/api/gmail-import`, { method: 'POST' });
+    const res  = await fetch('/api/gmail-import', { method: 'POST' });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Import failed');
     localStorage.setItem('gmailLastCheck', Date.now().toString());
