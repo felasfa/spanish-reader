@@ -13,6 +13,7 @@
 
 [functions."gmail-import"]
   timeout = 26
+  schedule = "0 0,9-23 * * *"
 
 [[redirects]]
   from = "/api/site-settings"

@@ -69,10 +69,22 @@ async function ghWrite(path, data, sha, message) {
 }
 
 // ─── Known Spanish newsletter senders ────────────────────────────────────────────────
-// Always import from these addresses regardless of subject/content detection
+// Matched against both the From AND Reply-To address (envelope).
+// Prefix with '@' to match any address at that domain.
 const KNOWN_SPANISH_SENDERS = [
-  'nytdirect@nytimes.com',    // NYT El Times
+  '@nytimes.com',     // NYT El Times — from/reply-to can be nytdirect@nytimes.com or nytdirect@e.nytimes3.com
+  '@e.nytimes',       // NYT delivery subdomains (e.nytimes3.com etc.)
 ];
+
+function isKnownSpanishSender(...addresses) {
+  return addresses.some(addr => {
+    if (!addr) return false;
+    const lower = addr.toLowerCase();
+    return KNOWN_SPANISH_SENDERS.some(pattern =>
+      pattern.startsWith('@') ? lower.includes(pattern) : lower === pattern
+    );
+  });
+}
 
 // ─── Spanish detection ─────────────────────────────────────────────────────────────────
 // Accented/special chars are a strong signal; fall back to keyword frequency
@@ -93,8 +105,8 @@ function isSpanishContent(text) {
 // ─── URL extraction ─────────────────────────────────────────────────────────────────────────────────
 // Priority 1: "view in browser" link (shows the full newsletter as a web page)
 // Priority 2: first meaningful article link
-// fromAddress: pass sender so known senders get looser fallback rules
-function extractNewsletterUrl(html, fromAddress) {
+// knownSender: true → allow click-tracker URLs (NYT routes everything through them)
+function extractNewsletterUrl(html, knownSender) {
   if (!html) return null;
   const $ = cheerio.load(html);
 
@@ -114,8 +126,7 @@ function extractNewsletterUrl(html, fromAddress) {
 
   // For known senders (e.g. NYT) all links go through their click tracker —
   // don't skip click.* URLs, just skip unsubscribe/privacy noise
-  const isKnownSender = KNOWN_SPANISH_SENDERS.includes((fromAddress || '').toLowerCase());
-  const skip = isKnownSender
+  const skip = knownSender
     ? /unsubscrib|pixel|manage|preference|privacy|terms|unsubscribe/i
     : /unsubscrib|track|click\.|open\.|pixel|logo|icon|manage|preference|footer|privacy|terms|contact|social|facebook|twitter|instagram|linkedin/i;
 
@@ -242,14 +253,15 @@ exports.handler = async (event) => {
         if (!isNewsletter) continue;
 
         // Subject + sender must suggest Spanish content
-        const fromName    = msg.envelope.from?.[0]?.name || '';
-        const fromAddress = msg.envelope.from?.[0]?.address || '';
-        const subject     = msg.envelope.subject || '';
-        const combined    = `${subject} ${fromName} ${fromAddress}`;
+        const fromName       = msg.envelope.from?.[0]?.name || '';
+        const fromAddress    = msg.envelope.from?.[0]?.address || '';
+        const replyToAddress = msg.envelope.replyTo?.[0]?.address || '';
+        const subject        = msg.envelope.subject || '';
+        const combined       = `${subject} ${fromName} ${fromAddress}`;
 
-        const knownSender = KNOWN_SPANISH_SENDERS.includes(fromAddress.toLowerCase());
+        const knownSender = isKnownSpanishSender(fromAddress, replyToAddress);
         if (knownSender || isSpanishContent(combined)) {
-          candidates.push({ uid: msg.uid, subject: subject.trim(), fromAddress });
+          candidates.push({ uid: msg.uid, subject: subject.trim(), knownSender });
         }
       }
 
@@ -275,7 +287,7 @@ exports.handler = async (event) => {
           try {
             const mail = await simpleParser(source);
             const html = mail.html || mail.textAsHtml || '';
-            const url  = extractNewsletterUrl(html, c.fromAddress);
+            const url  = extractNewsletterUrl(html, c.knownSender);
             if (!url) return null;
 
             const meta    = await fetchMeta(url);

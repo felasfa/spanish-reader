@@ -908,15 +908,6 @@ function renderReadingList(list) {
 }
 
 $('rl-gmail-import').addEventListener('click', async () => {
-  const COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
-  const lastCheck  = parseInt(localStorage.getItem('gmailLastCheck') || '0', 10);
-  const elapsed    = Date.now() - lastCheck;
-  if (elapsed < COOLDOWN_MS) {
-    const remaining = Math.ceil((COOLDOWN_MS - elapsed) / 60000);
-    showToast(`Checked recently — try again in ${remaining} min`, 'info');
-    return;
-  }
-
   const btn = $('rl-gmail-import');
   btn.disabled = true;
   btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Checking…`;
@@ -925,7 +916,6 @@ $('rl-gmail-import').addEventListener('click', async () => {
     const res  = await fetch('/api/gmail-import', { method: 'POST' });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Import failed');
-    localStorage.setItem('gmailLastCheck', Date.now().toString());
     if (data.imported === 0 && !data.archived) {
       showToast(data.message || 'No new Spanish newsletters found', 'info');
     } else {
