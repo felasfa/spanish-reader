@@ -74,6 +74,8 @@ async function ghWrite(path, data, sha, message) {
 const KNOWN_SPANISH_SENDERS = [
   '@nytimes.com',     // NYT El Times — from/reply-to can be nytdirect@nytimes.com or nytdirect@e.nytimes3.com
   '@e.nytimes',       // NYT delivery subdomains (e.nytimes3.com etc.)
+  '@elpais.com',      // El País newsletters — all links go through their click tracker
+  '@e.elpais',        // El País delivery subdomains
 ];
 
 function isKnownSpanishSender(...addresses) {
@@ -110,7 +112,8 @@ function extractNewsletterUrl(html, knownSender) {
   if (!html) return null;
   const $ = cheerio.load(html);
 
-  const viewPattern = /ver\s*(en\s*(el\s*)?navegador|en\s*la\s*web|online)|versión\s*web|web\s*version|view\s*(in\s*(your\s*)?browser|on\s*the\s*web|online|this\s*email)|si\s*no\s*puedes?\s*ver/i;
+  // "abrirlo en tu navegador" (El País), "ver en el navegador", "view in browser", etc.
+  const viewPattern = /ver\s*(en\s*(el\s*)?navegador|en\s*la\s*web|online)|versión\s*web|web\s*version|view\s*(in\s*(your\s*)?browser|on\s*the\s*web|online|this\s*email)|si\s*no\s*puedes?\s*ver|abri[rl].*navegador|en tu navegador/i;
   let url = null;
 
   $('a[href]').each((_, el) => {
@@ -124,7 +127,7 @@ function extractNewsletterUrl(html, knownSender) {
   });
   if (url) return url;
 
-  // For known senders (e.g. NYT) all links go through their click tracker —
+  // For known senders (e.g. NYT, El País) all links go through their click tracker —
   // don't skip click.* URLs, just skip unsubscribe/privacy noise
   const skip = knownSender
     ? /unsubscrib|pixel|manage|preference|privacy|terms|unsubscribe/i
@@ -265,6 +268,7 @@ exports.handler = async (event) => {
         }
       }
 
+      console.log(`[gmail] ${candidates.length} candidate(s):`, candidates.map(c => `uid=${c.uid} known=${c.knownSender} "${c.subject}"`).join(', '));
       if (!candidates.length) {
         return ok({ imported: 0, message: 'No Spanish newsletters found in inbox' });
       }
@@ -288,7 +292,11 @@ exports.handler = async (event) => {
             const mail = await simpleParser(source);
             const html = mail.html || mail.textAsHtml || '';
             const url  = extractNewsletterUrl(html, c.knownSender);
-            if (!url) return null;
+            if (!url) {
+              console.warn(`[gmail] uid=${c.uid} ("${c.subject}"): no URL found — skipping`);
+              return null;
+            }
+            console.log(`[gmail] uid=${c.uid} ("${c.subject}"): url=${url}`);
 
             const meta    = await fetchMeta(url);
             const hostname = (() => { try { return new URL(url).hostname; } catch { return ''; } })();
@@ -322,9 +330,11 @@ exports.handler = async (event) => {
         const item = enriched[i];
         if (existingUrls.has(item.url)) {
           // Already in reading list from a previous import — just archive it
+          console.log(`[gmail] uid=${item.uid}: URL already in reading list — archiving only (url=${item.url})`);
           toArchive.push(item.uid);
           continue;
         }
+        console.log(`[gmail] uid=${item.uid}: new entry → "${item.title}"`);
         newEntries.push({
           id:        Date.now() + i,
           url:       item.url,
