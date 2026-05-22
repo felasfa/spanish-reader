@@ -216,7 +216,7 @@ async function loadUrl(url, addToHistory = true) {
 
   const cached = await OfflineCache.getCachedArticle(url);
 
-  // ── Offline: serve from cache or show message ────────────────────────────
+  // ── Offline: serve from cache or show message ────────────────────────────────────────────
   if (!OfflineCache.isOnline()) {
     if (cached) {
       _commitNav(url, addToHistory);
