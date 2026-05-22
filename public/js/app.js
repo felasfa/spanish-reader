@@ -926,8 +926,8 @@ $('rl-gmail-import').addEventListener('click', async () => {
       if (data.imported > 0) {
         rlUnreadCount += data.imported;
         updateRLCount();
-        loadReadingList();
       }
+      loadReadingList(); // always refresh — new items may have been added on a previous run
     }
   } catch (e) {
     showToast(`Gmail import failed: ${e.message}`, 'error');
