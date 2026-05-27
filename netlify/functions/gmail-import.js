@@ -3,7 +3,7 @@ const { simpleParser } = require('mailparser');
 const cheerio = require('cheerio');
 const Anthropic = require('@anthropic-ai/sdk');
 
-// ─── Config ───────────────────────────────────────────────────────────────────────────────
+// ─── Config ──────────────────────────────────────────────────────────────────────────────────────
 const GMAIL_USER = 'felasfa@gmail.com';
 const GH_OWNER   = process.env.GITHUB_OWNER || 'felasfa';
 const GH_REPO    = process.env.GITHUB_REPO  || 'spanish-reader';
@@ -11,7 +11,7 @@ const GH_TOKEN   = process.env.GITHUB_TOKEN;
 const GH_BASE    = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents`;
 const RL_FILE    = 'data/reading-list.json';
 
-// ─── GitHub helpers (same pattern as other functions) ──────────────────────────────────
+// ─── GitHub helpers (same pattern as other functions) ──────────────────────
 let _branch = null;
 async function getDataBranch() {
   if (_branch) return _branch;
@@ -68,7 +68,7 @@ async function ghWrite(path, data, sha, message) {
   return res.json();
 }
 
-// ─── Known Spanish newsletter senders ────────────────────────────────────────────────
+// ─── Known Spanish newsletter senders ────────────────────────────────────────────
 // Matched against both the From AND Reply-To address (envelope).
 // Prefix with '@' to match any address at that domain.
 const KNOWN_SPANISH_SENDERS = [
@@ -88,8 +88,7 @@ function isKnownSpanishSender(...addresses) {
   });
 }
 
-// ─── Spanish detection ─────────────────────────────────────────────────────────────────
-// Accented/special chars are a strong signal; fall back to keyword frequency
+// ─── Spanish detection ─────────────────────────────────────────────────────────────────────────────
 function isSpanishContent(text) {
   // Strong signal: accented chars or inverted punctuation
   if (/[ñáéíóúüÁÉÍÓÚÜ¿¡]/.test(text)) return true;
@@ -104,7 +103,7 @@ function isSpanishContent(text) {
   return keywords.filter(w => new RegExp(`\\b${w}\\b`).test(lower)).length >= 2;
 }
 
-// ─── URL extraction ─────────────────────────────────────────────────────────────────────────────────
+// ─── URL extraction ────────────────────────────────────────────────────────────────────────────────────────────
 // Priority 1: "view in browser" link (shows the full newsletter as a web page)
 // Priority 2: first meaningful article link
 // knownSender: true → allow click-tracker URLs (NYT routes everything through them)
@@ -142,7 +141,7 @@ function extractNewsletterUrl(html, knownSender) {
   return url;
 }
 
-// ─── Metadata + summary ─────────────────────────────────────────────────────────────────────────────
+// ─── Metadata + summary ──────────────────────────────────────────────────────────────────────────────────────────────────────
 async function fetchMeta(url) {
   try {
     const res = await fetch(url, {
@@ -153,7 +152,11 @@ async function fetchMeta(url) {
       signal: AbortSignal.timeout(8000),
       redirect: 'follow',
     });
-    if (!res.ok) return null;
+    // Capture the final URL after all redirects, even if the page is paywalled (4xx).
+    // This is the canonical article URL — unique per edition even when the click-tracker
+    // URL is the same for all editions of a newsletter series delivered to you.
+    const canonicalUrl = res.url !== url ? res.url : null;
+    if (!res.ok) return canonicalUrl ? { canonicalUrl } : null;
     const html = await res.text();
     const $ = cheerio.load(html);
     const og = (p) => $(`meta[property="${p}"]`).attr('content') || $(`meta[name="${p}"]`).attr('content') || '';
@@ -161,7 +164,7 @@ async function fetchMeta(url) {
     const image       = og('og:image') || og('twitter:image') || '';
     const description = (og('og:description') || og('description')).trim();
     const siteName    = og('og:site_name').trim();
-    return { title, image: image.startsWith('http') ? image : '', description, siteName };
+    return { title, image: image.startsWith('http') ? image : '', description, siteName, canonicalUrl };
   } catch {
     return null;
   }
@@ -187,7 +190,7 @@ async function getSummary(meta, emailSubject) {
   }
 }
 
-// ─── First non-banner image from email HTML ───────────────────────────────────────────────────
+// ─── First non-banner image from email HTML ────────────────────────────────────────────────────────────────────────────────────────────────
 function extractEmailImage(html) {
   if (!html) return '';
   const $ = cheerio.load(html);
@@ -209,7 +212,7 @@ function extractEmailImage(html) {
 }
 
 
-// ─── Handler ───────────────────────────────────────────────────────────────────────────────────
+// ─── Handler ───────────────────────────────────────────────────────────────────────────────────────────────────────
 exports.handler = async (event) => {
   // Accept POST (manual "Check Gmail" button) or scheduled invocation (GET/no method)
   const method = event.httpMethod || 'GET';
@@ -235,7 +238,7 @@ exports.handler = async (event) => {
     const lock = await imap.getMailboxLock('INBOX');
 
     try {
-      // ── Step 1: count inbox messages ─────────────────────────────────────────────────────────────────
+      // ── Step 1: count inbox messages ───────────────────────────────────────────────────────────────────────────────────────────────────
       const status = await imap.status('INBOX', { messages: true });
       const total  = status.messages;
       if (total === 0) return ok({ imported: 0, message: 'Inbox is empty' });
@@ -273,7 +276,7 @@ exports.handler = async (event) => {
         return ok({ imported: 0, message: 'No Spanish newsletters found in inbox' });
       }
 
-      // ── Step 3: fetch full source for candidates ────────────────────────────────────────────────
+      // ── Step 3: fetch full source for candidates ──────────────────────────────────────────────────────────────────────────
       const sources = new Map();
       for await (const msg of imap.fetch(
         candidates.map(c => c.uid),
@@ -283,7 +286,7 @@ exports.handler = async (event) => {
         sources.set(msg.uid, msg.source);
       }
 
-      // ── Step 4: parse HTML and extract URLs + metadata (parallel) ───────────────────────
+      // ── Step 4: parse HTML and extract URLs + metadata (parallel) ────────────────────
       const enriched = (await Promise.all(
         candidates.map(async (c) => {
           const source = sources.get(c.uid);
@@ -291,23 +294,35 @@ exports.handler = async (event) => {
           try {
             const mail = await simpleParser(source);
             const html = mail.html || mail.textAsHtml || '';
-            const url  = extractNewsletterUrl(html, c.knownSender);
-            if (!url) {
+            const trackerUrl = extractNewsletterUrl(html, c.knownSender);
+            if (!trackerUrl) {
               console.warn(`[gmail] uid=${c.uid} ("${c.subject}"): no URL found — skipping`);
               return null;
             }
-            console.log(`[gmail] uid=${c.uid} ("${c.subject}"): url=${url}`);
 
-            const meta    = await fetchMeta(url);
-            const hostname = (() => { try { return new URL(url).hostname; } catch { return ''; } })();
-            const title   = (meta?.title && meta.title.length > 5 && !meta.title.includes(hostname))
+            const meta = await fetchMeta(trackerUrl);
+
+            // Use the canonical redirect target instead of the click-tracker URL.
+            // El País (and others) use the same tracker URL for all editions of a newsletter
+            // series delivered to you — only the redirect target is unique per edition.
+            // We keep the tracker as fallback if the redirect looks like a login page.
+            const canonicalUrl = meta?.canonicalUrl;
+            const isLoginPage  = canonicalUrl && /\/(login|signin|logon|acceso|registro|suscripcion[es]*)(\?|$|\/)/i.test(
+              (() => { try { return new URL(canonicalUrl).pathname; } catch { return ''; } })()
+            );
+            const storedUrl = canonicalUrl && !isLoginPage ? canonicalUrl : trackerUrl;
+
+            console.log(`[gmail] uid=${c.uid} ("${c.subject}"): tracker=${trackerUrl} → stored=${storedUrl}`);
+
+            const hostname = (() => { try { return new URL(storedUrl).hostname; } catch { return ''; } })();
+            const title    = (meta?.title && meta.title.length > 5 && !meta.title.includes(hostname))
               ? meta.title : c.subject;
             const summary  = await getSummary(meta, c.subject);
             const siteName = meta?.siteName || '';
 
             const image = meta?.image || extractEmailImage(html);
 
-            return { uid: c.uid, url, title, image, siteName, summary };
+            return { uid: c.uid, url: storedUrl, trackerUrl, title, image, siteName, summary };
           } catch (e) {
             console.error(`Failed to process newsletter uid=${c.uid}:`, e.message);
             return null;
@@ -330,11 +345,12 @@ exports.handler = async (event) => {
         const item = enriched[i];
         if (existingUrls.has(item.url)) {
           // Already in reading list from a previous import — just archive it
-          console.log(`[gmail] uid=${item.uid}: URL already in reading list — archiving only (url=${item.url})`);
+          const matchTitle = data.find(i => i.url === item.url)?.title || '?';
+          console.log(`[gmail] uid=${item.uid}: duplicate of "${matchTitle}" — archiving only\n  url: ${item.url}\n  tracker: ${item.trackerUrl}`);
           toArchive.push(item.uid);
           continue;
         }
-        console.log(`[gmail] uid=${item.uid}: new entry → "${item.title}"`);
+        console.log(`[gmail] uid=${item.uid}: new entry → "${item.title}" → ${item.url}`);
         newEntries.push({
           id:        Date.now() + i,
           url:       item.url,
