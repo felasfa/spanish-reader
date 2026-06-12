@@ -1,5 +1,27 @@
 [
   {
+    "id": 1781260524390,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260612&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=221396&sendId=221396&uri=nyt%3A%2F%2Fnewsletter%2F858e8165-3b39-52ef-af20-ea7513d06f59",
+    "title": "Libros e inteligencia artificial",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260612&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La inteligencia artificial transforma la industria editorial, revolucionando cómo se crean, distribuyen y consumen los libros actualmente.",
+    "siteName": "",
+    "dateAdded": "2026-06-12T10:35:24.390Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1781260524391,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260612&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=221400&sendId=221400&uri=nyt%3A%2F%2Fnewsletter%2F028fc730-b477-519e-b02d-f55bdf4cb308",
+    "title": "Liftoff",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260612&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Un posible trillonario podría emerger del despegue de nuevas innovaciones tecnológicas y empresariales.",
+    "siteName": "",
+    "dateAdded": "2026-06-12T10:35:24.390Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1781110219936,
     "url": "https://t3.newsletter.elpais.com./nl/jsp/m.jsp?c=%404FLYZKOq%2Fg2ZqTKh%2Bj05DHqarrgRQiLJ%2FQbjiKTyJ2A%3D",
     "title": "Planeta Futuro",
