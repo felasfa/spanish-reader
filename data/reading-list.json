@@ -1,5 +1,16 @@
 [
   {
+    "id": 1781521938434,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260615&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=221531&sendId=221531&uri=nyt%3A%2F%2Fnewsletter%2Fe26f9821-9a6e-5d44-80d6-a25391e1bf4f",
+    "title": "A hope for peace",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260615&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Un acuerdo en Irán ofrece esperanza para lograr la paz en la región.",
+    "siteName": "",
+    "dateAdded": "2026-06-15T11:12:18.434Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1781260524390,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260612&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=221396&sendId=221396&uri=nyt%3A%2F%2Fnewsletter%2F858e8165-3b39-52ef-af20-ea7513d06f59",
     "title": "Libros e inteligencia artificial",
