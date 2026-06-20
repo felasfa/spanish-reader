@@ -1,5 +1,27 @@
 [
   {
+    "id": 1781958128955,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260620&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=221812&sendId=221812&uri=nyt%3A%2F%2Fnewsletter%2F7ab8037d-13aa-5639-aaa4-ab03a7364862",
+    "title": "Game change",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260620&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Sin acceso al contenido completo del artículo, no puedo resumir adecuadamente. Proporciona el texto del boletín para elaborar la frase.",
+    "siteName": "",
+    "dateAdded": "2026-06-20T12:22:08.955Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1781958128956,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20260620&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=221816&sendId=221816&uri=nyt%3A%2F%2Fnewsletter%2F6b93f433-3417-5480-8bdf-0cf2019f15eb",
+    "title": "Nicholas Kristof's latest: The War Ended With a Surrender — Trump’s",
+    "image": "https://static01.nytimes.com/email-images/NYT-Nameplate-Alerts@2x.png",
+    "summary": "Trump se rindió en la guerra comercial según el análisis crítico de Nicholas Kristof en su última columna.",
+    "siteName": "",
+    "dateAdded": "2026-06-20T12:22:08.955Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1781718101791,
     "url": "https://t3.newsletter.elpais.com./nl/jsp/m.jsp?c=%400YBxlO93TnXq55Vc5iYGxQpqhv4TJRKJYQ%2BtulYSaOs%3D",
     "title": "Planeta Futuro",
