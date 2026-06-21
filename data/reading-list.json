@@ -1,5 +1,27 @@
 [
   {
+    "id": 1782045544048,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260621&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=221864&sendId=221864&uri=nyt%3A%2F%2Fnewsletter%2Ffa903cb6-db04-5089-9817-0af208f334bf",
+    "title": "Sweet or salty?",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260621&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El artículo cuestiona si el desayuno ideal debe ser dulce o salado para comenzar el día.",
+    "siteName": "",
+    "dateAdded": "2026-06-21T12:39:04.048Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1782045544049,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260621&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=221865&sendId=221865&uri=nyt%3A%2F%2Fnewsletter%2F96b950a7-73e3-5837-b022-f1e3d7053cf6",
+    "title": "6 camping essentials that go beyond the campground",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Los equipos de camping esenciales trascienden el campamento para adaptarse a múltiples aventuras y usos cotidianos versátiles.",
+    "siteName": "",
+    "dateAdded": "2026-06-21T12:39:04.048Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1781958128955,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260620&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=221812&sendId=221812&uri=nyt%3A%2F%2Fnewsletter%2F7ab8037d-13aa-5639-aaa4-ab03a7364862",
     "title": "Game change",
