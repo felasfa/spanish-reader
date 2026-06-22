@@ -1,5 +1,27 @@
 [
   {
+    "id": 1782125690839,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260622&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=221894&sendId=221894&uri=nyt%3A%2F%2Fnewsletter%2F33e500fd-56c0-551f-8b21-cbc2da388ca2",
+    "title": "En Opinión: La verdad incómoda del trabajo remoto",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260622&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El trabajo remoto presenta desafíos ocultos que van más allá de la comodidad aparente de trabajar desde casa.",
+    "siteName": "",
+    "dateAdded": "2026-06-22T10:54:50.839Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1782125690840,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20260622&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=221895&sendId=221895&uri=nyt%3A%2F%2Fnewsletter%2Fd701bc25-e27e-55c7-a53e-8e0f7d57124c",
+    "title": "Tall and dangerous",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260622&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los conductores altos enfrentan mayores riesgos y desafíos especiales en la conducción diaria.",
+    "siteName": "",
+    "dateAdded": "2026-06-22T10:54:50.839Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1782045544048,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260621&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=221864&sendId=221864&uri=nyt%3A%2F%2Fnewsletter%2Ffa903cb6-db04-5089-9817-0af208f334bf",
     "title": "Sweet or salty?",
