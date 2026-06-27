@@ -1,5 +1,16 @@
 [
   {
+    "id": 1782563082655,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260627&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=222182&sendId=222182&uri=nyt%3A%2F%2Fnewsletter%2F9307e8fc-a61d-5a2d-909a-fdbeb7724589",
+    "title": "Natural selection",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260627&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La selección natural es el proceso evolutivo mediante el cual los organismos mejor adaptados sobreviven y se reproducen.",
+    "siteName": "",
+    "dateAdded": "2026-06-27T12:24:42.655Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1782469125671,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260626&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=222123&sendId=222123&uri=nyt%3A%2F%2Fnewsletter%2F317a4ddd-de36-5a63-af23-2cf3fd9080cb",
     "title": "Venezuela en vilo",
