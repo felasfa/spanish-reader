@@ -1,5 +1,27 @@
 [
   {
+    "id": 1782728531772,
+    "url": "https://t3.newsletter.elpais.com./nl/jsp/m.jsp?c=%404uWrEW6DLVj1eGW19QYd%2Ffzkg9VrRecLK0URkRKcQcg%3D",
+    "title": "Cuatro piedras",
+    "image": "https://t.newsletter.elpais.com/r/?id=h111b6205,d068655,1",
+    "summary": "No puedo crear una frase sin acceso al contenido completo del artículo \"Cuatro piedras\". Necesitaría leer el boletín para hacer un resumen preciso.",
+    "siteName": "",
+    "dateAdded": "2026-06-29T10:22:11.772Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1782728531773,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260629&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=222251&sendId=222251&uri=nyt%3A%2F%2Fnewsletter%2Fba6201ce-8255-5b58-8e7d-6fc309746175",
+    "title": "En Opinión: Los cubanos que se han quedado en la isla",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260629&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los cubanos que permanecen en la isla enfrentan desafíos sociales y económicos significativos en su contexto actual.",
+    "siteName": "",
+    "dateAdded": "2026-06-29T10:22:11.772Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1782563082655,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260627&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=222182&sendId=222182&uri=nyt%3A%2F%2Fnewsletter%2F9307e8fc-a61d-5a2d-909a-fdbeb7724589",
     "title": "Natural selection",
