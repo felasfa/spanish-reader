@@ -1,5 +1,16 @@
 [
   {
+    "id": 1783030695372,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_ot_20260702&isViewInBrowser=true&nl=on-tech&productCode=OT&segment_id=222459&sendId=222459&uri=nyt%3A%2F%2Fnewsletter%2Fb812a1ff-5532-5be3-b565-d39f65246c27",
+    "title": "On Tech: This music box is a ray of hope for a decadent tech industry",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=1089504&li=OT&m=1482f2b122b4c258bd67a395fb7cb30b&p=OT_20260702&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Una caja de música representa una esperanza renovadora para la industria tecnológica que enfrenta su declive.",
+    "siteName": "",
+    "dateAdded": "2026-07-02T22:18:15.372Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1782906154510,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260701&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=222367&sendId=222367&uri=nyt%3A%2F%2Fnewsletter%2Fa3a4f4bd-5a6e-5093-9078-ffd534f86bf1",
     "title": "A separation of powers",
