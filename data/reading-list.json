@@ -1,5 +1,16 @@
 [
   {
+    "id": 1783078876055,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260703&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=222477&sendId=222477&uri=nyt%3A%2F%2Fnewsletter%2F8835945f-e488-5457-8f68-0685e997a4f8",
+    "title": "The pursuit is the point",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260703&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Estados Unidos celebra su 250 aniversario reconociendo que la búsqueda de objetivos es más importante que lograrlos.",
+    "siteName": "",
+    "dateAdded": "2026-07-03T11:41:16.055Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1783030695372,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_ot_20260702&isViewInBrowser=true&nl=on-tech&productCode=OT&segment_id=222459&sendId=222459&uri=nyt%3A%2F%2Fnewsletter%2Fb812a1ff-5532-5be3-b565-d39f65246c27",
     "title": "On Tech: This music box is a ray of hope for a decadent tech industry",
