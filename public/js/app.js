@@ -216,7 +216,7 @@ async function loadUrl(url, addToHistory = true) {
 
   const cached = await OfflineCache.getCachedArticle(url);
 
-  // ── Offline: serve from cache or show message ────────────────────────────────────────────
+  // ── Offline: serve from cache or show message ────────────────────────────────────────────────
   if (!OfflineCache.isOnline()) {
     if (cached) {
       _commitNav(url, addToHistory);
@@ -347,6 +347,16 @@ document.addEventListener('selectionchange', () => {
   if (document.activeElement !== vocabLookupEl) return;
   clearTimeout(vocabLookupTimer);
   vocabLookupTimer = setTimeout(checkVocabSelection, 600);
+});
+
+$('vocab-lookup-go').addEventListener('click', () => {
+  const val   = vocabLookupEl.value.trim();
+  if (!val) return;
+  const start = vocabLookupEl.selectionStart;
+  const end   = vocabLookupEl.selectionEnd;
+  const word  = (start !== end) ? vocabLookupEl.value.slice(start, end).trim() : val;
+  if (!word) return;
+  showTranslationPopup(word, val);
 });
 
 /* ===== Messages from iframe ===== */

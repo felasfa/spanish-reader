@@ -36,7 +36,7 @@ const INTERACTION_SCRIPT = `
 </div>
 <script>
 (function () {
-  // ── Context menu ──────────────────────────────────────────────
+  // ── Context menu ─────────────────────────────────────────────────────────────
   window._srLongPress = false;
   var menu   = document.getElementById('_sr_menu');
   var curHref = null;
@@ -96,7 +96,7 @@ const INTERACTION_SCRIPT = `
     }
   }, false);
 
-  // ── Text selection ────────────────────────────────────────────
+  // ── Text selection ────────────────────────────────────────────────────────────
   function getSentence(selectionText, container) {
     // Find the nearest block element with enough text; walk up if too short
     var root = container.closest('p,li,blockquote,td,h1,h2,h3,h4,h5,h6') || container;
@@ -107,18 +107,22 @@ const INTERACTION_SCRIPT = `
     }
     var text = (root.innerText || root.textContent || '').replace(/\\s+/g, ' ').replace(/\\.{2,}/g, '…').trim();
     if (!text) text = selectionText;
-    var sentences = text.match(/[^.!?¡¿\\n]+[.!?\\n]*/g) || [];
+    // Mask periods used as thousands/decimal separators in Spanish numbers (e.g. 1.234.567)
+    // so they are not mistaken for sentence boundaries. ■ won't appear in article text.
+    var masked = text.replace(/(\\d)\\.(\\d)/g, '$1■$2');
+    var maskedWord = selectionText.replace(/(\\d)\\.(\\d)/g, '$1■$2');
+    var sentences = masked.match(/[^.!?¡¿\\n]+[.!?\\n]*/g) || [];
     for (var i = 0; i < sentences.length; i++) {
-      if (sentences[i].includes(selectionText)) return sentences[i].trim();
+      if (sentences[i].includes(maskedWord)) return sentences[i].replace(/■/g, '.').trim();
     }
     // Fallback: grab text from the nearest sentence boundary around the word
-    var idx = text.indexOf(selectionText);
+    var idx = masked.indexOf(maskedWord);
     if (idx >= 0) {
-      var start = text.lastIndexOf('.', idx - 1);
+      var start = masked.lastIndexOf('.', idx - 1);
       start = (start >= 0) ? start + 1 : Math.max(0, idx - 120);
-      var end = text.indexOf('.', idx + selectionText.length);
-      end = (end >= 0) ? end + 1 : Math.min(text.length, idx + selectionText.length + 120);
-      return text.slice(start, end).trim();
+      var end = masked.indexOf('.', idx + maskedWord.length);
+      end = (end >= 0) ? end + 1 : Math.min(masked.length, idx + maskedWord.length + 120);
+      return masked.slice(start, end).replace(/■/g, '.').trim();
     }
     return text.slice(0, 300);
   }
@@ -144,7 +148,7 @@ const INTERACTION_SCRIPT = `
     selTimer = setTimeout(sendSelection, 600);
   });
 
-  // ── Scroll position reporting ─────────────────────────────────────
+  // ── Scroll position reporting ─────────────────────────────────────────────────────
   var scrollReportTimer;
   document.addEventListener('scroll', function () {
     clearTimeout(scrollReportTimer);
@@ -155,7 +159,7 @@ const INTERACTION_SCRIPT = `
     }, 150);
   }, { passive: true });
 
-  // ── Scroll restoration ───────────────────────────────────────────
+  // ── Scroll restoration ─────────────────────────────────────────────────────────
   // Accepts { pct } (fraction of scrollable height) which works across
   // different screen sizes, falling back to { y } (absolute pixels).
   // Retries until the page has rendered enough height to land correctly.
@@ -180,7 +184,7 @@ const INTERACTION_SCRIPT = `
     tryScroll(4);
   });
 })();
-</script>`;
+<\/script>`;
 
 async function inlineImages($) {
   const imgs = [];
@@ -287,7 +291,7 @@ exports.handler = async (event) => {
     $('meta[http-equiv="Content-Security-Policy"]').remove();
     $('meta[http-equiv="X-Frame-Options"]').remove();
 
-    // ── Newsletter / email HTML cleanup ───────────────────────────────────────
+    // ── Newsletter / email HTML cleanup ────────────────────────────────────────────────────────────────────────
     // Remove hidden elements (email clients hide these; browsers show them as blank space)
     $('[style]').each((_, el) => {
       const style = $(el).attr('style') || '';
