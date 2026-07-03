@@ -616,10 +616,11 @@ html, body {
 }
 
 /* ===== Vocabulary lookup box ===== */
-.vocab-lookup-wrap { margin-bottom: 20px; }
+.vocab-lookup-wrap { margin-bottom: 20px; display: flex; gap: 8px; align-items: flex-start; }
+.vocab-lookup-go { white-space: nowrap; flex-shrink: 0; }
 
 .vocab-lookup-box {
-  width: 100%;
+  flex: 1;
   padding: 14px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
