@@ -1,5 +1,27 @@
 [
   {
+    "id": 1784112501897,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_bn_20260715&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=223118&sendId=223118&uri=nyt%3A%2F%2Fnewsletter%2F5acd146b-a2b4-55bc-b4f9-aef96b43b532",
+    "title": "El lenguaje de las bacterias del cuerpo",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260715&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Las bacterias del cuerpo se comunican entre sí mediante un lenguaje químico sofisticado.",
+    "siteName": "",
+    "dateAdded": "2026-07-15T10:48:21.897Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1784112501898,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260715&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223122&sendId=223122&uri=nyt%3A%2F%2Fnewsletter%2Fec63eeb6-1c04-548b-98cb-07dbb0e1f41b",
+    "title": "Fatal encounters",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260715&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los encuentros fatales resultan en muertes trágicas que impactan profundamente a las comunidades afectadas.",
+    "siteName": "",
+    "dateAdded": "2026-07-15T10:48:21.897Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1783940798203,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260713&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223005&sendId=223005&uri=nyt%3A%2F%2Fnewsletter%2Fda7d2090-7723-542e-a28a-a390480a676d",
     "title": "The viceroy of Venezuela",
