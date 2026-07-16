@@ -1,5 +1,16 @@
 [
   {
+    "id": 1784198297912,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260716&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=223188&sendId=223188&uri=nyt%3A%2F%2Fnewsletter%2F022afc06-9f99-5730-9c2f-2eb92fb40aaf",
+    "title": "Lo que sabemos sobre la ‘Cyclospora’",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260716&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La Cyclospora es un parásito que causa infecciones intestinales transmitidas principalmente por agua y alimentos contaminados.",
+    "siteName": "",
+    "dateAdded": "2026-07-16T10:38:17.912Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1784112501897,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_bn_20260715&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=223118&sendId=223118&uri=nyt%3A%2F%2Fnewsletter%2F5acd146b-a2b4-55bc-b4f9-aef96b43b532",
     "title": "El lenguaje de las bacterias del cuerpo",
