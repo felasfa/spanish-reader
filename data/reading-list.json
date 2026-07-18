@@ -1,5 +1,27 @@
 [
   {
+    "id": 1784378609583,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260718&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223306&sendId=223306&uri=nyt%3A%2F%2Fnewsletter%2Fce4b93a0-fbfa-5302-bbba-e0db459c49bd",
+    "title": "Scenic route",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260718&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No puedo escribir la frase sin acceso al contenido completo del boletín. Por favor, comparte el texto del artículo.",
+    "siteName": "",
+    "dateAdded": "2026-07-18T12:43:29.583Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1784378609584,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260718&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=223321&sendId=223321&uri=nyt%3A%2F%2Fnewsletter%2Ff5afc0f5-464c-5594-89e3-46555607889b",
+    "title": "Under-$30 products we swear by",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Quince productos asequibles bajo treinta dólares que generan felicidad y bienestar en la vida diaria.",
+    "siteName": "",
+    "dateAdded": "2026-07-18T12:43:29.583Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1784289385989,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260717&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223250&sendId=223250&uri=nyt%3A%2F%2Fnewsletter%2F4558ad3e-492a-579a-a79b-f7665fdc3142",
     "title": "Greek life",
