@@ -1,5 +1,38 @@
 [
   {
+    "id": 1784741376701,
+    "url": "https://t3.newsletter.elpais.com./nl/jsp/m.jsp?c=%40G85B20x7ofxxgzD90tMT%2FpKnmZS%2FzTdwk4OFOtZRjWw%3D",
+    "title": "Planeta Futuro",
+    "image": "https://t.newsletter.elpais.com/r/?id=h16c7d7d1,d08db85,1",
+    "summary": "África enfrenta la crisis de hambre más grave del mundo, afectando millones de personas en toda la región.",
+    "siteName": "",
+    "dateAdded": "2026-07-22T17:29:36.701Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1784741376702,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nthw_20260722&isViewInBrowser=true&nl=headway&productCode=NTHW&segment_id=223511&sendId=223511&uri=nyt%3A%2F%2Fnewsletter%2Fb1667d19-d4eb-5a03-af5c-456f6fe2c111",
+    "title": "Headway: Do you know where your government’s data is?",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=916890&li=NTHW&m=1482f2b122b4c258bd67a395fb7cb30b&p=NTHW_20260722&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El gobierno debe ser transparente sobre dónde almacena y gestiona los datos de los ciudadanos.",
+    "siteName": "",
+    "dateAdded": "2026-07-22T17:29:36.701Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1784741376703,
+    "url": "https://t3.newsletter.elpais.com./nl/jsp/m.jsp?c=%40xUcO9tchaYQCIVBHAmD3F754s3dppYfGiS1jgLq%2Bdok%3D",
+    "title": "México",
+    "image": "https://t.newsletter.elpais.com/r/?id=h16c9defd,d08ca69,1",
+    "summary": "Ismael \"El Mayo\" Zambada consolidó un imperio delictivo diversificado en México durante décadas.",
+    "siteName": "",
+    "dateAdded": "2026-07-22T17:29:36.701Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1784718401386,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260722&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223494&sendId=223494&uri=nyt%3A%2F%2Fnewsletter%2Fc9dc47a2-34e1-502e-ad7e-de10b745f004",
     "title": "Dirty lettuce",
