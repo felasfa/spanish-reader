@@ -1,5 +1,27 @@
 [
   {
+    "id": 1784894382237,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_hh_20260724&isViewInBrowser=true&nl=well&paid_regi=1&productCode=HH&segment_id=223592&sendId=223592&uri=nyt%3A%2F%2Fnewsletter%2F250ead89-085f-5636-aefa-31c7199f13be",
+    "title": "It’s OK to hate summer",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=162155&li=HH&m=1482f2b122b4c258bd67a395fb7cb30b&p=HH_20260724&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No todos disfrutan del verano; está bien preferir otras estaciones del año.",
+    "siteName": "",
+    "dateAdded": "2026-07-24T11:59:42.237Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1784894382238,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260724&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223605&sendId=223605&uri=nyt%3A%2F%2Fnewsletter%2Fc971d56b-a962-5b6b-9584-649274d3f27a",
+    "title": "Do the math",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260724&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Las matemáticas son protagonistas en un día importante lleno de cálculos y operaciones destacadas.",
+    "siteName": "",
+    "dateAdded": "2026-07-24T11:59:42.237Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1784741376701,
     "url": "https://t3.newsletter.elpais.com./nl/jsp/m.jsp?c=%40G85B20x7ofxxgzD90tMT%2FpKnmZS%2FzTdwk4OFOtZRjWw%3D",
     "title": "Planeta Futuro",
