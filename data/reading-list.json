@@ -1,5 +1,27 @@
 [
   {
+    "id": 1784982644223,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260725&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223662&sendId=223662&uri=nyt%3A%2F%2Fnewsletter%2Ff378e109-8249-5751-b657-799203d203ef",
+    "title": "Flavor profile",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260725&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El verano tiene un perfil de sabor único que combina frescura, dulzura y aromas de la estación más cálida.",
+    "siteName": "",
+    "dateAdded": "2026-07-25T12:30:44.223Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1784982644224,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20260725&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=223669&sendId=223669&uri=nyt%3A%2F%2Fnewsletter%2F2ba3bcef-126e-5bd0-aaa5-db9399de8df8",
+    "title": "Nicholas Kristof's latest: Trump’s War Was ‘Perfect’ Until It Wasn’t",
+    "image": "https://static01.nytimes.com/email-images/NYT-Nameplate-Alerts@2x.png",
+    "summary": "Kristof argumenta que la guerra de Trump fue perfecta hasta que dejó de serlo.",
+    "siteName": "",
+    "dateAdded": "2026-07-25T12:30:44.223Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1784894382237,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_hh_20260724&isViewInBrowser=true&nl=well&paid_regi=1&productCode=HH&segment_id=223592&sendId=223592&uri=nyt%3A%2F%2Fnewsletter%2F250ead89-085f-5636-aefa-31c7199f13be",
     "title": "It’s OK to hate summer",
