@@ -1,5 +1,27 @@
 [
   {
+    "id": 1785149291768,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_bn_20260727&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=223750&sendId=223750&uri=nyt%3A%2F%2Fnewsletter%2F5c3791be-bbb6-556f-b8c9-009226908059",
+    "title": "En Opinión: La generación Z no ama su trabajo. Y está bien",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260727&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La generación Z prioriza el bienestar personal sobre la carrera profesional, rechazando la cultura del trabajo excesivo.",
+    "siteName": "",
+    "dateAdded": "2026-07-27T10:48:11.768Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1785149291770,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260727&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223751&sendId=223751&uri=nyt%3A%2F%2Fnewsletter%2F7ce526f9-df0d-5e3d-a645-823c706f5eea",
+    "title": "Protected no more",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260727&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Pérdida de protecciones legales o institucionales que anteriormente resguardaban a un grupo o entidad vulnerable.",
+    "siteName": "",
+    "dateAdded": "2026-07-27T10:48:11.769Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1784982644223,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260725&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223662&sendId=223662&uri=nyt%3A%2F%2Fnewsletter%2Ff378e109-8249-5751-b657-799203d203ef",
     "title": "Flavor profile",
