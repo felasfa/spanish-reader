@@ -1,5 +1,27 @@
 [
   {
+    "id": 1789135212031,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260911&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226348&sendId=226348&uri=nyt%3A%2F%2Fnewsletter%2F7dfb1885-8d9a-5239-bfe1-7dadce812936",
+    "title": "11 de Septiembre",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260911&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El 11 de septiembre fue un día trágico de ataques terroristas en Estados Unidos que cambió la historia mundial.",
+    "siteName": "",
+    "dateAdded": "2026-09-11T14:00:12.031Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1789135212032,
+    "url": "https://mailchi.mp/annualreviews/las-erupciones-que-cambiaron-el-mundo-y-la-ia-da-un-impulso-a-la-biologa-sintetica?e=0badd1f9e6",
+    "title": "Las erupciones que cambiaron el mundo, y la IA da un impulso a la biología sintética",
+    "image": "https://mcusercontent.com/00f3581333eb1d5166b3eff6c/images/aaa24271-4445-8d5d-ba2a-b999d03c44e1.jpg",
+    "summary": "Boletín de Knowable en español",
+    "siteName": "",
+    "dateAdded": "2026-09-11T14:00:12.031Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1785324069418,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260729&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=223855&sendId=223855&uri=nyt%3A%2F%2Fnewsletter%2F9b2b1915-bcd1-5d82-8bd7-929488528a50",
     "title": "Europe’s burning",
