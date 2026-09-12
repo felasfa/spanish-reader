@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789218013401,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260912&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226411&sendId=226411&uri=nyt%3A%2F%2Fnewsletter%2F249526b0-ec0a-5057-abcb-f9af02fcf80d",
+    "title": "The best drip coffee makers",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Este fabricante de café prepara una taza excelente y es considerado uno de los mejores.",
+    "siteName": "",
+    "dateAdded": "2026-09-12T13:00:13.401Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789214410306,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20260912&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=226399&sendId=226399&uri=nyt%3A%2F%2Fnewsletter%2Fbe4d8293-de86-5a4b-9d7f-2d92a9eb037f",
     "title": "Nicholas Kristof's latest: Biden and Trump Called It a Genocide and Then Turned Away",
