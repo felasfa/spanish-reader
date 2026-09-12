@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789207213509,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260912&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226393&sendId=226393&uri=nyt%3A%2F%2Fnewsletter%2Ff39072f8-a2f2-541d-88e0-3c22653e4d60",
+    "title": "Walk this way",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260912&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Caminar es una actividad saludable recomendada para incorporar en la rutina diaria matutina.",
+    "siteName": "",
+    "dateAdded": "2026-09-12T10:00:13.509Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789153212398,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260911&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226372&sendId=226372&uri=nyt%3A%2F%2Fnewsletter%2F344dba74-bf12-5d85-959c-6fce79d9e2b3",
     "title": "The blow-up chair that nearly fooled our home decor expert",
