@@ -1,5 +1,27 @@
 [
   {
+    "id": 1789304411375,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260913&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226437&sendId=226437&uri=nyt%3A%2F%2Fnewsletter%2Ff512cf26-7aed-53be-9d3f-c25a001f4b16",
+    "title": "Una matemática de 92 años, su aprendiz de 15 y un sueño",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260913&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Una matemática de 92 años enseña a una joven de 15 años, cumpliendo un sueño compartido.",
+    "siteName": "",
+    "dateAdded": "2026-09-13T13:00:11.375Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1789304411376,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260913&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226445&sendId=226445&uri=nyt%3A%2F%2Fnewsletter%2F1023cadf-cfca-5446-8532-85973a7a69dd",
+    "title": "How to make your phone last longer",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Descubre siete trucos efectivos para maximizar la duración y rendimiento de tu teléfono móvil.",
+    "siteName": "",
+    "dateAdded": "2026-09-13T13:00:11.375Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789300810425,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260913&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226436&sendId=226436&uri=nyt%3A%2F%2Fnewsletter%2Fa74ef68d-dd7f-535b-a536-7c007cca8002",
     "title": "Fit check",
