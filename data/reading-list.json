@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789390815641,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260914&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226475&sendId=226475&uri=nyt%3A%2F%2Fnewsletter%2F41620602-3a16-5cf9-98d8-a38e88f1148a",
+    "title": "En Opinión: Venezuela, un acuerdo petrolero y una democracia lejana",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260914&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Venezuela enfrenta desafíos petroleros mientras su democracia permanece distante y frágil.",
+    "siteName": "",
+    "dateAdded": "2026-09-14T13:00:15.641Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789383609829,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260914&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226468&sendId=226468&uri=nyt%3A%2F%2Fnewsletter%2F973a9be1-ce00-5f17-a11c-e1b4b2fc1098",
     "title": "Rogue machines",
