@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789423216903,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260914&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226505&sendId=226505&uri=nyt%3A%2F%2Fnewsletter%2Fa6d14ac4-bc15-55c6-ae89-7eb7a9c36fb7",
+    "title": "Make your rug feel soft as a cloud",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Los protectores de alfombra son esenciales para que tu alfombra se sienta suave y cómoda como una nube.",
+    "siteName": "",
+    "dateAdded": "2026-09-14T22:00:16.903Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789390815641,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260914&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226475&sendId=226475&uri=nyt%3A%2F%2Fnewsletter%2F41620602-3a16-5cf9-98d8-a38e88f1148a",
     "title": "En Opinión: Venezuela, un acuerdo petrolero y una democracia lejana",
