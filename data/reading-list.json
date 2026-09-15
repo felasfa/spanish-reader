@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789477220363,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260915&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226525&sendId=226525&uri=nyt%3A%2F%2Fnewsletter%2F23b7c45b-bddd-596b-8f61-056e35ceeb22",
+    "title": "The World: Todo sobre los hutíes",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260915&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los hutíes son un grupo armado yemení que controla territorios y ha generado conflictos regionales significativos.",
+    "siteName": "",
+    "dateAdded": "2026-09-15T13:00:20.363Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789473614467,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260915&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226521&sendId=226521&uri=nyt%3A%2F%2Fnewsletter%2Faea6a2fe-06d8-5c97-95d2-1f0047ef983a",
     "title": "Trouble in paradise",
