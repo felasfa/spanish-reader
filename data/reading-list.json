@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789509610694,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260915&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226563&sendId=226563&uri=nyt%3A%2F%2Fnewsletter%2F1287d1df-38b4-59ee-a149-e5cc0977fe40",
+    "title": "It’s OK to use 3-in-1 shower products. Our beauty writer says so.",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Los productos de ducha 3 en 1 son una opción válida y aceptable según expertos en belleza.",
+    "siteName": "",
+    "dateAdded": "2026-09-15T22:00:10.694Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789502413896,
     "url": "https://www.nytimes.com/2026/09/10/well/mind/adhd-symptoms-change-age.html?algo=combo_lda_unique_triton_clicks_decay_96_50_ranks&emc=edit_hh_20260915&fellback=false&imp_id=699931295786886&nl=well&pool=programmingnode%2Fe1f22e62-8dba-51f4-87bc-e552a87bb958&req_id=5433062389699486&segment_id=226549&surface=well-nl&variant=0_only_variant",
     "title": "Well: 5 stories you might have missed",
