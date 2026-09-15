@@ -1,5 +1,27 @@
 [
   {
+    "id": 1789473614467,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260915&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226521&sendId=226521&uri=nyt%3A%2F%2Fnewsletter%2Faea6a2fe-06d8-5c97-95d2-1f0047ef983a",
+    "title": "Trouble in paradise",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260915&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El gobierno intensifica medidas contra la inmigración, generando controversia y desafíos en políticas migratorias actuales.",
+    "siteName": "",
+    "dateAdded": "2026-09-15T12:00:14.467Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1789473614468,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20260915&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=226522&sendId=226522&uri=nyt%3A%2F%2Fnewsletter%2F02ce2f8c-a2a0-5800-a3fe-734290b6e90d",
+    "title": "Science Times: Ancient teeth reveal the earliest evidence of drug use",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=SC_20260915&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los dientes antiguos revelan la evidencia más temprana del uso de drogas en la historia humana.",
+    "siteName": "",
+    "dateAdded": "2026-09-15T12:00:14.467Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789423216903,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260914&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226505&sendId=226505&uri=nyt%3A%2F%2Fnewsletter%2Fa6d14ac4-bc15-55c6-ae89-7eb7a9c36fb7",
     "title": "Make your rug feel soft as a cloud",
