@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789563613106,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260916&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226582&sendId=226582&uri=nyt%3A%2F%2Fnewsletter%2Fca835f9b-b964-5341-b069-7ae4f3356734",
+    "title": "Hay una nueva droga en la ciudad",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260916&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Una nueva droga ha aparecido en la ciudad, generando preocupación entre las autoridades y la comunidad local.",
+    "siteName": "",
+    "dateAdded": "2026-09-16T13:00:13.106Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789556437311,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260916&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226577&sendId=226577&uri=nyt%3A%2F%2Fnewsletter%2F03f232c6-524f-5ffe-ad18-4c528c6ff012",
     "title": "Geography is power",
