@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789642811435,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260917&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226633&sendId=226633&uri=nyt%3A%2F%2Fnewsletter%2F3f5b2440-9052-541f-b078-c63f20aa882c",
+    "title": "Moneyball",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260917&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El análisis estadístico revoluciona el béisbol, permitiendo a equipos competir eficientemente con presupuestos limitados.",
+    "siteName": "",
+    "dateAdded": "2026-09-17T11:00:11.435Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789596015360,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260916&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226619&sendId=226619&uri=nyt%3A%2F%2Fnewsletter%2F2253f498-b600-5d77-9bf1-c96a2d93be08",
     "title": "Give your desk a glow up",
