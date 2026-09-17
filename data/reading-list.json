@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789682412854,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260917&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226667&sendId=226667&uri=nyt%3A%2F%2Fnewsletter%2F240e824d-b16a-500b-a75f-ff66484b986c",
+    "title": "We ate a lot of crustless PB&Js …",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Comimos muchos sándwiches de mantequilla de maní sin corteza.",
+    "siteName": "",
+    "dateAdded": "2026-09-17T22:00:12.854Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789650015630,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260917&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226634&sendId=226634&uri=nyt%3A%2F%2Fnewsletter%2Fc7f9f83d-8244-5c3d-911d-dad5dc78f1d8",
     "title": "Perú se une al Escudo de las Américas",
