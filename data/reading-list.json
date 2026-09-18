@@ -1,5 +1,27 @@
 [
   {
+    "id": 1789736410527,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260918&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226685&sendId=226685&uri=nyt%3A%2F%2Fnewsletter%2F70c18387-f9db-542a-8f4b-a8558e37f628",
+    "title": "¿Es posible desacelerar el avance de la IA?",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260918&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Se debate si es viable ralentizar el desarrollo acelerado de la inteligencia artificial actualmente.",
+    "siteName": "",
+    "dateAdded": "2026-09-18T13:00:10.527Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1789736410528,
+    "url": "http://m4.novedades.elpais.com/nl/jsp/m.jsp?c=%40SO7Tj0z7SIXnPP3NMfYmq90iOjeNQP2FtRt9rSr8q1Y%3D&mid=DM770727&bid=593989944",
+    "title": "EL PAÍS",
+    "image": "https://t.novedades.elpais.com/r/?id=h23679138,d0ccf50,1",
+    "summary": "Los lectores de EL PAÍS reflexionan sobre el valor y la satisfacción de su suscripción al periódico.",
+    "siteName": "",
+    "dateAdded": "2026-09-18T13:00:10.527Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789732824589,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20260918&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=226684&sendId=226684&uri=nyt%3A%2F%2Fnewsletter%2Fa60cdd5a-404e-5945-a705-2efd3eb293ee",
     "title": "Science at The Times",
