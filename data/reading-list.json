@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789732824589,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20260918&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=226684&sendId=226684&uri=nyt%3A%2F%2Fnewsletter%2Fa60cdd5a-404e-5945-a705-2efd3eb293ee",
+    "title": "Science at The Times",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=SC_20260918&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Videos microscópicos revelan las maravillas invisibles que nos rodean en el mundo científico.",
+    "siteName": "",
+    "dateAdded": "2026-09-18T12:00:24.589Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789682412854,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260917&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226667&sendId=226667&uri=nyt%3A%2F%2Fnewsletter%2F240e824d-b16a-500b-a75f-ff66484b986c",
     "title": "We ate a lot of crustless PB&Js …",
