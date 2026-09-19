@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789815610637,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260919&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226737&sendId=226737&uri=nyt%3A%2F%2Fnewsletter%2Fb7dbe0e0-ebf5-57af-9748-aa81f172f77e",
+    "title": "Fading light",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260919&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La luz se desvanece gradualmente en el horizonte durante las primeras horas de la mañana.",
+    "siteName": "",
+    "dateAdded": "2026-09-19T11:00:10.637Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789740011919,
     "url": "https://mailchi.mp/annualreviews/escuchando-el-canto-de-los-reptiles-y-cuan-preocupante-es-la-sed-de-la-ia?e=0badd1f9e6",
     "title": "Escuchando el canto de los reptiles... y ¿cuán preocupante es la sed de la IA?",
