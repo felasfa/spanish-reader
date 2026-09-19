@@ -1,5 +1,27 @@
 [
   {
+    "id": 1789822811507,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260919&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226746&sendId=226746&uri=nyt%3A%2F%2Fnewsletter%2Fb0bc1177-f752-5311-8c8e-903047388dfe",
+    "title": "Cómo bajarnos de la espiral de la novedad",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260919&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La tecnología y el consumo acelerado nos atrapan en una búsqueda constante de novedades que dificulta encontrar satisfacción duradera.",
+    "siteName": "",
+    "dateAdded": "2026-09-19T13:00:11.507Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1789822811508,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260919&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226752&sendId=226752&uri=nyt%3A%2F%2Fnewsletter%2F3758d234-7e89-5a29-8bae-69f4808472eb",
+    "title": "7 lightweight sweaters for early fall",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Siete suéteres ligeros ideales para usar en las primeras semanas del otoño.",
+    "siteName": "",
+    "dateAdded": "2026-09-19T13:00:11.507Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789819213468,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20260919&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=226742&sendId=226742&uri=nyt%3A%2F%2Fnewsletter%2F343143a0-07c7-5128-a760-28d10c08f562",
     "title": "Nicholas Kristof's latest: Here’s How Trump and Xi Can Make Progress on A.I.",
