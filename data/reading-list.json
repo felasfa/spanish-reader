@@ -1,5 +1,27 @@
 [
   {
+    "id": 1789909211669,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260920&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226781&sendId=226781&uri=nyt%3A%2F%2Fnewsletter%2F31e96b6c-1d62-5b69-bef5-ec7a0f1ea366",
+    "title": "El estudiante eterno",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260920&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No puedo ver el contenido del boletín que mencionas. Por favor, comparte el texto completo para poder escribir una frase que lo resuma.",
+    "siteName": "",
+    "dateAdded": "2026-09-20T13:00:11.669Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1789909211670,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260920&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226789&sendId=226789&uri=nyt%3A%2F%2Fnewsletter%2F785d452d-fb36-536b-bae1-9797353580fd",
+    "title": "Autumnal upgrades",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Los imprescindibles de otoño incluyen actualizaciones estacionales para renovar tu guardarropa y estilo.",
+    "siteName": "",
+    "dateAdded": "2026-09-20T13:00:11.669Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789905614272,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260920&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226780&sendId=226780&uri=nyt%3A%2F%2Fnewsletter%2F50940733-f5c9-524b-b4b4-58134f28b996",
     "title": "Reality bites",
