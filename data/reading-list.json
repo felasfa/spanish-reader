@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789988411950,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260921&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226815&sendId=226815&uri=nyt%3A%2F%2Fnewsletter%2Fc75037e4-c693-5476-b9a8-1fd16efb3691",
+    "title": "Your politics questions",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260921&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El boletín matutino responde preguntas sobre política de forma clara y accesible para informar a los lectores.",
+    "siteName": "",
+    "dateAdded": "2026-09-21T11:00:11.950Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789984810653,
     "url": "https://t3.newsletter.elpais.com/nl/jsp/m.jsp?c=%40s1U51oPMwX9lAe2%2BSNh0GKV6Pb4pW3rv%2BkHtaob3OEo%3D",
     "title": "Cuatro piedras",
