@@ -1,5 +1,16 @@
 [
   {
+    "id": 1790028012954,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260921&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=226851&sendId=226851&uri=nyt%3A%2F%2Fnewsletter%2F87d8f2d7-f508-5e9c-af33-8de74f854ec2",
+    "title": "We have new favorite running shoes",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Tenemos nuevos zapatos para correr que se han convertido en nuestros favoritos.",
+    "siteName": "",
+    "dateAdded": "2026-09-21T22:00:12.954Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1789995614239,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260921&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226826&sendId=226826&uri=nyt%3A%2F%2Fnewsletter%2F72fe9c2d-636a-55b6-94cb-4cc14ad39ed5",
     "title": "En Opinión: Europa y la obsesión con la migración",
