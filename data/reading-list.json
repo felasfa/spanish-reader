@@ -1,5 +1,16 @@
 [
   {
+    "id": 1790082016312,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260922&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226873&sendId=226873&uri=nyt%3A%2F%2Fnewsletter%2Fd36eb0f3-b24a-53ce-ab5c-891c5acb2f7d",
+    "title": "The World: ¿Un cambio de poder en EE. UU.?",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260922&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Estados Unidos podría experimentar un cambio significativo en su distribución del poder político en próximas elecciones.",
+    "siteName": "",
+    "dateAdded": "2026-09-22T13:00:16.312Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790078413151,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20260922&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=226866&sendId=226866&uri=nyt%3A%2F%2Fnewsletter%2Fe70b6986-de19-5cca-91ef-1b5c86f24e4a",
     "title": "Science Times: Are A.I. Models Being Misled to Act Too Human?",
