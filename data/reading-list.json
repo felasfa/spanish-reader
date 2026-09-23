@@ -1,5 +1,16 @@
 [
   {
+    "id": 1790168427966,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260923&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=226933&sendId=226933&uri=nyt%3A%2F%2Fnewsletter%2F36780fa7-9648-5dba-ae3c-cf69d57a1a67",
+    "title": "Trump vs. la prensa",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260923&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Trump mantiene conflictiva relación con medios de comunicación, cuestionando su credibilidad e imparcialidad constantemente.",
+    "siteName": "",
+    "dateAdded": "2026-09-23T13:00:27.966Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790161213242,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260923&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226928&sendId=226928&uri=nyt%3A%2F%2Fnewsletter%2F3c508524-81f4-5f2c-9205-11f82e303774",
     "title": "The distrust election",
