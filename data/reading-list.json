@@ -1,5 +1,16 @@
 [
   {
+    "id": 1790247610722,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260924&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=226986&sendId=226986&uri=nyt%3A%2F%2Fnewsletter%2F2b895c27-bbe8-5a2e-9b46-bc7486ffca0f",
+    "title": "The big show",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260924&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Líderes mundiales se enfrentan en un gran evento internacional de importancia política global.",
+    "siteName": "",
+    "dateAdded": "2026-09-24T11:00:10.722Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790182811582,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nthw_20260923&isViewInBrowser=true&nl=headway&productCode=NTHW&segment_id=226950&sendId=226950&uri=nyt%3A%2F%2Fnewsletter%2F27163cd9-ab8c-51a8-985d-366b8239e7df",
     "title": "Headway: A.I. resists the rising tides",
