@@ -1,5 +1,27 @@
 [
   {
+    "id": 1790427611924,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260926&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227107&sendId=227107&uri=nyt%3A%2F%2Fnewsletter%2F1667b7a9-cab1-57be-8ea1-6ef6b677f3ac",
+    "title": "Alexa, necesito algo de espacio",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260926&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Alexa requiere distancia y espacio personal para mejorar su bienestar y desarrollo individual.",
+    "siteName": "",
+    "dateAdded": "2026-09-26T13:00:11.924Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1790427611925,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_wcd_20260926&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227116&sendId=227116&uri=nyt%3A%2F%2Fnewsletter%2F5531dc49-5c2d-51de-82e4-503436a2f207",
+    "title": "This dish spray cleans far more than dishes",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Este spray de platos limpia mucho más que solo platos, según expertos en limpieza.",
+    "siteName": "",
+    "dateAdded": "2026-09-26T13:00:11.924Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790424014438,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20260926&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=227103&sendId=227103&uri=nyt%3A%2F%2Fnewsletter%2F0e1e7e3e-486f-553b-aa7e-99ae8fc5a7f8",
     "title": "Nicholas Kristof's latest: The U.N. Is Terrible. We Need the U.N.",
