@@ -1,5 +1,27 @@
 [
   {
+    "id": 1790514010188,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260927&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227143&sendId=227143&uri=nyt%3A%2F%2Fnewsletter%2F06c4d967-e7ef-5fba-a859-3a3c8fc2454b",
+    "title": "La ‘tradwife’ que cuestionó sus creencias",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260927&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Una mujer que seguía el estilo de vida tradicional reflexiona y cuestiona sus propias creencias.",
+    "siteName": "",
+    "dateAdded": "2026-09-27T13:00:10.188Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1790514010189,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20260927&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227151&sendId=227151&uri=nyt%3A%2F%2Fnewsletter%2F63037f3c-f986-5385-b24f-b76236d65e41",
+    "title": "“One of the best things we’ve ever done as a family”",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Una familia busca mejorar sus hábitos con el teléfono y descubre que es una de sus mejores decisiones juntos.",
+    "siteName": "",
+    "dateAdded": "2026-09-27T13:00:10.188Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790503213186,
     "url": "https://t3.newsletter.elpais.com/nl/jsp/m.jsp?c=%40eAC1wkRmRTODxSd0NSNN4%2BHL8RDteO%2FYwcRp33bN5C8%3D",
     "title": "Por qué aguanta el bolsonarismo",
