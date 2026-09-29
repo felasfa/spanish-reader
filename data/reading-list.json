@@ -1,5 +1,27 @@
 [
   {
+    "id": 1790683214424,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260929&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227235&sendId=227235&uri=nyt%3A%2F%2Fnewsletter%2Fe572d494-1a60-5839-9485-449f5d4744d7",
+    "title": "Modest proposals",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260929&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Se proponen medidas modestas pero efectivas para mejorar la calidad educativa en las escuelas.",
+    "siteName": "",
+    "dateAdded": "2026-09-29T12:00:14.424Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1790683214425,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20260929&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=227236&sendId=227236&uri=nyt%3A%2F%2Fnewsletter%2F0f2f7068-5cdc-54f7-b960-f6043e4a573a",
+    "title": "Science Times: In an $80 motel room, a discovery sheds light on the origins of life",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=SC_20260929&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Un descubrimiento en una habitación de motel económica ilumina los misterios sobre los orígenes de la vida.",
+    "siteName": "",
+    "dateAdded": "2026-09-29T12:00:14.424Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790679611837,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_bn_20260929&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227232&sendId=227232&uri=nyt%3A%2F%2Fnewsletter%2Fa5071377-737b-5d6d-b787-b8894f8c3bc7",
     "title": "The World: Los obreros poetas chinos",
