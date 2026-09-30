@@ -1,5 +1,16 @@
 [
   {
+    "id": 1790769611451,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260930&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227287&sendId=227287&uri=nyt%3A%2F%2Fnewsletter%2F593e8102-5e38-51f0-a192-1791a68c4538",
+    "title": "Justice for Jane Doe?",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20260930&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Cornell enfrenta un caso de abuso sexual con demandas de justicia para la víctima identificada como Jane Doe.",
+    "siteName": "",
+    "dateAdded": "2026-09-30T12:00:11.451Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790712016033,
     "url": "https://www.nytimes.com/2026/09/28/well/gastrointestinal-symptoms-gut-health.html?algo=combo_lda_unique_triton_clicks_decay_96_50_ranks&emc=edit_hh_20260929&fellback=false&imp_id=5451489081973545&nl=well&pool=programmingnode%2Fe1f22e62-8dba-51f4-87bc-e552a87bb958&req_id=8219359077655580&segment_id=227259&surface=well-nl&variant=0_only_variant",
     "title": "Well: 5 stories you might have missed",
