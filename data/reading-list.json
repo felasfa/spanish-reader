@@ -1,5 +1,16 @@
 [
   {
+    "id": 1790773211826,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20260930&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227291&sendId=227291&uri=nyt%3A%2F%2Fnewsletter%2Fa44fbfc5-0525-59e0-a563-c21abc7d06a8",
+    "title": "Las 100 mejores series de TV",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20260930&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Las cien mejores series de televisión seleccionadas por su calidad, impacto cultural y entretenimiento excepcional.",
+    "siteName": "",
+    "dateAdded": "2026-09-30T13:00:11.826Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790769611451,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20260930&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227287&sendId=227287&uri=nyt%3A%2F%2Fnewsletter%2F593e8102-5e38-51f0-a192-1791a68c4538",
     "title": "Justice for Jane Doe?",
