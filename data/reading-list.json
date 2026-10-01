@@ -1,5 +1,16 @@
 [
   {
+    "id": 1790863235819,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261001&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227361&sendId=227361&uri=nyt%3A%2F%2Fnewsletter%2Facf0e22c-1d47-57e0-bcc6-d3f466d9b45a",
+    "title": "The winners of our first-ever Hall of Fame awards",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Se presentan los primeros ganadores del Salón de la Fama inaugural de la organización.",
+    "siteName": "",
+    "dateAdded": "2026-10-01T14:00:35.819Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790852414841,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261001&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227346&sendId=227346&uri=nyt%3A%2F%2Fnewsletter%2F5e21048c-7a62-5c2b-81a3-5a2b5609806d",
     "title": "Dark arts",
