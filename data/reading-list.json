@@ -1,5 +1,27 @@
 [
   {
+    "id": 1790895608408,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_ot_20261001&isViewInBrowser=true&nl=on-tech&productCode=OT&segment_id=227388&sendId=227388&uri=nyt%3A%2F%2Fnewsletter%2F76b764dc-eb4e-54ca-a409-254e9aa5c08e",
+    "title": "On Tech: How Meta uses A.I. data centers to avoid taxes",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=1089504&li=OT&m=1482f2b122b4c258bd67a395fb7cb30b&p=OT_20261001&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Meta utiliza centros de datos con inteligencia artificial como estrategia para reducir o evadir sus obligaciones fiscales.",
+    "siteName": "",
+    "dateAdded": "2026-10-01T23:00:08.408Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1790895608409,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261001&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227390&sendId=227390&uri=nyt%3A%2F%2Fnewsletter%2F452c5ed4-475c-5bb7-8fd0-3093908e1ed1",
+    "title": "5 things we love from Wirecutter’s Hall of Fame",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Wirecutter presenta sus cinco productos favoritos más populares de todos los tiempos en su galería de éxitos.",
+    "siteName": "",
+    "dateAdded": "2026-10-01T23:00:08.408Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790870410548,
     "url": "http://m4.novedades.elpais.com/nl/jsp/m.jsp?c=%40I%2FyiQD9umhaUQqDTFvxHTBMhMb7KrHI6r4Bn%2BOrXIrM%3D&mid=DM795634&bid=654646414",
     "title": "EL PAÍS",
