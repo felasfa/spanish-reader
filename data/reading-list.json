@@ -1,5 +1,27 @@
 [
   {
+    "id": 1790946011744,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261002&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227417&sendId=227417&uri=nyt%3A%2F%2Fnewsletter%2F6825c79e-8dd0-5f71-aa84-a743c7d5a7df",
+    "title": "La Universidad de Cornell bajo escrutinio",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261002&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La Universidad de Cornell enfrenta críticas y cuestionamientos sobre sus políticas o prácticas institucionales.",
+    "siteName": "",
+    "dateAdded": "2026-10-02T13:00:11.744Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1790946011745,
+    "url": "http://m4.novedades.elpais.com/nl/jsp/m.jsp?c=%40VMIwoGWJhpFpBVj2BgkfVjHy8O71waaKBJyKkiNisZM%3D&mid=DM795740&bid=659929088",
+    "title": "EL PAÍS",
+    "image": "https://t.novedades.elpais.com/r/?id=h2755b800,d0fb519,1",
+    "summary": "Tu suscripción a EL PAÍS requiere atención: revisa los detalles de tu cuenta y realiza los cambios necesarios.",
+    "siteName": "",
+    "dateAdded": "2026-10-02T13:00:11.744Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790942417856,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261002&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=227409&sendId=227409&uri=nyt%3A%2F%2Fnewsletter%2F4fa9160d-d677-5104-a86d-c10296241a61",
     "title": "Why don’t more patients get new cancer drugs?",
