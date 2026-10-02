@@ -1,5 +1,16 @@
 [
   {
+    "id": 1790938812162,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261002&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227407&sendId=227407&uri=nyt%3A%2F%2Fnewsletter%2Fe2631f0d-27ec-56c0-a3fc-079d0a803be2",
+    "title": "In Ithaca",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261002&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No puedo escribir un resumen sin acceso al contenido completo del boletín. Por favor, comparte el texto del artículo.",
+    "siteName": "",
+    "dateAdded": "2026-10-02T11:00:12.162Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1790895608408,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_ot_20261001&isViewInBrowser=true&nl=on-tech&productCode=OT&segment_id=227388&sendId=227388&uri=nyt%3A%2F%2Fnewsletter%2F76b764dc-eb4e-54ca-a409-254e9aa5c08e",
     "title": "On Tech: How Meta uses A.I. data centers to avoid taxes",
