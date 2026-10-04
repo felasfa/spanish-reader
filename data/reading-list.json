@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791118814008,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261004&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227517&sendId=227517&uri=nyt%3A%2F%2Fnewsletter%2F37f237bf-2d2a-5d6b-8a64-38766458b060",
+    "title": "What do a plunger, a vacuum, and a set of sheets have in common?",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "El artículo explora qué tienen en común un desatascador, una aspiradora y un juego de sábanas.",
+    "siteName": "",
+    "dateAdded": "2026-10-04T13:00:14.008Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791115211635,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261004&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227510&sendId=227510&uri=nyt%3A%2F%2Fnewsletter%2F0712ce59-ce8e-56c9-b9c9-19154cde4b46",
     "title": "A good ending",
