@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791205212615,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261005&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227551&sendId=227551&uri=nyt%3A%2F%2Fnewsletter%2F9251c390-0e16-5687-88ac-78fcdfcfafe9",
+    "title": "En Opinión: Hay que prepararnos para el super El Niño",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261005&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El Niño intenso requiere preparación preventiva para mitigar sus impactos económicos, ambientales y sociales.",
+    "siteName": "",
+    "dateAdded": "2026-10-05T13:00:12.615Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791198010643,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261005&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227543&sendId=227543&uri=nyt%3A%2F%2Fnewsletter%2F75e95c8a-5c6e-5e18-bcb0-6e5e40fcd5c3",
     "title": "On the docket",
