@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791237613752,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261005&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227581&sendId=227581&uri=nyt%3A%2F%2Fnewsletter%2Fc1981bc5-34a1-57a7-b0d2-ac2715d92957",
+    "title": "A piscine pitcher",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Un recipiente con forma de pez es un regalo ideal y práctico para servir bebidas.",
+    "siteName": "",
+    "dateAdded": "2026-10-05T22:00:13.752Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791205212615,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261005&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227551&sendId=227551&uri=nyt%3A%2F%2Fnewsletter%2F9251c390-0e16-5687-88ac-78fcdfcfafe9",
     "title": "En Opinión: Hay que prepararnos para el super El Niño",
