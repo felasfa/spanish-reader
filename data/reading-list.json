@@ -1,5 +1,27 @@
 [
   {
+    "id": 1791316823594,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_wcd_20261006&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227623&sendId=227623&uri=nyt%3A%2F%2Fnewsletter%2F9e33c819-ee8c-5dd7-8483-ca171c0240b9",
+    "title": "A bunch of our style favorites are on sale right now",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Se encuentran en oferta varios artículos de moda y estilo que son favoritos actualmente.",
+    "siteName": "",
+    "dateAdded": "2026-10-06T20:00:23.594Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1791316823595,
+    "url": "https://www.nytimes.com/2026/09/29/well/eat/nutrition-30-plants-a-week.html?algo=combo_bert_hl_sm_bd_unique_triton_clicks_decay_96_50_ranks&emc=edit_hh_20261006&fellback=false&imp_id=5810017101151234&nl=well&pool=programmingnode%2Fe1f22e62-8dba-51f4-87bc-e552a87bb958&req_id=4909518496820215&segment_id=227624&surface=well-nl&variant=0_only_variant",
+    "title": "Well: 5 stories you might have missed",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=162155&li=HH&m=1482f2b122b4c258bd67a395fb7cb30b&p=HH_20261006&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El boletín presenta cinco historias sobre bienestar y salud que quizás los lectores pasaron por alto.",
+    "siteName": "",
+    "dateAdded": "2026-10-06T20:00:23.594Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791291610720,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261006&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227607&sendId=227607&uri=nyt%3A%2F%2Fnewsletter%2Fda163f31-1412-516c-8834-1fcfc7536a96",
     "title": "The World: La guerra, con intermediarios",
