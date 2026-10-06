@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791284424671,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261006&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227596&sendId=227596&uri=nyt%3A%2F%2Fnewsletter%2F1d328407-f30f-5b97-b7d4-a9e9ad0a2bb1",
+    "title": "Picky eaters",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261006&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los gatos pueden ser comedores quisquillosos y selectivos con su comida y preferencias alimentarias.",
+    "siteName": "",
+    "dateAdded": "2026-10-06T11:00:24.671Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791237613752,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261005&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227581&sendId=227581&uri=nyt%3A%2F%2Fnewsletter%2Fc1981bc5-34a1-57a7-b0d2-ac2715d92957",
     "title": "A piscine pitcher",
