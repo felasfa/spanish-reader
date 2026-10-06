@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791291610720,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261006&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227607&sendId=227607&uri=nyt%3A%2F%2Fnewsletter%2Fda163f31-1412-516c-8834-1fcfc7536a96",
+    "title": "The World: La guerra, con intermediarios",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261006&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La guerra moderna se libra frecuentemente a través de intermediarios en lugar de enfrentamientos directos entre potencias.",
+    "siteName": "",
+    "dateAdded": "2026-10-06T13:00:10.720Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791284424671,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261006&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227596&sendId=227596&uri=nyt%3A%2F%2Fnewsletter%2F1d328407-f30f-5b97-b7d4-a9e9ad0a2bb1",
     "title": "Picky eaters",
