@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791464410415,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261008&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227791&sendId=227791&uri=nyt%3A%2F%2Fnewsletter%2F68de6b40-7245-57e6-97ed-50e2c1682dca",
+    "title": "El Salvador, México, Brasil",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261008&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No puedo escribir una frase de resumen porque el contenido del boletín no está completo en tu mensaje.",
+    "siteName": "",
+    "dateAdded": "2026-10-08T13:00:10.415Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791457215007,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261008&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227788&sendId=227788&uri=nyt%3A%2F%2Fnewsletter%2F66692302-c7a2-5101-a199-5c79f2ceb7e3",
     "title": "In retreat",
