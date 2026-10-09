@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791547214403,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261009&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=227847&sendId=227847&uri=nyt%3A%2F%2Fnewsletter%2Fac79332b-ba05-592e-94bb-6290dfc3d11d",
+    "title": "‘Breathtaking,’ ‘Devastating’: Mathematics Reels After OpenAI Release",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=SC_20261009&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "OpenAI lanza un avance matemático que impacta profundamente a la comunidad científica internacional.",
+    "siteName": "",
+    "dateAdded": "2026-10-09T12:00:14.403Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791543612107,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261009&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227845&sendId=227845&uri=nyt%3A%2F%2Fnewsletter%2Fdb981c01-f9ce-5908-b50c-55db664e52e2",
     "title": "Fish food",
