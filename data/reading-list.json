@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791543612107,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261009&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227845&sendId=227845&uri=nyt%3A%2F%2Fnewsletter%2Fdb981c01-f9ce-5908-b50c-55db664e52e2",
+    "title": "Fish food",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261009&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No puedo proporcionar un resumen sin acceso al contenido completo del artículo \"Fish food\". Necesitaría leer el boletín para escribir una frase precisa.",
+    "siteName": "",
+    "dateAdded": "2026-10-09T11:00:12.107Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791496882374,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_ot_20261008&isViewInBrowser=true&nl=on-tech&productCode=OT&segment_id=227827&sendId=227827&uri=nyt%3A%2F%2Fnewsletter%2F284096b2-bff6-500d-9ac5-0f2894ee5adc",
     "title": "On Tech: This photo is an A.I. fake. Can you tell?",
