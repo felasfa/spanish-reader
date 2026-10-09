@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791576020225,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261009&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227876&sendId=227876&uri=nyt%3A%2F%2Fnewsletter%2F2a15bdb9-7ec4-5afd-9f55-c96dd44f92aa",
+    "title": "A spooky bowl — and more Halloween decor we love",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Un tazón fantasmal y otras decoraciones de Halloween que nos encantan.",
+    "siteName": "",
+    "dateAdded": "2026-10-09T20:00:20.225Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791550836757,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261009&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227852&sendId=227852&uri=nyt%3A%2F%2Fnewsletter%2F4b840ca4-d7fc-5e14-a885-23291c50c870",
     "title": "¿Hay peste en Rusia?",
