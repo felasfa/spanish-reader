@@ -1,5 +1,27 @@
 [
   {
+    "id": 1791633611495,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261010&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227900&sendId=227900&uri=nyt%3A%2F%2Fnewsletter%2F38452368-7d76-5635-93f2-b7a9f5033a43",
+    "title": "Screen time",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261010&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El exceso de tiempo frente a pantallas afecta la salud física y mental de las personas en la sociedad moderna.",
+    "siteName": "",
+    "dateAdded": "2026-10-10T12:00:11.495Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1791633611496,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20261010&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=227902&sendId=227902&uri=nyt%3A%2F%2Fnewsletter%2F3b168850-c839-5bdb-9b1b-96be1f2bb44a",
+    "title": "Nicholas Kristof's latest: How Is Child Marriage Still Legal in the U.S.?",
+    "image": "https://static01.nytimes.com/email-images/NYT-Nameplate-Alerts@2x.png",
+    "summary": "Nicholas Kristof cuestiona por qué el matrimonio infantil sigue siendo legal en algunos estados de Estados Unidos.",
+    "siteName": "",
+    "dateAdded": "2026-10-10T12:00:11.495Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791622810615,
     "url": "https://t3.newsletter.elpais.com/nl/jsp/m.jsp?c=%40b%2BsK%2F9mGCvR%2Fy1Zdt76n9KMd0GjvnYx5mZ7b%2F1ZsIjo%3D",
     "title": "El boletín de Materia",
