@@ -1,5 +1,27 @@
 [
   {
+    "id": 1791637211550,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261010&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=227914&sendId=227914&uri=nyt%3A%2F%2Fnewsletter%2F667f1f57-1f84-5e2c-a230-f4e51c9403ba",
+    "title": "Are you in New York? Science Times is putting on an event.",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=SC_20261010&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Science Times organiza un evento en Nueva York para sus lectores interesados en ciencia.",
+    "siteName": "",
+    "dateAdded": "2026-10-10T13:00:11.550Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1791637211551,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_wcd_20261010&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227913&sendId=227913&uri=nyt%3A%2F%2Fnewsletter%2F6440ab3a-f801-5549-9eaf-567f3b2c9ec6",
+    "title": "Drinking glasses worth reaching for again and again",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Se presentan dieciséis vasos de bebida de alta calidad, diseñados para uso frecuente y duradero.",
+    "siteName": "",
+    "dateAdded": "2026-10-10T13:00:11.550Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791633611495,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261010&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227900&sendId=227900&uri=nyt%3A%2F%2Fnewsletter%2F38452368-7d76-5635-93f2-b7a9f5033a43",
     "title": "Screen time",
