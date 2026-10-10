@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791590412109,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261009&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227893&sendId=227893&uri=nyt%3A%2F%2Fnewsletter%2Fa6c2007b-2a1e-58e3-af9a-9029536a6533",
+    "title": "Terremoto en Panamá: lo que hay que saber",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261009&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Un terremoto afectó a Panamá; autoridades informan sobre medidas de seguridad y evaluación de daños.",
+    "siteName": "",
+    "dateAdded": "2026-10-10T00:00:12.109Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791576020225,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261009&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227876&sendId=227876&uri=nyt%3A%2F%2Fnewsletter%2F2a15bdb9-7ec4-5afd-9f55-c96dd44f92aa",
     "title": "A spooky bowl — and more Halloween decor we love",
