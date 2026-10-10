@@ -751,6 +751,8 @@ html, body {
   cursor: pointer;
 }
 .vocab-entry:last-child { border-bottom: none; }
+/* Alternating per-day background so same-day entries read as a group while scrolling */
+.vocab-entry.vocab-day-b { background: var(--surface-2); }
 .vocab-entry.vocab-new { background: rgba(198,40,40,.07); transition: background 0.8s ease; }
 
 .vocab-summary {

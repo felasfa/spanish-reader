@@ -534,10 +534,25 @@ function updateSortMenuUI() {
   });
 }
 
-function buildEntryHTML(e, lastViewed) {
+// Alternates a flag each time the calendar day (local time) changes as we walk
+// down a date-ordered list, so same-day entries render with a matching background.
+function assignDayGroups(items) {
+  let currentKey = null;
+  let altFlag = false;
+  return items.map(e => {
+    const key = e.date ? new Date(e.date).toDateString() : '';
+    if (key !== currentKey) {
+      currentKey = key;
+      altFlag = !altFlag;
+    }
+    return { entry: e, dayAlt: altFlag };
+  });
+}
+
+function buildEntryHTML(e, lastViewed, dayAlt = false) {
   const domain = e.url ? (() => { try { return cleanDomain(new URL(e.url).hostname); } catch { return ''; } })() : '';
   const isNew  = e.date && e.date > lastViewed;
-  return `<div class="vocab-entry${isNew ? ' vocab-new' : ''}" data-id="${e.id}">
+  return `<div class="vocab-entry${isNew ? ' vocab-new' : ''}${dayAlt ? ' vocab-day-b' : ''}" data-id="${e.id}">
     <div class="vocab-summary">
       <span class="vocab-word">${escapeHtml(e.word)}</span>
       <span class="vocab-sep">→</span>
@@ -635,7 +650,12 @@ async function renderVocabulary(vocab) {
   $('vocab-table-wrap').style.display = 'block';
 
   const lastViewed = vocabLastViewedCache;
-  $('vocab-tbody').innerHTML = items.map(e => buildEntryHTML(e, lastViewed)).join('');
+  // Day-grouping only makes sense when entries are date-ordered (contiguous same-day runs);
+  // alpha sort scatters same-day entries, so skip the alternating background there.
+  const rows = vocabSortMode === 'date'
+    ? assignDayGroups(items)
+    : items.map(entry => ({ entry, dayAlt: false }));
+  $('vocab-tbody').innerHTML = rows.map(({ entry, dayAlt }) => buildEntryHTML(entry, lastViewed, dayAlt)).join('');
   attachEntryListeners();
 }
 
