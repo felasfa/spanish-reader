@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791720058813,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261011&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227957&sendId=227957&uri=nyt%3A%2F%2Fnewsletter%2Ff1db6074-1f90-58c9-94ab-7c4f5a88f83a",
+    "title": "The watchtower",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261011&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "China implementa sistemas avanzados de vigilancia masiva para monitorear y controlar a su población.",
+    "siteName": "",
+    "dateAdded": "2026-10-11T12:00:58.813Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791712854555,
     "url": "https://t3.newsletter.elpais.com/nl/jsp/m.jsp?c=%40w9pQPk5L0SjhYJxLC5wDV6OZ2ZP4uhG%2FRJ%2BVpQ7c6mE%3D",
     "title": "Cómo movilizar a un votante bombardeado",
