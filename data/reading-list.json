@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791723653367,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261011&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=227964&sendId=227964&uri=nyt%3A%2F%2Fnewsletter%2F4fcf3eb0-1b7a-5f52-a682-c3cec5cb4276",
+    "title": "“This pumpkin head almost made me lose my own”",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Un cazador obsesionado busca una máquina de chicles viral que casi lo vuelve loco.",
+    "siteName": "",
+    "dateAdded": "2026-10-11T13:00:53.367Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791720058813,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261011&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=227957&sendId=227957&uri=nyt%3A%2F%2Fnewsletter%2Ff1db6074-1f90-58c9-94ab-7c4f5a88f83a",
     "title": "The watchtower",
