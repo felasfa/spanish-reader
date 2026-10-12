@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791824452001,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261012&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228002&sendId=228002&uri=nyt%3A%2F%2Fnewsletter%2F38f27e87-a1dc-5433-8574-2ceae0fdf933",
+    "title": "Nearly 40 cans of tuna later …",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Se probaron casi cuarenta latas de atún para determinar cuál es la mejor marca disponible.",
+    "siteName": "",
+    "dateAdded": "2026-10-12T17:00:52.001Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791810051537,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261012&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=227992&sendId=227992&uri=nyt%3A%2F%2Fnewsletter%2F5feecc77-c937-5a06-b7c0-2244430a835f",
     "title": "En Opinión: Una ciudad en México vs. los aranceles de Trump",
