@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791896456322,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261013&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=228028&sendId=228028&uri=nyt%3A%2F%2Fnewsletter%2F81ff53bd-e407-523b-a84e-5e6283587d13",
+    "title": "¿Cómo va la carrera por el Congreso?",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261013&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Las elecciones al Congreso de Estados Unidos muestran una competencia cerrada entre demócratas y republicanos por el control legislativo.",
+    "siteName": "",
+    "dateAdded": "2026-10-13T13:00:56.322Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791892850384,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261013&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=228026&sendId=228026&uri=nyt%3A%2F%2Fnewsletter%2F55f8f542-c29e-5edd-bdfa-764f8193b93b",
     "title": "Science Times: Will we ever understand dementia?",
