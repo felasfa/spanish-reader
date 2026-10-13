@@ -1,5 +1,16 @@
 [
   {
+    "id": 1791882044442,
+    "url": "http://m4.novedades.elpais.com/nl/jsp/m.jsp?c=%40Y7HkZzYFPb0Cd8qkY5JBo3Kz8hPN033us34eE5RiTDQ%3D&mid=DM804026&bid=700831493",
+    "title": "EL PAIS",
+    "image": "https://ep00.epimg.net/estaticos/newsletter/recursos/elpais/suscriptores/20260605/nyt.png",
+    "summary": "El País ofrece acceso exclusivo a contenidos de The New York Times para sus suscriptores.",
+    "siteName": "",
+    "dateAdded": "2026-10-13T09:00:44.442Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1791824452001,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261012&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228002&sendId=228002&uri=nyt%3A%2F%2Fnewsletter%2F38f27e87-a1dc-5433-8574-2ceae0fdf933",
     "title": "Nearly 40 cans of tuna later …",
