@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792101684726,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261015&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228174&sendId=228174&uri=nyt%3A%2F%2Fnewsletter%2F6d309459-97f7-589c-9751-9302ce55616e",
+    "title": "The best men’s jeans",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Los nuevos jeans para hombres son los mejores del mercado y se han convertido en nuestros favoritos.",
+    "siteName": "",
+    "dateAdded": "2026-10-15T22:01:24.726Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792065647817,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261015&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228135&sendId=228135&uri=nyt%3A%2F%2Fnewsletter%2Fd0615aec-c58a-5bc6-a458-7f2fecf5aedd",
     "title": "Choosin’ Texas",
