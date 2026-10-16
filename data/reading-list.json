@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792152116046,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261016&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=228196&sendId=228196&uri=nyt%3A%2F%2Fnewsletter%2F0551d3a3-53f9-5f5b-b282-b83d52e7265b",
+    "title": "Tinta roja en una plaza china",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261016&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No puedo escribir la frase sin tener acceso al contenido del boletín. Por favor, comparte el texto del boletín para poder resumirlo adecuadamente.",
+    "siteName": "",
+    "dateAdded": "2026-10-16T12:01:56.046Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792152059000,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261016&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=228194&sendId=228194&uri=nyt%3A%2F%2Fnewsletter%2F19351aed-7ea9-5f2a-be74-c09d08dac295",
     "title": "Worlds more habitable than Earth? They’re out there.",
