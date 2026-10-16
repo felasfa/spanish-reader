@@ -51,7 +51,18 @@ function showView(name) {
   }
   scrollPositions[state.currentView] = window.scrollY;
   if (state.currentView !== name) state.previousView = state.currentView;
-  if (state.currentView === 'vocabulary') collapseLookup();
+  if (state.currentView === 'vocabulary') {
+    collapseLookup();
+    if (name !== 'vocabulary') {
+      // Mark newly-added words as viewed only once we leave the page, so the red
+      // highlight stays visible for as long as the user is reviewing the list.
+      $('vocab-tbody').querySelectorAll('.vocab-new').forEach(r => r.classList.remove('vocab-new'));
+      $('nav-vocab-count').style.display = 'none';
+      fetch(`${API_BASE}/api/vocabulary/last-viewed`, { method: 'POST' })
+        .then(r => r.json()).then(d => { vocabLastViewedCache = d.lastViewed || '0'; })
+        .catch(() => {});
+    }
+  }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   $(`view-${name}`).classList.add('active');
   state.currentView = name;
@@ -587,15 +598,8 @@ function attachEntryListeners() {
       deleteVocabEntry(entry.dataset.id);
     });
   });
-  if ($('vocab-tbody').querySelector('.vocab-new')) {
-    setTimeout(() => {
-      $('vocab-tbody').querySelectorAll('.vocab-new').forEach(r => r.classList.remove('vocab-new'));
-      $('nav-vocab-count').style.display = 'none';
-      fetch(`${API_BASE}/api/vocabulary/last-viewed`, { method: 'POST' })
-        .then(r => r.json()).then(d => { vocabLastViewedCache = d.lastViewed || '0'; })
-        .catch(() => {});
-    }, 2000);
-  }
+  // Newly-added words stay highlighted red while the user is on this page —
+  // see showView() for where they get marked as viewed, on navigating away.
 }
 
 async function getSemanticGroups(vocab) {
