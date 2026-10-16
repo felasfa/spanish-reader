@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792180865379,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_wcd_20261016&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228227&sendId=228227&uri=nyt%3A%2F%2Fnewsletter%2F03bcac3b-bef3-5e3a-888a-1b9dcc2a072c",
+    "title": "“This five-minute home installation gave me immediate peace of mind”",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Una mejora de seguridad de siete dólares con instalación en casa de cinco minutos brinda tranquilidad inmediata.",
+    "siteName": "",
+    "dateAdded": "2026-10-16T20:01:05.379Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792159283653,
     "url": "https://mailchi.mp/annualreviews/la-nasa-pone-el-foco-en-la-contaminacion-atmosferica?e=0badd1f9e6",
     "title": "La NASA pone el foco en la contaminación atmosférica",
