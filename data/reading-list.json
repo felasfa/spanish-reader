@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792242065412,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_wcd_20261017&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228269&sendId=228269&uri=nyt%3A%2F%2Fnewsletter%2Fded10613-7e2e-5b26-bf63-5d1538a6c976",
+    "title": "The best women’s leather boots",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Presentamos nuestra nueva guía con las mejores botas de cuero para mujeres.",
+    "siteName": "",
+    "dateAdded": "2026-10-17T13:01:05.412Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792238496664,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20261017&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=228256&sendId=228256&uri=nyt%3A%2F%2Fnewsletter%2F86d9b4ec-8cc2-55cf-8ea9-733508c585e7",
     "title": "Nicholas Kristof's latest: ‘If Slaughterhouses Had Glass Walls’",
