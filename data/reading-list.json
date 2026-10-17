@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792238496664,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20261017&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=228256&sendId=228256&uri=nyt%3A%2F%2Fnewsletter%2F86d9b4ec-8cc2-55cf-8ea9-733508c585e7",
+    "title": "Nicholas Kristof's latest: ‘If Slaughterhouses Had Glass Walls’",
+    "image": "https://static01.nytimes.com/email-images/NYT-Nameplate-Alerts@2x.png",
+    "summary": "Nicholas Kristof propone que si los mataderos tuvieran paredes de cristal, la gente cuestionaría sus prácticas.",
+    "siteName": "",
+    "dateAdded": "2026-10-17T12:01:36.664Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792231253542,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261017&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228249&sendId=228249&uri=nyt%3A%2F%2Fnewsletter%2F4025b5ad-f206-5b56-b347-0b9f09bc1935",
     "title": "Paper towns",
