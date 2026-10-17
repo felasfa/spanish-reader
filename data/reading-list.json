@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792231253542,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261017&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228249&sendId=228249&uri=nyt%3A%2F%2Fnewsletter%2F4025b5ad-f206-5b56-b347-0b9f09bc1935",
+    "title": "Paper towns",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261017&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Las ciudades de papel son lugares ficticios que existen solo en mapas y documentos, sin realidad tangible.",
+    "siteName": "",
+    "dateAdded": "2026-10-17T10:00:53.542Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792180865379,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_wcd_20261016&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228227&sendId=228227&uri=nyt%3A%2F%2Fnewsletter%2F03bcac3b-bef3-5e3a-888a-1b9dcc2a072c",
     "title": "“This five-minute home installation gave me immediate peace of mind”",
