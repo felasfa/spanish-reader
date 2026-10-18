@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792328449543,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261018&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228297&sendId=228297&uri=nyt%3A%2F%2Fnewsletter%2F6026dca1-d24e-58d4-ab68-b5ee81e1361b",
+    "title": "Cheap(ish) game-changers",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Seis productos asequibles que transforman la vida cotidiana con innovación y practicidad.",
+    "siteName": "",
+    "dateAdded": "2026-10-18T13:00:49.543Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792324856941,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261018&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228295&sendId=228295&uri=nyt%3A%2F%2Fnewsletter%2Ffe9a7262-dc45-5aca-a885-6e877d720009",
     "title": "O.J.’s accomplice?",
