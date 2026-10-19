@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792447325333,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261019&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228375&sendId=228375&uri=nyt%3A%2F%2Fnewsletter%2Fb21eab79-cb2f-5b79-973a-420f41c6142b",
+    "title": "9 fantastic jigsaw puzzles",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Se presentan nueve rompecabezas de jigsaw fantásticos y peculiares para disfrutar.",
+    "siteName": "",
+    "dateAdded": "2026-10-19T22:02:05.333Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792407655708,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261019&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228334&sendId=228334&uri=nyt%3A%2F%2Fnewsletter%2F6d558393-a658-59b4-b8cb-261183bb1530",
     "title": "A bad combination",
