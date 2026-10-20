@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792501260671,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261020&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=228387&sendId=228387&uri=nyt%3A%2F%2Fnewsletter%2Fcee6d901-2bfb-539d-b028-e1028fa1179d",
+    "title": "The World: Los fracasos de Macron",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261020&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Macron enfrenta fracasos políticos que debilitan su gobierno y autoridad en Francia.",
+    "siteName": "",
+    "dateAdded": "2026-10-20T13:01:00.671Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792497653278,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261020&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=228385&sendId=228385&uri=nyt%3A%2F%2Fnewsletter%2F6a5aca58-01fc-53f1-8a8c-1a30a4d52cf2",
     "title": "Science Times: How did life arise?",
