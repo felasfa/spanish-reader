@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792494045724,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261020&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228384&sendId=228384&uri=nyt%3A%2F%2Fnewsletter%2F47c34bd2-8b60-5fd0-8802-8e5a72248c20",
+    "title": "Death from above",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261020&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los drones militares se utilizan como armas letales desde el aire en operaciones de combate.",
+    "siteName": "",
+    "dateAdded": "2026-10-20T11:00:45.724Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792447325333,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261019&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228375&sendId=228375&uri=nyt%3A%2F%2Fnewsletter%2Fb21eab79-cb2f-5b79-973a-420f41c6142b",
     "title": "9 fantastic jigsaw puzzles",
