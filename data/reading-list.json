@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792497653278,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261020&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=228385&sendId=228385&uri=nyt%3A%2F%2Fnewsletter%2F6a5aca58-01fc-53f1-8a8c-1a30a4d52cf2",
+    "title": "Science Times: How did life arise?",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=SC_20261020&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La ciencia investiga cómo surgió la vida en la Tierra a través de diferentes teorías y evidencia científica.",
+    "siteName": "",
+    "dateAdded": "2026-10-20T12:00:53.278Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792494045724,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261020&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228384&sendId=228384&uri=nyt%3A%2F%2Fnewsletter%2F47c34bd2-8b60-5fd0-8802-8e5a72248c20",
     "title": "Death from above",
