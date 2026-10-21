@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792620081121,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261021&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228486&sendId=228486&uri=nyt%3A%2F%2Fnewsletter%2F95106152-bd6c-568a-96e9-408d30cfc5b1",
+    "title": "The iPhone Duo is worth the hype",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "El iPhone Duo es el teléfono más emocionante de los últimos años y justifica toda la expectativa generada.",
+    "siteName": "",
+    "dateAdded": "2026-10-21T22:01:21.121Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792584131795,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261021&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=228445&sendId=228445&uri=nyt%3A%2F%2Fnewsletter%2F60c889dc-8261-5bfa-86ea-33173e85f11c",
     "title": "Las telenovelas hechas para el teléfono nos invaden",
