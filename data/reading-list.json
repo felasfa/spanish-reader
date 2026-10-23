@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792753249362,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261023&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228554&sendId=228554&uri=nyt%3A%2F%2Fnewsletter%2Fe0904fec-8ab9-5696-914a-b7afca49ba99",
+    "title": "You’re being watched",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261023&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Te observan constantemente a través de dispositivos y plataformas digitales que recopilan tus datos personales.",
+    "siteName": "",
+    "dateAdded": "2026-10-23T11:00:49.362Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792710114610,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_ot_20261022&isViewInBrowser=true&nl=on-tech&productCode=OT&segment_id=228541&sendId=228541&uri=nyt%3A%2F%2Fnewsletter%2Fed798fa4-e5c7-5118-bcce-792531b0bfdc",
     "title": "On Tech: Gray paint has never had it as good as in the A.I. boom",
