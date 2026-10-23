@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792760473882,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261023&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=228559&sendId=228559&uri=nyt%3A%2F%2Fnewsletter%2F14a9931f-d40a-51b3-9543-a612416b0f63",
+    "title": "Policías en las escuelas de EE. UU.",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261023&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Presencia de agentes policiales en instituciones educativas estadounidenses genera debate sobre seguridad y bienestar estudiantil.",
+    "siteName": "",
+    "dateAdded": "2026-10-23T13:01:13.882Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792753249362,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261023&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228554&sendId=228554&uri=nyt%3A%2F%2Fnewsletter%2Fe0904fec-8ab9-5696-914a-b7afca49ba99",
     "title": "You’re being watched",
