@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792843248788,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20261024&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=228607&sendId=228607&uri=nyt%3A%2F%2Fnewsletter%2F1c6dc3a4-7fcc-5571-9e45-e7c0c6907cd8",
+    "title": "Nicholas Kristof's latest: ‘Everything We Love Is on the Line’",
+    "image": "https://static01.nytimes.com/email-images/NYT-Nameplate-Alerts@2x.png",
+    "summary": "Nicholas Kristof advierte que todo lo que amamos está en riesgo y necesita ser protegido urgentemente.",
+    "siteName": "",
+    "dateAdded": "2026-10-24T12:00:48.788Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792836047172,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261024&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228603&sendId=228603&uri=nyt%3A%2F%2Fnewsletter%2Fd60f824b-d99a-5572-9991-dcf203bbc456",
     "title": "Outside chance",
