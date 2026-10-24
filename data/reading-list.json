@@ -1,5 +1,16 @@
 [
   {
+    "id": 1792846854120,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_wcd_20261024&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228624&sendId=228624&uri=nyt%3A%2F%2Fnewsletter%2F8ae769b0-28b3-5bb4-b190-71dcc25fe4ba",
+    "title": "The fluffiest towel we’ve ever tested",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Las toallas de baño más esponjosas y suaves que hemos probado en nuestras pruebas.",
+    "siteName": "",
+    "dateAdded": "2026-10-24T13:00:54.120Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792843248788,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20261024&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=228607&sendId=228607&uri=nyt%3A%2F%2Fnewsletter%2F1c6dc3a4-7fcc-5571-9e45-e7c0c6907cd8",
     "title": "Nicholas Kristof's latest: ‘Everything We Love Is on the Line’",
