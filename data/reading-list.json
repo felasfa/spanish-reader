@@ -1,5 +1,27 @@
 [
   {
+    "id": 1792929669185,
+    "url": "https://t3.newsletter.elpais.com/nl/jsp/m.jsp?c=%40%2FwIv61WAsu9zFTS73HoVbNv3Wr1X5X9xCLv4pmNgOPE%3D",
+    "title": "El País Semanal",
+    "image": "https://t.newsletter.elpais.com/r/?id=h2d382db8,d1229b5,1",
+    "summary": "El País Semanal celebra cinco décadas de presencia destacada en las portadas del reconocido periódico español.",
+    "siteName": "",
+    "dateAdded": "2026-10-25T12:01:09.185Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1792929669186,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261025&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228656&sendId=228656&uri=nyt%3A%2F%2Fnewsletter%2Fbf62c95a-d374-5e66-91fd-0b471f7758fb",
+    "title": "One agent’s doubts",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261025&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Un agente cuestiona las políticas de deportación y sus procedimientos implementados.",
+    "siteName": "",
+    "dateAdded": "2026-10-25T12:01:09.185Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792846854120,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_wcd_20261024&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228624&sendId=228624&uri=nyt%3A%2F%2Fnewsletter%2F8ae769b0-28b3-5bb4-b190-71dcc25fe4ba",
     "title": "The fluffiest towel we’ve ever tested",
