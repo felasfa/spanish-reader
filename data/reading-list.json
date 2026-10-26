@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793052054445,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261026&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228733&sendId=228733&uri=nyt%3A%2F%2Fnewsletter%2F8972cfc8-30b1-5d4e-aead-432a2828fbf3",
+    "title": "Cheap and fun Halloween costumes",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Consejos prácticos y económicos para crear disfraces de Halloween caseros de manera divertida y creativa.",
+    "siteName": "",
+    "dateAdded": "2026-10-26T22:00:54.445Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793019655013,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261026&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=228700&sendId=228700&uri=nyt%3A%2F%2Fnewsletter%2F5188a92d-6c1b-5270-adfe-075aee15785c",
     "title": "En Opinión: El orden mundial que viene",
