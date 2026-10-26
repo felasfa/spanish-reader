@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793008847663,
+    "url": "http://m4.novedades.elpais.com/nl/jsp/m.jsp?c=%4034riU0KQgGqjzLohhZcW0IqjOr%2F2m9cLcdFEjmjaDuQ%3D&mid=DM816249&bid=759960244",
+    "title": "EL PAIS",
+    "image": "https://ep00.epimg.net/estaticos/newsletter/recursos/elpais/suscriptores/20260605/nyt.png",
+    "summary": "The New York Times ofrece una nueva opción de suscripción integrada para lectores de El País.",
+    "siteName": "",
+    "dateAdded": "2026-10-26T10:00:47.663Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1792933248502,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261025&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228660&sendId=228660&uri=nyt%3A%2F%2Fnewsletter%2F5614ddd3-6468-534e-9412-f913bd3e2162",
     "title": "The promise and peril of constant health tracking",
