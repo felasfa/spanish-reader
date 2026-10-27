@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793142048635,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_wcd_20261027&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228793&sendId=228793&uri=nyt%3A%2F%2Fnewsletter%2Fab814142-ae4a-5d8d-aac3-5f33851c876b",
+    "title": "This screwdriver does everything right",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Este destornillador versátil hace todo perfectamente y es el único que necesitarás tener.",
+    "siteName": "",
+    "dateAdded": "2026-10-27T23:00:48.635Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793116849652,
     "url": "https://t3.newsletter.elpais.com/nl/jsp/m.jsp?c=%40K589sjtd5OuqUPo1bsepiybIoglzgzkq0BQqmrtYk4c%3D",
     "title": "México",
