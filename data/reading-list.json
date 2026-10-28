@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793185263241,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261028&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228806&sendId=228806&uri=nyt%3A%2F%2Fnewsletter%2F8c6a0b01-57e8-54b0-82c8-cb333b454e47",
+    "title": "A.I. by the numbers",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261028&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "",
+    "siteName": "",
+    "dateAdded": "2026-10-28T11:01:03.241Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793142048635,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_wcd_20261027&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228793&sendId=228793&uri=nyt%3A%2F%2Fnewsletter%2Fab814142-ae4a-5d8d-aac3-5f33851c876b",
     "title": "This screwdriver does everything right",
