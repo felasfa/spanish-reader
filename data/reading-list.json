@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793271662153,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261029&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228865&sendId=228865&uri=nyt%3A%2F%2Fnewsletter%2F1371b1b5-3e3a-5ce2-a0ff-8b62fd35cab5",
+    "title": "Stacking ballots",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261029&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No puedo escribir un resumen sin acceso al contenido completo del artículo. Por favor, comparte el texto del boletín.",
+    "siteName": "",
+    "dateAdded": "2026-10-29T11:01:02.153Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793224848237,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261028&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228852&sendId=228852&uri=nyt%3A%2F%2Fnewsletter%2Faf9c5a65-bc8f-588d-b99a-4137d9a153c3",
     "title": "We did it: We found actually comfortable heels",
