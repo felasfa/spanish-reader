@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793311265560,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261029&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=228904&sendId=228904&uri=nyt%3A%2F%2Fnewsletter%2F1220764b-ebf2-5379-8d01-0286f1e06337",
+    "title": "Your dishwasher can clean more than just dishes",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "El lavavajillas puede limpiar muchas más cosas además de platos y vajilla.",
+    "siteName": "",
+    "dateAdded": "2026-10-29T22:01:05.560Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793278849215,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261029&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=228871&sendId=228871&uri=nyt%3A%2F%2Fnewsletter%2F48243407-2c46-5578-98f8-217b1be58bed",
     "title": "Machado regresa a Venezuela",
