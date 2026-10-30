@@ -1,5 +1,27 @@
 [
   {
+    "id": 1793361654959,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261030&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=228925&sendId=228925&uri=nyt%3A%2F%2Fnewsletter%2F3ccb5bed-6a9e-5d06-8e08-a928561140e8",
+    "title": "View from the top",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261030&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Científicos desarrollan láseres para matar mosquitos, una innovadora estrategia contra enfermedades transmitidas por insectos.",
+    "siteName": "",
+    "dateAdded": "2026-10-30T12:00:54.959Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1793361654960,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261030&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=228927&sendId=228927&uri=nyt%3A%2F%2Fnewsletter%2Fe977a498-306f-51ef-8a19-a5129bebe038",
+    "title": "Brain disease is pervasive in N.F.L.,new study suggests",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=SC_20261030&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Un nuevo estudio sugiere que la enfermedad cerebral es generalizada entre los jugadores de la NFL.",
+    "siteName": "",
+    "dateAdded": "2026-10-30T12:00:54.959Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793358049390,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20261030&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=228923&sendId=228923&uri=nyt%3A%2F%2Fnewsletter%2F98893e61-a87d-5b07-9926-620b9dcdf07d",
     "title": "Nicholas Kristof's latest: I Covered the Tiananmen Square Massacre. It Still Weighs on Me.",
