@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793541651718,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261101&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229027&sendId=229027&uri=nyt%3A%2F%2Fnewsletter%2F07106510-d0b6-5b46-bae6-4366d61420b5",
+    "title": "The 5 things we loved last month",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Un detergente para ropa impresionante fue uno de los cinco productos que nos encantaron el mes pasado.",
+    "siteName": "",
+    "dateAdded": "2026-11-01T14:00:51.718Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793538045380,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261101&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229020&sendId=229020&uri=nyt%3A%2F%2Fnewsletter%2F6bc3729d-89f9-5dc7-b7eb-0b7034b999cb",
     "title": "Going the distance",
