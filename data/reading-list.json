@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793628065601,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261102&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=229069&sendId=229069&uri=nyt%3A%2F%2Fnewsletter%2F963c896d-6e48-5e4e-8794-c76c295c7378",
+    "title": "En Opinión: ¿Qué está pasando en Europa?",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261102&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Europa enfrenta desafíos políticos, económicos y sociales complejos que requieren soluciones coordinadas entre sus naciones.",
+    "siteName": "",
+    "dateAdded": "2026-11-02T14:01:05.601Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793620852305,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261102&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229061&sendId=229061&uri=nyt%3A%2F%2Fnewsletter%2F8295bcbb-cd82-50c4-bdc1-a920c37ad6cf",
     "title": "Our final polls",
