@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793620852305,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261102&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229061&sendId=229061&uri=nyt%3A%2F%2Fnewsletter%2F8295bcbb-cd82-50c4-bdc1-a920c37ad6cf",
+    "title": "Our final polls",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261102&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los últimos sondeos finales revelan las tendencias definitivas antes de las elecciones.",
+    "siteName": "",
+    "dateAdded": "2026-11-02T12:00:52.305Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793541651718,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261101&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229027&sendId=229027&uri=nyt%3A%2F%2Fnewsletter%2F07106510-d0b6-5b46-bae6-4366d61420b5",
     "title": "The 5 things we loved last month",
