@@ -1,5 +1,27 @@
 [
   {
+    "id": 1793746849755,
+    "url": "https://www.nytimes.com/interactive/2026/10/29/well/sugar-health-quiz-halloween-candy.html?algo=combo_bert_hl_sm_bd_unique_triton_clicks_decay_96_50_ranks&emc=edit_hh_20261103&fellback=false&imp_id=3009526290589972&nl=well&pool=programmingnode%2Fe1f22e62-8dba-51f4-87bc-e552a87bb958&req_id=6251012382241480&segment_id=229150&surface=well-nl&variant=0_only_variant",
+    "title": "Well: 5 stories you might have missed",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=162155&li=HH&m=1482f2b122b4c258bd67a395fb7cb30b&p=HH_20261103&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No puedo escribir un resumen sin acceso al contenido del boletín. Solo tengo el título disponible.",
+    "siteName": "",
+    "dateAdded": "2026-11-03T23:00:49.755Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1793746849756,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261103&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229151&sendId=229151&uri=nyt%3A%2F%2Fnewsletter%2F69e2c1dc-9a89-5a28-a35a-53e02af365c6",
+    "title": "“This $70 appliance gave me my evenings back”",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Una olla de cocción lenta de setenta dólares devolvió las noches libres al autor del artículo.",
+    "siteName": "",
+    "dateAdded": "2026-11-03T23:00:49.755Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793732454738,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261103&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=229139&sendId=229139&uri=nyt%3A%2F%2Fnewsletter%2F68c5da98-3d83-54c9-988b-9757fd77156a",
     "title": "Elecciones intermedias en EE. UU., en vivo",
