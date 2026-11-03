@@ -1,5 +1,27 @@
 [
   {
+    "id": 1793664062804,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_ot_20261102&isViewInBrowser=true&nl=on-tech&productCode=OT&segment_id=229101&sendId=229101&uri=nyt%3A%2F%2Fnewsletter%2F86c7ea09-d6c9-5832-900f-ee821c0f0cf6",
+    "title": "On Tech: How Binance’s $6.3 billion hack went down",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=1089504&li=OT&m=1482f2b122b4c258bd67a395fb7cb30b&p=OT_20261102&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Binance sufrió un robo de 6.3 mil millones de dólares en un incidente de seguridad tecnológica importante.",
+    "siteName": "",
+    "dateAdded": "2026-11-03T00:01:02.804Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1793664062805,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261102&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229103&sendId=229103&uri=nyt%3A%2F%2Fnewsletter%2F0ce0e119-7938-5e5f-a0ee-43382a87ca45",
+    "title": "13 vases that look beautiful — with or without flowers",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Se presentan trece jarrones hermosos que lucen elegantes tanto con flores como sin ellas.",
+    "siteName": "",
+    "dateAdded": "2026-11-03T00:01:02.804Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793628065601,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261102&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=229069&sendId=229069&uri=nyt%3A%2F%2Fnewsletter%2F963c896d-6e48-5e4e-8794-c76c295c7378",
     "title": "En Opinión: ¿Qué está pasando en Europa?",
