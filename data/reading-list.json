@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793710849845,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_sc_20261103&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=229114&sendId=229114&uri=nyt%3A%2F%2Fnewsletter%2Fb122f5e3-4f7c-5d00-98f4-e06ae5c5b8ba",
+    "title": "Science Times: Do animals grieve?",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=SC_20261103&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los animales experimentan duelo y tristeza ante la pérdida de sus seres queridos, demostrando emociones complejas.",
+    "siteName": "",
+    "dateAdded": "2026-11-03T13:00:49.845Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793707249897,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261103&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229112&sendId=229112&uri=nyt%3A%2F%2Fnewsletter%2Fc504f517-e9c4-560c-aa67-2369783e648b",
     "title": "Majority rules",
