@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793714451843,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261103&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=229122&sendId=229122&uri=nyt%3A%2F%2Fnewsletter%2F75d0c83d-8020-5e32-96d9-28600ce55bce",
+    "title": "EE. UU. va a las urnas",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261103&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los ciudadanos estadounidenses acuden a votar en las elecciones presidenciales.",
+    "siteName": "",
+    "dateAdded": "2026-11-03T14:00:51.843Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793710849845,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_sc_20261103&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=229114&sendId=229114&uri=nyt%3A%2F%2Fnewsletter%2Fb122f5e3-4f7c-5d00-98f4-e06ae5c5b8ba",
     "title": "Science Times: Do animals grieve?",
