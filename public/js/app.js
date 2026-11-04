@@ -65,7 +65,7 @@ function showView(name) {
       vocabSearchQuery = '';
       $('vocab-search-input').value = '';
       $('vocab-search-btn').classList.remove('search-active');
-      $('vocab-search-panel').classList.remove('open');
+      $('vocab-search-dialog').classList.remove('open');
     }
   }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -745,7 +745,7 @@ $('vocab-sort-btn').addEventListener('click', (e) => {
 
 document.addEventListener('click', () => {
   $('vocab-sort-menu').classList.remove('open');
-  $('vocab-search-panel').classList.remove('open');
+  if ($('vocab-search-dialog').classList.contains('open')) closeVocabSearch();
 });
 
 document.querySelectorAll('.vocab-sort-item[data-sort]').forEach(item => {
@@ -764,29 +764,29 @@ document.querySelectorAll('.vocab-sort-item[data-sort]').forEach(item => {
 });
 
 /* ===== Search ===== */
-function cancelVocabSearch() {
+function closeVocabSearch() {
   vocabSearchQuery = '';
   $('vocab-search-input').value = '';
   $('vocab-search-btn').classList.remove('search-active');
-  $('vocab-search-panel').classList.remove('open');
+  $('vocab-search-dialog').classList.remove('open');
   renderVocabulary(vocabCache).catch(e => console.error('render error', e));
 }
 
 $('vocab-search-btn').addEventListener('click', (e) => {
   e.stopPropagation();
-  const panel = $('vocab-search-panel');
-  if (panel.classList.contains('open')) {
-    panel.classList.remove('open');
+  const dialog = $('vocab-search-dialog');
+  if (dialog.classList.contains('open')) {
+    closeVocabSearch();
   } else {
     $('vocab-sort-menu').classList.remove('open');
-    panel.classList.add('open');
+    dialog.classList.add('open');
     $('vocab-search-input').focus();
   }
 });
 
-$('vocab-search-panel').addEventListener('click', (e) => e.stopPropagation());
+$('vocab-search-dialog').addEventListener('click', (e) => e.stopPropagation());
 
-$('vocab-search-cancel').addEventListener('click', () => cancelVocabSearch());
+$('vocab-search-cancel').addEventListener('click', () => closeVocabSearch());
 
 $('vocab-search-input').addEventListener('input', (e) => {
   vocabSearchQuery = e.target.value.trim();
@@ -795,7 +795,7 @@ $('vocab-search-input').addEventListener('input', (e) => {
 });
 
 $('vocab-search-input').addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') cancelVocabSearch();
+  if (e.key === 'Escape') closeVocabSearch();
 });
 
 $('vocab-export').addEventListener('click', async () => {

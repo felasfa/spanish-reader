@@ -711,59 +711,55 @@ html, body {
 .vocab-sort-divider { height: 1px; background: var(--border-light); margin: 3px 0; }
 
 /* ===== Vocabulary search ===== */
-.vocab-search-wrap { position: relative; }
-
 #vocab-search-btn.search-active {
   color: var(--primary);
   border-color: var(--primary);
   background: var(--primary-light);
 }
 
-.vocab-search-panel {
+.vocab-search-dialog {
   display: none;
-  position: absolute;
-  left: 0;
-  top: calc(100% + 6px);
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  box-shadow: 0 4px 18px rgba(0,0,0,.12);
-  padding: 7px 8px 7px 12px;
-  width: 260px;
-  max-width: calc(100vw - 48px);
-  z-index: 200;
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  padding: 10px 10px 10px 16px;
+  width: min(420px, calc(100vw - 32px));
+  z-index: 2200;
 }
-.vocab-search-panel.open { display: flex; }
+.vocab-search-dialog.open { display: flex; }
 
-.vocab-search-panel-icon { color: var(--text-muted); flex-shrink: 0; }
-
-.vocab-search-panel-input {
+.vocab-search-dialog-input {
   flex: 1;
   min-width: 0;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
   font-family: inherit;
   background: transparent;
   color: var(--text);
 }
-.vocab-search-panel-input::placeholder { color: var(--text-muted); }
+.vocab-search-dialog-input::placeholder { color: var(--text-muted); }
 
-.vocab-search-cancel {
+.vocab-search-dialog-close {
   flex-shrink: 0;
   background: none;
   border: none;
   cursor: pointer;
   color: var(--text-muted);
-  padding: 4px;
-  border-radius: 4px;
+  padding: 6px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   transition: color 0.15s, background 0.15s;
 }
-.vocab-search-cancel:hover { color: var(--danger); background: var(--danger-light); }
+.vocab-search-dialog-close:hover { color: var(--danger); background: var(--danger-light); }
 
 .vocab-search-empty {
   padding: 48px 24px;

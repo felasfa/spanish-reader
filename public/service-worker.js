@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'sr-shell-v1';
+const CACHE = 'sr-shell-v2';
 
 const SHELL = [
   '/index.html',
@@ -52,17 +52,15 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Static shell assets: stale-while-revalidate — serve from cache instantly,
-  // fetch from network in background to keep cache fresh
+  // Static shell assets: network-first, falling back to cache when offline.
+  // Must match the navigate branch above — index.html is always fetched fresh,
+  // so css/js have to be too, or a deploy can pair new HTML with stale JS/CSS.
   event.respondWith(
     caches.open(CACHE).then(cache =>
-      cache.match(request).then(cached => {
-        const networkFetch = fetch(request).then(res => {
-          if (res.ok) cache.put(request, res.clone());
-          return res;
-        }).catch(() => null);
-        return cached || networkFetch;
-      })
+      fetch(request).then(res => {
+        if (res.ok) cache.put(request, res.clone());
+        return res;
+      }).catch(() => cache.match(request))
     )
   );
 });
