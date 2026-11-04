@@ -710,6 +710,68 @@ html, body {
 
 .vocab-sort-divider { height: 1px; background: var(--border-light); margin: 3px 0; }
 
+/* ===== Vocabulary search ===== */
+.vocab-search-wrap { position: relative; }
+
+#vocab-search-btn.search-active {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.vocab-search-panel {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.12);
+  padding: 7px 8px 7px 12px;
+  width: 260px;
+  max-width: calc(100vw - 48px);
+  z-index: 200;
+}
+.vocab-search-panel.open { display: flex; }
+
+.vocab-search-panel-icon { color: var(--text-muted); flex-shrink: 0; }
+
+.vocab-search-panel-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: inherit;
+  background: transparent;
+  color: var(--text);
+}
+.vocab-search-panel-input::placeholder { color: var(--text-muted); }
+
+.vocab-search-cancel {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s, background 0.15s;
+}
+.vocab-search-cancel:hover { color: var(--danger); background: var(--danger-light); }
+
+.vocab-search-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
 .vocab-group-heading {
   font-size: 11px;
   font-weight: 700;

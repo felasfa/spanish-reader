@@ -61,6 +61,11 @@ function showView(name) {
       fetch(`${API_BASE}/api/vocabulary/last-viewed`, { method: 'POST' })
         .then(r => r.json()).then(d => { vocabLastViewedCache = d.lastViewed || '0'; })
         .catch(() => {});
+      // Reset any active search so the next visit starts from the full list
+      vocabSearchQuery = '';
+      $('vocab-search-input').value = '';
+      $('vocab-search-btn').classList.remove('search-active');
+      $('vocab-search-panel').classList.remove('open');
     }
   }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -527,6 +532,7 @@ async function updateVocabCount() {
 let vocabSortMode     = 'date';   // 'date' | 'alpha' | 'semantic'
 let vocabSortReversed = false;
 let vocabCache        = [];
+let vocabSearchQuery  = '';
 
 function applyVocabSort(vocab) {
   const sorted = [...vocab];
@@ -535,6 +541,15 @@ function applyVocabSort(vocab) {
   }
   if (vocabSortReversed) sorted.reverse();
   return sorted;
+}
+
+function filterVocab(vocab, query) {
+  if (!query) return vocab;
+  const q = query.toLowerCase();
+  return vocab.filter(e =>
+    (e.word || '').toLowerCase().includes(q) ||
+    (e.translation || '').toLowerCase().includes(q)
+  );
 }
 
 function updateSortMenuUI() {
@@ -642,15 +657,25 @@ async function renderVocabulary(vocab) {
     $('vocab-table-wrap').style.display = 'none';
     return;
   }
+  $('vocab-empty').style.display = 'none';
 
-  if (vocabSortMode === 'semantic') {
-    await renderVocabularyGrouped(vocab);
+  const filtered = filterVocab(vocab, vocabSearchQuery);
+  if (filtered.length === 0) {
+    $('vocab-subtitle').textContent = `No matches for "${vocabSearchQuery}"`;
+    $('vocab-table-wrap').style.display = 'block';
+    $('vocab-tbody').innerHTML = `<div class="vocab-search-empty">No words match "${escapeHtml(vocabSearchQuery)}".</div>`;
     return;
   }
 
-  const items = applyVocabSort(vocab);
-  $('vocab-subtitle').textContent = `${items.length} word${items.length !== 1 ? 's' : ''} in your collection`;
-  $('vocab-empty').style.display = 'none';
+  if (vocabSortMode === 'semantic') {
+    await renderVocabularyGrouped(filtered);
+    return;
+  }
+
+  const items = applyVocabSort(filtered);
+  $('vocab-subtitle').textContent = vocabSearchQuery
+    ? `${items.length} result${items.length !== 1 ? 's' : ''} for "${vocabSearchQuery}"`
+    : `${items.length} word${items.length !== 1 ? 's' : ''} in your collection`;
   $('vocab-table-wrap').style.display = 'block';
 
   const lastViewed = vocabLastViewedCache;
@@ -692,7 +717,9 @@ async function renderVocabularyGrouped(vocab) {
   cats.forEach(cat => groups[cat].sort((a, b) => (a.word || '').localeCompare(b.word || '', undefined, { sensitivity: 'base' })));
 
   const wordCount = vocab.length;
-  $('vocab-subtitle').textContent = `${wordCount} word${wordCount !== 1 ? 's' : ''} in ${cats.length} group${cats.length !== 1 ? 's' : ''}`;
+  $('vocab-subtitle').textContent = vocabSearchQuery
+    ? `${wordCount} result${wordCount !== 1 ? 's' : ''} for "${vocabSearchQuery}" in ${cats.length} group${cats.length !== 1 ? 's' : ''}`
+    : `${wordCount} word${wordCount !== 1 ? 's' : ''} in ${cats.length} group${cats.length !== 1 ? 's' : ''}`;
   $('vocab-empty').style.display = 'none';
   $('vocab-table-wrap').style.display = 'block';
 
@@ -716,7 +743,10 @@ $('vocab-sort-btn').addEventListener('click', (e) => {
   $('vocab-sort-menu').classList.toggle('open');
 });
 
-document.addEventListener('click', () => $('vocab-sort-menu').classList.remove('open'));
+document.addEventListener('click', () => {
+  $('vocab-sort-menu').classList.remove('open');
+  $('vocab-search-panel').classList.remove('open');
+});
 
 document.querySelectorAll('.vocab-sort-item[data-sort]').forEach(item => {
   item.addEventListener('click', (e) => {
@@ -731,6 +761,41 @@ document.querySelectorAll('.vocab-sort-item[data-sort]').forEach(item => {
     updateSortMenuUI();
     renderVocabulary(vocabCache).catch(e => console.error('render error', e));
   });
+});
+
+/* ===== Search ===== */
+function cancelVocabSearch() {
+  vocabSearchQuery = '';
+  $('vocab-search-input').value = '';
+  $('vocab-search-btn').classList.remove('search-active');
+  $('vocab-search-panel').classList.remove('open');
+  renderVocabulary(vocabCache).catch(e => console.error('render error', e));
+}
+
+$('vocab-search-btn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  const panel = $('vocab-search-panel');
+  if (panel.classList.contains('open')) {
+    panel.classList.remove('open');
+  } else {
+    $('vocab-sort-menu').classList.remove('open');
+    panel.classList.add('open');
+    $('vocab-search-input').focus();
+  }
+});
+
+$('vocab-search-panel').addEventListener('click', (e) => e.stopPropagation());
+
+$('vocab-search-cancel').addEventListener('click', () => cancelVocabSearch());
+
+$('vocab-search-input').addEventListener('input', (e) => {
+  vocabSearchQuery = e.target.value.trim();
+  $('vocab-search-btn').classList.toggle('search-active', !!vocabSearchQuery);
+  renderVocabulary(vocabCache).catch(e => console.error('render error', e));
+});
+
+$('vocab-search-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') cancelVocabSearch();
 });
 
 $('vocab-export').addEventListener('click', async () => {
