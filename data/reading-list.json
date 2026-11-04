@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793782851132,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20261104&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=229189&sendId=229189&uri=nyt%3A%2F%2Fnewsletter%2F1e8e381e-cdcd-53ca-a7e6-582759d50c08",
+    "title": "Nicholas Kristof's latest: What Sherrod Brown Knows",
+    "image": "https://static01.nytimes.com/email-images/NYT-Nameplate-Alerts@2x.png",
+    "summary": "Nicholas Kristof analiza lo que Sherrod Brown sabe sobre temas de importancia política y social actual.",
+    "siteName": "",
+    "dateAdded": "2026-11-04T09:00:51.132Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793746849755,
     "url": "https://www.nytimes.com/interactive/2026/10/29/well/sugar-health-quiz-halloween-candy.html?algo=combo_bert_hl_sm_bd_unique_triton_clicks_decay_96_50_ranks&emc=edit_hh_20261103&fellback=false&imp_id=3009526290589972&nl=well&pool=programmingnode%2Fe1f22e62-8dba-51f4-87bc-e552a87bb958&req_id=6251012382241480&segment_id=229150&surface=well-nl&variant=0_only_variant",
     "title": "Well: 5 stories you might have missed",
