@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793883657256,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261105&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229255&sendId=229255&uri=nyt%3A%2F%2Fnewsletter%2F4a868540-e747-5b80-9aa6-678a0eb6efc6",
+    "title": "Blue whale",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261105&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los cambios llegan mientras los expertos estudian a la ballena azul, el mamífero marino más grande del planeta.",
+    "siteName": "",
+    "dateAdded": "2026-11-05T13:00:57.256Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793833259152,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261104&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229237&sendId=229237&uri=nyt%3A%2F%2Fnewsletter%2F6e614c40-b80f-51a8-b2c8-f34bd4337fc8",
     "title": "A handsome table for small spaces — and more standouts from IKEA’s new collection",
