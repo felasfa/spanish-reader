@@ -1,5 +1,27 @@
 [
   {
+    "id": 1793970075895,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261106&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229307&sendId=229307&uri=nyt%3A%2F%2Fnewsletter%2F6a7b5f4c-7494-5a17-b631-51388e4ce180",
+    "title": "Voter ID",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=NN_20261106&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "La política de identidad influye en los requisitos de identificación electoral y sus implicaciones políticas.",
+    "siteName": "",
+    "dateAdded": "2026-11-06T13:01:15.895Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1793970075896,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261106&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=229309&sendId=229309&uri=nyt%3A%2F%2Fnewsletter%2Fa04123ea-aea4-5ea0-946a-c2916ecca9fa",
+    "title": "What a Democratic Congress Could Mean for Science",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=SC_20261106&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Un Congreso Demócrata podría aumentar la financiación científica y fortalecer las políticas ambientales y de investigación en Estados Unidos.",
+    "siteName": "",
+    "dateAdded": "2026-11-06T13:01:15.895Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793923280608,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_ot_20261105&isViewInBrowser=true&nl=on-tech&productCode=OT&segment_id=229295&sendId=229295&uri=nyt%3A%2F%2Fnewsletter%2F2ee53a4a-ea82-52a9-876b-561f08cf164c",
     "title": "On Tech: Voters reject A.I.",
