@@ -1,5 +1,16 @@
 [
   {
+    "id": 1793970090114,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261106&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=229310&sendId=229310&uri=nyt%3A%2F%2Fnewsletter%2Fa556a79f-2f29-58a8-8b0b-0fb4cd0b6fec",
+    "title": "Una semana azul en EE. UU.",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=BN_20261106&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "No puedo resumir el boletín porque no proporcionaste su contenido. Solo veo el título \"Una semana azul en EE. UU.\" sin el texto del artículo.",
+    "siteName": "",
+    "dateAdded": "2026-11-06T13:01:30.114Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793970075895,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261106&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229307&sendId=229307&uri=nyt%3A%2F%2Fnewsletter%2F6a7b5f4c-7494-5a17-b631-51388e4ce180",
     "title": "Voter ID",
