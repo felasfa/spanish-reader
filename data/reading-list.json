@@ -1,5 +1,16 @@
 [
   {
+    "id": 1794042057288,
+    "url": "http://m4.novedades.elpais.com/nl/jsp/m.jsp?c=%40GwlUMRE6koHvnJsPMSiuzKq3Tfj0eoBjqWHGTigN47Q%3D&mid=DM827283&bid=814172063",
+    "title": "EL PAIS",
+    "image": "https://ep00.epimg.net/estaticos/newsletter/recursos/elpais/suscriptores/20260605/nyt.png",
+    "summary": "El País promociona agregar The New York Times a tu suscripción como opción adicional.",
+    "siteName": "",
+    "dateAdded": "2026-11-07T09:00:57.288Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1793970090114,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261106&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=229310&sendId=229310&uri=nyt%3A%2F%2Fnewsletter%2Fa556a79f-2f29-58a8-8b0b-0fb4cd0b6fec",
     "title": "Una semana azul en EE. UU.",
