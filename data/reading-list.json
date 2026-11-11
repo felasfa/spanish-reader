@@ -1,5 +1,16 @@
 [
   {
+    "id": 1794402057414,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261111&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229559&sendId=229559&uri=nyt%3A%2F%2Fnewsletter%2F5e469ef5-0710-5259-a851-aa756b1c0291",
+    "title": "Red flags",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261111&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El boletín advierte sobre señales de alerta que deben considerarse con precaución en situaciones diversas.",
+    "siteName": "",
+    "dateAdded": "2026-11-11T13:00:57.414Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1794351669682,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261110&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229545&sendId=229545&uri=nyt%3A%2F%2Fnewsletter%2Fa063e8ef-b7a5-58ee-a332-80450ab7b637",
     "title": "The carry-on suitcase we’ve loved for nearly a decade",
