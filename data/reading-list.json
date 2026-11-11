@@ -1,5 +1,16 @@
 [
   {
+    "id": 1794438053664,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261111&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229595&sendId=229595&uri=nyt%3A%2F%2Fnewsletter%2F68e42f30-29b7-528c-9554-6d649982f0a1",
+    "title": "The best pillows for side sleepers",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Los mejores almohadas para dormir de lado ofrecen comodidad y apoyo suave para la cabeza.",
+    "siteName": "",
+    "dateAdded": "2026-11-11T23:00:53.664Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1794430855628,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_dww_20261111&isViewInBrowser=true&nl=david-wallace-wells&productCode=DWW&segment_id=229584&sendId=229584&uri=nyt%3A%2F%2Fnewsletter%2F1773410e-2079-5534-96de-99327cf5d6ab",
     "title": "America just isn’t a center-right country",
