@@ -1,5 +1,16 @@
 [
   {
+    "id": 1794488455402,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261112&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229613&sendId=229613&uri=nyt%3A%2F%2Fnewsletter%2F0563cd9c-95c4-585d-8b88-ddaa066b40f6",
+    "title": "Flight risks",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261112&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los riesgos de vuelo amenazan la industria aeroportuaria y requieren mayor vigilancia en seguridad.",
+    "siteName": "",
+    "dateAdded": "2026-11-12T13:00:55.402Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1794438053664,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261111&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229595&sendId=229595&uri=nyt%3A%2F%2Fnewsletter%2F68e42f30-29b7-528c-9554-6d649982f0a1",
     "title": "The best pillows for side sleepers",
