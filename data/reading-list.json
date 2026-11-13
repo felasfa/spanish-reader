@@ -1,5 +1,16 @@
 [
   {
+    "id": 1794596456018,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261113&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229690&sendId=229690&uri=nyt%3A%2F%2Fnewsletter%2Fa5cafd43-2933-56af-b9af-d8ccca1c7853",
+    "title": "The best chocolate chip cookie dough",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "La masa de galletas con chocolate comprada en tienda es la mejor opción para preparar galletas deliciosas rápidamente.",
+    "siteName": "",
+    "dateAdded": "2026-11-13T19:00:56.018Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1794578471593,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261113&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=229672&sendId=229672&uri=nyt%3A%2F%2Fnewsletter%2Fffa0af4f-763d-52b6-a086-5b8d3c43eb32",
     "title": "El último viaje del S.S. United States",
