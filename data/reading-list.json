@@ -1,5 +1,16 @@
 [
   {
+    "id": 1794578471593,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261113&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=229672&sendId=229672&uri=nyt%3A%2F%2Fnewsletter%2Fffa0af4f-763d-52b6-a086-5b8d3c43eb32",
+    "title": "El último viaje del S.S. United States",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261113&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El S.S. United States realiza su último viaje, marcando el fin de una era de transatlánticos de lujo.",
+    "siteName": "",
+    "dateAdded": "2026-11-13T14:01:11.593Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1794574853883,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261113&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=229671&sendId=229671&uri=nyt%3A%2F%2Fnewsletter%2F01d7dfac-1181-51a0-b906-5b32fa0627c8",
     "title": "Young talent fueled American scientific dominance. Now it’s disappearing.",
