@@ -1,5 +1,16 @@
 [
   {
+    "id": 1794664856715,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261114&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229735&sendId=229735&uri=nyt%3A%2F%2Fnewsletter%2F83530a93-1330-5d50-bc9e-71e0609e2591",
+    "title": "Our ultimate guide to board games",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Guía completa de dieciocho juegos de mesa que recomendamos y amamos jugar.",
+    "siteName": "",
+    "dateAdded": "2026-11-14T14:00:56.715Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1794657668180,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261114&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229720&sendId=229720&uri=nyt%3A%2F%2Fnewsletter%2F52d48b23-2a67-5c9a-a7da-a4452fb3da2a",
     "title": "Forever in bluejeans",
