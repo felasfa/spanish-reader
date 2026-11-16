@@ -1,5 +1,16 @@
 [
   {
+    "id": 1794870054321,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261116&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229838&sendId=229838&uri=nyt%3A%2F%2Fnewsletter%2F63038bfa-d1d5-503c-89a6-d20886961bb0",
+    "title": "Just gift them a Scottish sweater, says our style expert",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "El suéter escocés es el regalo perfecto según los expertos en moda y estilo.",
+    "siteName": "",
+    "dateAdded": "2026-11-16T23:00:54.321Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1794837671500,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261116&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=229802&sendId=229802&uri=nyt%3A%2F%2Fnewsletter%2Fdd1b0b42-1de6-5fd8-bbcb-4dc1b4813a38",
     "title": "En Opinión: ¿Será posible leer la mente?",
