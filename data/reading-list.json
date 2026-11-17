@@ -1,5 +1,16 @@
 [
   {
+    "id": 1794934874853,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261117&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229867&sendId=229867&uri=nyt%3A%2F%2Fnewsletter%2Ff9e591de-1159-5b2d-81b6-c3346158c5e7",
+    "title": "Gift of the day is here!!",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Este boletín presenta los treinta mejores regalos del año, destacando la selección especial del regalo del día.",
+    "siteName": "",
+    "dateAdded": "2026-11-17T17:01:14.853Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1794920472683,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_sc_20261117&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=229851&sendId=229851&uri=nyt%3A%2F%2Fnewsletter%2F75261449-b8da-5fb3-805b-cc63482dad13",
     "title": "Science Times: SpaceX made history with a rocket catch in Texas",
