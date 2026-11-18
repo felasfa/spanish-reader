@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795003256504,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_nn_20261118&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229906&sendId=229906&uri=nyt%3A%2F%2Fnewsletter%2F34f8d681-591d-5dc6-a61d-4d5a7dbe78cb",
+    "title": "Closing time",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261118&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Los servicios enfrentan constantes interrupciones durante el horario de cierre, afectando operaciones diarias.",
+    "siteName": "",
+    "dateAdded": "2026-11-18T12:00:56.504Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1794956458491,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261117&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=229888&sendId=229888&uri=nyt%3A%2F%2Fnewsletter%2Fc0287694-b265-5ac6-9ea5-0b4ac733b5e2",
     "title": "The best space heaters we’ve tested",
