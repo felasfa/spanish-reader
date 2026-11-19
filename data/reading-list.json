@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795093266457,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261119&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=229965&sendId=229965&uri=nyt%3A%2F%2Fnewsletter%2F30b90b7e-ba29-5e31-a146-39ec544171d4",
+    "title": "Welcome to Vice City",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261119&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Se presenta Vice City, el videojuego más grande jamás creado.",
+    "siteName": "",
+    "dateAdded": "2026-11-19T13:01:06.457Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795089660669,
     "url": "http://m4.novedades.elpais.com/nl/jsp/m.jsp?c=%402cf8Xl50VNEBs1W7cFErIJS6nX%2FRlmGJOKpsTe7Qi08%3D&mid=DM837840&bid=881052613",
     "title": "EL PAÍS Vinos x Lacrima | Navidad entre copas",
