@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795183259270,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261120&first_send=0&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=230015&sendId=230015&uri=nyt%3A%2F%2Fnewsletter%2F2a591503-30a9-53e9-8e2b-213e26285862",
+    "title": "Cómo hacer frente a un apagón digital",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261120&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El boletín enseña estrategias para enfrentar interrupciones de servicios digitales y mantener la continuidad operativa.",
+    "siteName": "",
+    "dateAdded": "2026-11-20T14:00:59.270Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795179657516,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_sc_20261120&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=230013&sendId=230013&uri=nyt%3A%2F%2Fnewsletter%2F66d200ee-1059-5db4-908f-d378424d85f4",
     "title": "Bringing Shackleton’s outpost back to life",
