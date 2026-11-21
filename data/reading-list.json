@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795266058190,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nk_20261121&isViewInBrowser=true&nl=nicholas-kristof&paid_regi=1&productCode=NK&segment_id=230066&sendId=230066&uri=nyt%3A%2F%2Fnewsletter%2F09e013d4-2f92-5bd7-87dd-31795111f8da",
+    "title": "Nicholas Kristof's latest: This Is the Best Kind of Holiday Gift",
+    "image": "https://static01.nytimes.com/email-images/NYT-Nameplate-Alerts@2x.png",
+    "summary": "Nicholas Kristof recomienda regalos navideños que generen impacto positivo y significativo en las vidas de las personas necesitadas.",
+    "siteName": "",
+    "dateAdded": "2026-11-21T13:00:58.190Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795262463370,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261121&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230065&sendId=230065&uri=nyt%3A%2F%2Fnewsletter%2Fc2df5090-e746-5f83-bf50-8cd30876cf9c",
     "title": "Who owns Thanksgiving?",
