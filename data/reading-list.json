@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795435257549,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261123&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230144&sendId=230144&uri=nyt%3A%2F%2Fnewsletter%2F1559f9e1-9e33-5fb5-bb0e-0f869fc52da8",
+    "title": "Big A.I. feelings",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261123&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Nvidia enfrenta grandes emociones sobre inteligencia artificial y responde preguntas de los inversores.",
+    "siteName": "",
+    "dateAdded": "2026-11-23T12:00:57.549Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795352453425,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261122&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230105&sendId=230105&uri=nyt%3A%2F%2Fnewsletter%2F25df212e-54e6-5e80-91f5-1820d49fd426",
     "title": "What machines love",
