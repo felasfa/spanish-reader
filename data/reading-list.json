@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795474854454,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261123&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=230190&sendId=230190&uri=nyt%3A%2F%2Fnewsletter%2F5e9363d3-4aa7-5078-a8f2-9dded931d2dc",
+    "title": "A big ol’ blanket-scarf we love",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Una bufanda de cachemira grande que funciona como manta y complemento de moda versátil.",
+    "siteName": "",
+    "dateAdded": "2026-11-23T23:00:54.454Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795435257549,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261123&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230144&sendId=230144&uri=nyt%3A%2F%2Fnewsletter%2F1559f9e1-9e33-5fb5-bb0e-0f869fc52da8",
     "title": "Big A.I. feelings",
