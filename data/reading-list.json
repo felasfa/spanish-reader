@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795521659229,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261124&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230202&sendId=230202&uri=nyt%3A%2F%2Fnewsletter%2Fcc03a71c-1fa3-511c-94c2-54aa0241768e",
+    "title": "Too big to fail",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261124&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Huang regresa al liderazgo de una empresa considerada demasiado grande para fracasar.",
+    "siteName": "",
+    "dateAdded": "2026-11-24T12:00:59.229Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795474854454,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261123&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=230190&sendId=230190&uri=nyt%3A%2F%2Fnewsletter%2F5e9363d3-4aa7-5078-a8f2-9dded931d2dc",
     "title": "A big ol’ blanket-scarf we love",
