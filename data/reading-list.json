@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795528858999,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261124&first_send=0&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=230205&sendId=230205&uri=nyt%3A%2F%2Fnewsletter%2Fa1d9a03d-ca92-561b-b715-38d8f5810da0",
+    "title": "The World: El regreso de Jensen Huang",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261124&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Jensen Huang regresa al liderazgo tecnológico mundial, reafirmando su influencia en la industria de semiconductores y la inteligencia artificial.",
+    "siteName": "",
+    "dateAdded": "2026-11-24T14:00:58.999Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795521659229,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261124&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230202&sendId=230202&uri=nyt%3A%2F%2Fnewsletter%2Fcc03a71c-1fa3-511c-94c2-54aa0241768e",
     "title": "Too big to fail",
