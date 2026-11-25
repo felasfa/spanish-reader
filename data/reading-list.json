@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795608071683,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261125&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230252&sendId=230252&uri=nyt%3A%2F%2Fnewsletter%2F909261eb-343b-5db7-bb2b-1c5362633602",
+    "title": "Travel hell",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261125&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Millones de viajeros enfrentan caos y congestión durante las vacaciones de Acción de Gracias en carreteras y aeropuertos.",
+    "siteName": "",
+    "dateAdded": "2026-11-25T12:01:11.683Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795528858999,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261124&first_send=0&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=230205&sendId=230205&uri=nyt%3A%2F%2Fnewsletter%2Fa1d9a03d-ca92-561b-b715-38d8f5810da0",
     "title": "The World: El regreso de Jensen Huang",
