@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795611674010,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261125&first_send=0&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=230257&sendId=230257&uri=nyt%3A%2F%2Fnewsletter%2F48ccd7b3-d714-567a-a9c1-f2ecbdb059bd",
+    "title": "Bienvenidos a Vice City",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261125&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Vice City es una ciudad vibrante y peligrosa donde la ambición, el crimen y la supervivencia definen cada día.",
+    "siteName": "",
+    "dateAdded": "2026-11-25T13:01:14.010Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795608071683,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=0&emc=edit_nn_20261125&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230252&sendId=230252&uri=nyt%3A%2F%2Fnewsletter%2F909261eb-343b-5db7-bb2b-1c5362633602",
     "title": "Travel hell",
