@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795647656292,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261125&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=230298&sendId=230298&uri=nyt%3A%2F%2Fnewsletter%2F63a85cc1-43e9-5515-9708-42f7e6e632ae",
+    "title": "Charming drinking glasses for all",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Se presentan encantadores vasos de beber con diseños caprichosos y agradables para todos los gustos.",
+    "siteName": "",
+    "dateAdded": "2026-11-25T23:00:56.292Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795611674010,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261125&first_send=0&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=230257&sendId=230257&uri=nyt%3A%2F%2Fnewsletter%2F48ccd7b3-d714-567a-a9c1-f2ecbdb059bd",
     "title": "Bienvenidos a Vice City",
