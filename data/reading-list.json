@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795698057307,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261126&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=230314&sendId=230314&uri=nyt%3A%2F%2Fnewsletter%2F927ff22c-35dd-5cee-a47d-cd1d4c66db98",
+    "title": "The best early Black Friday deals we’ve found",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Las mejores ofertas tempranas del Black Friday ya están disponibles para comprar.",
+    "siteName": "",
+    "dateAdded": "2026-11-26T13:00:57.307Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795694457045,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261126&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230313&sendId=230313&uri=nyt%3A%2F%2Fnewsletter%2Fa30264a7-60ae-55b7-8b37-4b828abdcea3",
     "title": "Give thanks",
