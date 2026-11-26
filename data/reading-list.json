@@ -1,5 +1,27 @@
 [
   {
+    "id": 1795694457045,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261126&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230313&sendId=230313&uri=nyt%3A%2F%2Fnewsletter%2Fa30264a7-60ae-55b7-8b37-4b828abdcea3",
+    "title": "Give thanks",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261126&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Thanksgiving es un día para expresar gratitud y dar gracias por las bendiciones recibidas.",
+    "siteName": "",
+    "dateAdded": "2026-11-26T12:00:57.045Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1795694457046,
+    "url": "http://m4.novedades.elpais.com/nl/jsp/m.jsp?c=%40OaLGSG8v1t54oN1C8BZUKyB5ME38yl1bmzqEboUv2vY%3D&mid=DM843107&bid=917599080",
+    "title": "EL PAÍS Vinos x Lacrima | Navidad entre copas",
+    "image": "https://img.mailinblue.com/10733608/images/content_library/original/6af5a89d82bf6cfce042d255.png",
+    "summary": "Sugerencias de regalos navideños para amantes del vino con recomendaciones especiales.",
+    "siteName": "",
+    "dateAdded": "2026-11-26T12:00:57.045Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795687260811,
     "url": "https://t3.newsletter.elpais.com/nl/jsp/m.jsp?c=%40ZXgXebJYgNxcaS7UOVfN6dbrhmGABuq7WuGMgu2j%2BPU%3D",
     "title": "Planeta Futuro",
