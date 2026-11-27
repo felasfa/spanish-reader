@@ -1,5 +1,27 @@
 [
   {
+    "id": 1795784458485,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_sc_20261127&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=230347&sendId=230347&uri=nyt%3A%2F%2Fnewsletter%2F7c3d587c-4156-528f-b32f-5ab0f0054906",
+    "title": "NASA slammed a spacecraft into an asteroid. Here’s the first look.",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207547&li=SC&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261127&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "NASA impactó deliberadamente una nave espacial contra un asteroide en una misión de defensa planetaria histórica.",
+    "siteName": "",
+    "dateAdded": "2026-11-27T13:00:58.485Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
+    "id": 1795784458486,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261127&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=230348&sendId=230348&uri=nyt%3A%2F%2Fnewsletter%2F97e9ad9d-8bdf-578a-9134-d063437f1530",
+    "title": "Happy Black Friday to all who celebrate",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Se presentan las mejores ofertas de Black Friday disponibles actualmente en internet para los compradores.",
+    "siteName": "",
+    "dateAdded": "2026-11-27T13:00:58.485Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795780860124,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261127&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230345&sendId=230345&uri=nyt%3A%2F%2Fnewsletter%2Ff53b04fd-4ce6-5d48-86d6-53a19dc26833",
     "title": "Round two",
