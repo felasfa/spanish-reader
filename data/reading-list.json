@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795809658587,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261127&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=230361&sendId=230361&uri=nyt%3A%2F%2Fnewsletter%2Fd9b859a8-a9e0-5a27-b4d2-1aadaf8ed859",
+    "title": "We found a bunch of great gifts on sale",
+    "image": "https://static.nytimes.com/email-images/Email%20Headers%20-%20The%20Recommendation.png",
+    "summary": "Encontramos cinco regalos excelentes en oferta que puedes comprar hoy.",
+    "siteName": "",
+    "dateAdded": "2026-11-27T20:00:58.587Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795788061083,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261127&first_send=0&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=230349&sendId=230349&uri=nyt%3A%2F%2Fnewsletter%2F7b017a43-0107-5948-8f26-dea8e1f9feb5",
     "title": "Haití voltea a ver a Bukele",
