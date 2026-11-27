@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795780860124,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261127&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230345&sendId=230345&uri=nyt%3A%2F%2Fnewsletter%2Ff53b04fd-4ce6-5d48-86d6-53a19dc26833",
+    "title": "Round two",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261127&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Aprende a reutilizar tus sobras de comida de manera creativa en recetas deliciosas y económicas.",
+    "siteName": "",
+    "dateAdded": "2026-11-27T12:01:00.124Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795719657599,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261126&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=230329&sendId=230329&uri=nyt%3A%2F%2Fnewsletter%2F0e63a4f6-ec91-50c9-9b70-0cc8aef4bbb0",
     "title": "This might be the perfect sweater",
