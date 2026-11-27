@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795788061083,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_bn_20261127&first_send=0&isViewInBrowser=true&nl=el-times&productCode=BN&segment_id=230349&sendId=230349&uri=nyt%3A%2F%2Fnewsletter%2F7b017a43-0107-5948-8f26-dea8e1f9feb5",
+    "title": "Haití voltea a ver a Bukele",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=207716&li=BN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261127&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "Haití observa a Bukele como posible modelo para enfrentar la violencia criminal que azota el país.",
+    "siteName": "",
+    "dateAdded": "2026-11-27T14:01:01.083Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795784458485,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?abVariantId=1&emc=edit_sc_20261127&isViewInBrowser=true&nl=science-times&paid_regi=1&productCode=SC&segment_id=230347&sendId=230347&uri=nyt%3A%2F%2Fnewsletter%2F7c3d587c-4156-528f-b32f-5ab0f0054906",
     "title": "NASA slammed a spacecraft into an asteroid. Here’s the first look.",
