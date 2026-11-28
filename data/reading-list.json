@@ -1,5 +1,16 @@
 [
   {
+    "id": 1795867259145,
+    "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_nn_20261128&isViewInBrowser=true&nl=the-morning&paid_regi=1&productCode=NN&segment_id=230379&sendId=230379&uri=nyt%3A%2F%2Fnewsletter%2F978c55a5-ce32-5063-b863-eaa807c40248",
+    "title": "Retail therapy",
+    "image": "https://liveintent.newyorktimesinfo.com/imp?s=859181&li=NN&m=1482f2b122b4c258bd67a395fb7cb30b&p=20261128&stpe=default&li_coord=desktop&collapse_width=600",
+    "summary": "El comercio minorista ofrece una mejor forma de dar regalos terapéuticos y satisfactorios.",
+    "siteName": "",
+    "dateAdded": "2026-11-28T12:00:59.145Z",
+    "read": false,
+    "source": "gmail"
+  },
+  {
     "id": 1795820458044,
     "url": "https://messaging-custom-newsletters.nytimes.com/dynamic/render?emc=edit_wcd_20261127&first_send=0&isViewInBrowser=true&nl=the-recommendation&productCode=WCD&segment_id=230368&sendId=230368&uri=nyt%3A%2F%2Fnewsletter%2Fbf1340b9-3731-5556-a527-defcb593223d",
     "title": "The Black Friday deals y’all loved most today",
